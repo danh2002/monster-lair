@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hỗ Trợ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E8650A;
+    --orange-light: #FF8C2E;
+    --orange-dark: #C4500A;
+    --bg-dark: #0a0a0b;
+    --bg-card: rgba(255,255,255,0.04);
+    --bg-card-hover: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(232,101,10,0.4);
+    --text-primary: #F5F0E8;
+    --text-secondary: rgba(245,240,232,0.6);
+    --text-muted: rgba(245,240,232,0.35);
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+    --success: #22c55e;
+    --error: #ef4444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,11,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex; align-items: center; gap: 2.5rem;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: radial-gradient(circle, #3a1a08, #1a0a04);
+    border: 1px solid rgba(232,101,10,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+    margin-left: 0.5rem;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 15px; letter-spacing: 0.04em; font-weight: 600;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--orange-light); }
+  .nav-links a.active { border-bottom: 2px solid var(--orange); padding-bottom: 2px; }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 0.75rem; }
+  .btn-lang {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-body); font-size: 13px;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-lang:hover { border-color: rgba(255,255,255,0.2); }
+  .btn-login {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.05em;
+    padding: 7px 18px; border-radius: 6px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-login:hover { border-color: rgba(255,255,255,0.3); }
+  .btn-register {
+    background: var(--orange);
+    border: none;
+    color: #fff;
+    font-family: var(--font-display); font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 8px 20px; border-radius: 6px; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-register:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 520px;
+    padding: 120px 2rem 80px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,101,10,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(100,20,0,0.3) 0%, transparent 60%),
+      linear-gradient(180deg, #1a0d04 0%, #0a0a0b 100%);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle 1px at 20% 30%, rgba(232,101,10,0.4) 0%, transparent 100%),
+      radial-gradient(circle 1px at 80% 20%, rgba(232,101,10,0.3) 0%, transparent 100%),
+      radial-gradient(circle 1px at 60% 70%, rgba(232,101,10,0.2) 0%, transparent 100%);
+    background-size: 200px 200px, 300px 300px, 250px 250px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-label {
+    display: inline-block;
+    font-family: var(--font-display); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange-light);
+    background: rgba(232,101,10,0.1);
+    border: 1px solid rgba(232,101,10,0.3);
+    padding: 5px 16px; border-radius: 100px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 8vw, 88px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--orange-light); }
+  .hero-subtitle {
+    color: var(--text-secondary);
+    font-size: 17px;
+    max-width: 480px; margin: 0 auto 2.5rem;
+    line-height: 1.65;
+  }
+  .hero-search {
+    display: flex; gap: 0; max-width: 520px; width: 100%; margin: 0 auto;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .hero-search:focus-within { border-color: rgba(232,101,10,0.5); }
+  .hero-search svg { width: 20px; height: 20px; flex-shrink: 0; margin: 0 14px; color: var(--text-muted); align-self: center; }
+  .hero-search input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text-primary); font-family: var(--font-body); font-size: 15px;
+    padding: 14px 8px;
+  }
+  .hero-search input::placeholder { color: var(--text-muted); }
+  .hero-search button {
+    background: var(--orange); border: none; color: #fff;
+    font-family: var(--font-display); font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 0 24px; cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .hero-search button:hover { background: var(--orange-light); }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    margin-top: 1.25rem;
+  }
+  .hero-tag {
+    font-size: 13px; color: var(--text-secondary);
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    padding: 4px 12px; border-radius: 100px; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .hero-tag:hover { color: var(--orange-light); border-color: rgba(232,101,10,0.4); }
+
+  /* ── SECTION ── */
+  section { padding: 80px 2rem; }
+  .container { max-width: 1160px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-display); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange-light); margin-bottom: 0.6rem;
+    display: block;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 54px);
+    font-weight: 800; text-transform: uppercase;
+    line-height: 1; letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .section-title span { color: var(--orange-light); }
+  .section-sub {
+    color: var(--text-secondary); font-size: 15px;
+    max-width: 460px; line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+
+  /* ── CATEGORIES ── */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .cat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    display: flex; align-items: flex-start; gap: 18px;
+    text-decoration: none; color: inherit;
+    position: relative; overflow: hidden;
+  }
+  .cat-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(232,101,10,0.06) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .cat-card:hover { background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-3px); }
+  .cat-card:hover::before { opacity: 1; }
+  .cat-icon {
+    width: 52px; height: 52px; flex-shrink: 0;
+    background: rgba(232,101,10,0.12);
+    border: 1px solid rgba(232,101,10,0.2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    transition: background 0.25s;
+  }
+  .cat-card:hover .cat-icon { background: rgba(232,101,10,0.22); }
+  .cat-info { flex: 1; }
+  .cat-title {
+    font-family: var(--font-display); font-size: 20px; font-weight: 700;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cat-desc { color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
+  .cat-count {
+    font-size: 12px; color: var(--orange-light);
+    font-family: var(--font-display); font-weight: 600; letter-spacing: 0.05em;
+    margin-top: 10px; display: block;
+  }
+  .cat-arrow {
+    align-self: center; opacity: 0;
+    color: var(--orange-light); font-size: 20px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .cat-card:hover .cat-arrow { opacity: 1; transform: translateX(4px); }
+
+  /* ── FAQ ── */
+  .faq-section { background: rgba(255,255,255,0.015); }
+  .faq-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem;
+  }
+  .faq-tab {
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-secondary); padding: 8px 18px; border-radius: 8px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .faq-tab:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.2); }
+  .faq-tab.active {
+    background: var(--orange); border-color: var(--orange); color: #fff;
+  }
+  .faq-list { display: flex; flex-direction: column; gap: 8px; }
+  .faq-item {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; transition: border-color 0.25s;
+  }
+  .faq-item.open { border-color: rgba(232,101,10,0.35); }
+  .faq-question {
+    width: 100%; background: transparent; border: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px; cursor: pointer;
+    font-family: var(--font-body); font-size: 16px; font-weight: 500;
+    color: var(--text-primary); text-align: left; gap: 16px;
+    transition: color 0.2s;
+  }
+  .faq-item.open .faq-question { color: var(--orange-light); }
+  .faq-icon {
+    width: 28px; height: 28px; flex-shrink: 0;
+    background: rgba(232,101,10,0.1); border: 1px solid rgba(232,101,10,0.2);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--orange-light); font-style: normal;
+    transition: transform 0.3s, background 0.2s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(232,101,10,0.2); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .faq-answer-inner {
+    padding: 0 24px 20px;
+    color: var(--text-secondary); font-size: 15px; line-height: 1.7;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  /* ── GUIDES ── */
+  .guides-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+  }
+  .guide-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 28px; cursor: pointer; position: relative; overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+  }
+  .guide-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .guide-card:hover { border-color: var(--border-hover); transform: translateY(-4px); background: var(--bg-card-hover); }
+  .guide-card:hover::after { transform: scaleX(1); }
+  .guide-num {
+    font-family: var(--font-display); font-size: 52px; font-weight: 800;
+    color: rgba(232,101,10,0.15); line-height: 1;
+    position: absolute; top: 16px; right: 20px;
+    transition: color 0.2s;
+  }
+  .guide-card:hover .guide-num { color: rgba(232,101,10,0.3); }
+  .guide-emoji { font-size: 32px; margin-bottom: 14px; display: block; }
+  .guide-title {
+    font-family: var(--font-display); font-size: 22px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  .guide-desc { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 18px; }
+  .guide-steps { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .guide-steps li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--text-secondary);
+  }
+  .step-dot {
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(232,101,10,0.15); border: 1px solid rgba(232,101,10,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 11px; font-weight: 700;
+    color: var(--orange-light); margin-top: 1px;
+  }
+
+  /* ── CONTACT ── */
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; align-items: start;
+  }
+  .contact-info { position: sticky; top: 90px; }
+  .contact-info-title {
+    font-family: var(--font-display); font-size: 32px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+  .contact-info-title span { color: var(--orange-light); }
+  .contact-info p { color: var(--text-secondary); font-size: 15px; line-height: 1.65; margin-bottom: 2rem; }
+  .contact-channels { display: flex; flex-direction: column; gap: 14px; }
+  .contact-channel {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    transition: border-color 0.2s;
+    text-decoration: none; color: inherit;
+  }
+  .contact-channel:hover { border-color: var(--border-hover); }
+  .ch-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .ch-icon.email { background: rgba(59,130,246,0.15); }
+  .ch-icon.discord { background: rgba(88,101,242,0.15); }
+  .ch-icon.facebook { background: rgba(24,119,242,0.15); }
+  .ch-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; font-family: var(--font-display); }
+  .ch-value { font-size: 14px; color: var(--text-primary); font-weight: 500; margin-top: 2px; }
+  .ch-meta { font-size: 12px; color: var(--orange-light); margin-top: 2px; }
+
+  /* FORM */
+  .contact-form-wrap {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 36px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .form-group label {
+    font-family: var(--font-display); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary);
+  }
+  .form-group label span { color: var(--orange); margin-left: 2px; }
+  .form-control {
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px;
+    color: var(--text-primary); font-family: var(--font-body); font-size: 15px;
+    outline: none; transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .form-control::placeholder { color: var(--text-muted); }
+  .form-control:focus { border-color: rgba(232,101,10,0.5); background: rgba(232,101,10,0.04); }
+  .form-control.error { border-color: rgba(239,68,68,0.5); }
+  textarea.form-control { resize: vertical; min-height: 130px; line-height: 1.6; }
+  select.form-control { cursor: pointer; }
+  select.form-control option { background: #1a1008; color: var(--text-primary); }
+  .form-error { font-size: 12px; color: #f87171; display: none; }
+  .form-group.has-error .form-error { display: block; }
+  .form-group.has-error .form-control { border-color: rgba(239,68,68,0.5); }
+  .btn-submit {
+    width: 100%; background: var(--orange); border: none; color: #fff;
+    font-family: var(--font-display); font-size: 16px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 16px; border-radius: 8px; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-top: 8px;
+  }
+  .btn-submit:hover:not(:disabled) { background: var(--orange-light); transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+  .spinner {
+    width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.6s linear infinite; display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .form-msg {
+    border-radius: 8px; padding: 14px 16px; font-size: 14px;
+    display: none; align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+  .form-msg.success { display: flex; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: #4ade80; }
+  .form-msg.error-msg { display: flex; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080808; border-top: 1px solid var(--border);
+    padding: 60px 2rem 0;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    padding-bottom: 48px; border-bottom: 1px solid var(--border);
+  }
+  .footer-brand p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin: 12px 0 20px; max-width: 260px; }
+  .footer-socials { display: flex; gap: 10px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .social-btn:hover { border-color: rgba(232,101,10,0.4); background: rgba(232,101,10,0.08); }
+  .footer-col h4 {
+    font-family: var(--font-display); font-size: 15px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px;
+    color: var(--text-primary);
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--orange-light); }
+  .footer-bottom {
+    padding: 24px 0; display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-badges { display: flex; gap: 12px; align-items: center; }
+  .badge-esrb, .badge-pegi {
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
+    padding: 5px 10px; display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600;
+  }
+  .badge-esrb .rating { font-size: 18px; font-weight: 800; }
+  .footer-copyright { color: var(--text-muted); font-size: 12px; text-align: right; line-height: 1.6; }
+  .footer-dev {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .dev-badge {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px;
+    font-size: 12px;
+  }
+  .dev-badge .icon { font-size: 16px; }
+  .dev-badge .label { color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .dev-badge .name { font-weight: 600; font-size: 13px; }
+  .footer-brand-logo {
+    font-family: var(--font-display); font-size: 22px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px; background: linear-gradient(90deg, transparent, rgba(232,101,10,0.3), transparent);
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .contact-wrap { grid-template-columns: 1fr; }
+    .contact-info { position: static; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    nav { padding: 0 1rem; gap: 1rem; }
+    .nav-links { display: none; }
+    section { padding: 60px 1rem; }
+    .hero { padding: 100px 1rem 60px; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .contact-form-wrap { padding: 24px; }
+    .footer-dev { flex-wrap: wrap; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .fade-up:nth-child(1) { animation-delay: 0.05s; }
+  .fade-up:nth-child(2) { animation-delay: 0.1s; }
+  .fade-up:nth-child(3) { animation-delay: 0.15s; }
+  .fade-up:nth-child(4) { animation-delay: 0.2s; }
+  .fade-up:nth-child(5) { animation-delay: 0.25s; }
+  .fade-up:nth-child(6) { animation-delay: 0.3s; }
+
+  /* scroll reveal via IntersectionObserver */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">🦕</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">TRANG CHỦ</a></li>
+    <li><a href="#">LỖI ĐÀI CHIẾN</a></li>
+    <li><a href="#">NẠP GAME</a></li>
+    <li><a href="#">HƯỚNG DẪN</a></li>
+    <li><a href="#" class="active">HỖ TRỢ</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-lang">Chọn ngôn ngữ &rsaquo;</button>
+    <button class="btn-login">👤 ĐĂNG NHẬP</button>
+    <button class="btn-register">💎 TẠO TÀI KHOẢN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-label fade-up">Trung Tâm Hỗ Trợ</span>
+    <h1 class="fade-up">HỖ TRỢ &amp; <span>GIẢI ĐÁP</span></h1>
+    <p class="hero-subtitle fade-up">Tìm câu trả lời nhanh chóng cho mọi thắc mắc. Đội ngũ hỗ trợ luôn sẵn sàng đồng hành cùng bạn trên hành trình chinh phục Đảo Khủng Long.</p>
+    <div class="hero-search fade-up">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" placeholder="Tìm kiếm bài viết hỗ trợ...">
+      <button>TÌM KIẾM</button>
+    </div>
+    <div class="hero-tags fade-up">
+      <span class="hero-tag">Nạp game</span>
+      <span class="hero-tag">Quên mật khẩu</span>
+      <span class="hero-tag">Lỗi đăng nhập</span>
+      <span class="hero-tag">Hoàn tiền</span>
+      <span class="hero-tag">Báo lỗi</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SUPPORT CATEGORIES -->
+<section>
+  <div class="container">
+    <span class="section-label reveal">Danh mục hỗ trợ</span>
+    <h2 class="section-title reveal">CHỌN <span>CHỦ ĐỀ</span></h2>
+    <p class="section-sub reveal">Chọn danh mục phù hợp để tìm câu trả lời nhanh nhất.</p>
+    <div class="categories-grid">
+      <a href="#faq" class="cat-card fade-up">
+        <div class="cat-icon">❓</div>
+        <div class="cat-info">
+          <div class="cat-title">Câu Hỏi Thường Gặp</div>
+          <div class="cat-desc">Giải đáp nhanh các thắc mắc phổ biến nhất từ cộng đồng người chơi.</div>
+          <span class="cat-count">24 bài viết</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href="#contact" class="cat-card fade-up">
+        <div class="cat-icon">🔐</div>
+        <div class="cat-info">
+          <div class="cat-title">Vấn Đề Tài Khoản</div>
+          <div class="cat-desc">Khôi phục tài khoản, đổi mật khẩu, xác minh danh tính và bảo mật.</div>
+          <span class="cat-count">18 bài viết</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href="#contact" class="cat-card fade-up">
+        <div class="cat-icon">💳</div>
+        <div class="cat-info">
+          <div class="cat-title">Thanh Toán & Nạp Game</div>
+          <div class="cat-desc">Hướng dẫn nạp tiền, các phương thức thanh toán và xử lý giao dịch lỗi.</div>
+          <span class="cat-count">31 bài viết</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href="#guides" class="cat-card fade-up">
+        <div class="cat-icon">🦖</div>
+        <div class="cat-info">
+          <div class="cat-title">Gameplay & Tính Năng</div>
+          <div class="cat-desc">Hướng dẫn chiến đấu, xây dựng quân đoàn, Lôi Đài Chiến và các tính năng đặc biệt.</div>
+          <span class="cat-count">47 bài viết</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href="#contact" class="cat-card fade-up">
+        <div class="cat-icon">🐛</div>
+        <div class="cat-info">
+          <div class="cat-title">Báo Cáo Lỗi</div>
+          <div class="cat-desc">Gặp sự cố kỹ thuật? Gửi báo cáo lỗi để đội ngũ xử lý nhanh nhất.</div>
+          <span class="cat-count">Gửi báo cáo</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href="#contact" class="cat-card fade-up">
+        <div class="cat-icon">🎧</div>
+        <div class="cat-info">
+          <div class="cat-title">Liên Hệ Hỗ Trợ</div>
+          <div class="cat-desc">Không tìm thấy câu trả lời? Gửi yêu cầu trực tiếp đến đội hỗ trợ của chúng tôi.</div>
+          <span class="cat-count">Phản hồi trong 24h</span>
+        </div>
+        <span class="cat-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ ACCORDION -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <span class="section-label reveal">Giải đáp thắc mắc</span>
+    <h2 class="section-title reveal">CÂU HỎI <span>THƯỜNG GẶP</span></h2>
+    <p class="section-sub reveal">Những câu hỏi phổ biến nhất từ cộng đồng Đảo Khủng Long.</p>
+
+    <div class="faq-tabs reveal">
+      <button class="faq-tab active" data-tab="all">Tất cả</button>
+      <button class="faq-tab" data-tab="account">Tài khoản</button>
+      <button class="faq-tab" data-tab="payment">Thanh toán</button>
+      <button class="faq-tab" data-tab="game">Gameplay</button>
+      <button class="faq-tab" data-tab="tech">Kỹ thuật</button>
+    </div>
+
+    <div class="faq-list reveal" id="faq-list">
+      <!-- account -->
+      <div class="faq-item" data-cat="account">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Làm thế nào để khôi phục mật khẩu tài khoản?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Truy cập trang đăng nhập và nhấp vào <strong>"Quên mật khẩu?"</strong>. Nhập số điện thoại hoặc email đã đăng ký. Bạn sẽ nhận được mã OTP trong vòng 2 phút. Nhập mã và đặt mật khẩu mới. Nếu không nhận được mã, hãy kiểm tra hộp thư rác hoặc liên hệ hỗ trợ trực tiếp.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-cat="account">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Tài khoản của tôi bị khóa, phải làm gì?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Tài khoản có thể bị khóa do vi phạm điều khoản sử dụng hoặc hoạt động bất thường. Vui lòng liên hệ đội hỗ trợ qua email <strong>support@daokhunglong.vn</strong> hoặc Discord để được xem xét và giải quyết trong vòng 48 giờ làm việc.
+          </div>
+        </div>
+      </div>
+      <!-- payment -->
+      <div class="faq-item" data-cat="payment">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Các phương thức thanh toán nào được hỗ trợ?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Hiện tại Đảo Khủng Long hỗ trợ đầy đủ: <strong>Thẻ ATM nội địa, Visa/Mastercard, MoMo, ZaloPay, VNPay, thẻ cào điện thoại (Viettel, Vinaphone, Mobifone)</strong>. Chúng tôi liên tục cập nhật thêm phương thức thanh toán mới.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-cat="payment">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Giao dịch thành công nhưng chưa nhận được xu, phải làm gì?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Thông thường xu sẽ được cộng ngay lập tức. Trong một số trường hợp hiếm gặp, quá trình xử lý có thể mất đến <strong>15 phút</strong>. Nếu sau 30 phút vẫn chưa nhận, hãy kiểm tra lịch sử đơn hàng. Nếu giao dịch ở trạng thái "Pending", hãy chờ thêm. Nếu "Rejected", liên hệ hỗ trợ kèm mã đơn hàng để được xử lý.
+          </div>
+        </div>
+      </div>
+      <!-- game -->
+      <div class="faq-item" data-cat="game">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Lôi Đài Chiến là gì và cách tham gia như thế nào?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Lôi Đài Chiến là sự kiện PvP quy mô lớn, nơi các phe <strong>Hoá Long</strong> và <strong>Tu Tiên</strong> đối đầu nhau. Mỗi mùa giải kéo dài 10 ngày. Tham gia bằng cách đăng ký trong game, tích lũy điểm thông qua trận đấu và leo BXH để nhận phần thưởng xu độc quyền.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-cat="game">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Làm sao để tải game về máy tính?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Nhấn vào nút <strong>"Tải Game Miễn Phí"</strong> trên trang chủ. Chọn phiên bản phù hợp (Windows 10/11 64-bit, tối thiểu 8GB RAM, GPU NVIDIA GTX 1060 trở lên). File cài đặt khoảng 35GB. Sau khi tải xong, chạy installer và làm theo hướng dẫn. Có thể mất thêm 10-15 phút để tải tài nguyên bổ sung lần đầu khởi động.
+          </div>
+        </div>
+      </div>
+      <!-- tech -->
+      <div class="faq-item" data-cat="tech">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Game bị lag hoặc giật, cách khắc phục như thế nào?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Thử các bước sau: <strong>1.</strong> Giảm chất lượng đồ họa trong Settings. <strong>2.</strong> Tắt các ứng dụng chạy ngầm. <strong>3.</strong> Kiểm tra kết nối mạng và đổi sang server gần nhất. <strong>4.</strong> Cập nhật driver GPU mới nhất. <strong>5.</strong> Xóa cache game trong thư mục cài đặt. Nếu vẫn còn vấn đề, gửi file log cho đội hỗ trợ kỹ thuật.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item" data-cat="tech">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Cấu hình máy tính tối thiểu để chơi game là gì?
+          <i class="faq-icon">+</i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <strong>Tối thiểu:</strong> Windows 10 64-bit, CPU Intel i5-8400 / AMD Ryzen 5 2600, RAM 8GB, GPU NVIDIA GTX 1060 6GB / AMD RX 580 8GB, SSD 50GB trống.<br><br>
+            <strong>Đề xuất:</strong> CPU Intel i7-10700K / Ryzen 7 5800X, RAM 16GB, GPU RTX 3070 / RX 6700 XT để trải nghiệm tốt nhất ở 1080p 60fps.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUICK GUIDES -->
+<section id="guides">
+  <div class="container">
+    <span class="section-label reveal">Hướng dẫn nhanh</span>
+    <h2 class="section-title reveal">BẮT ĐẦU <span>DỄ DÀNG</span></h2>
+    <p class="section-sub reveal">Các hướng dẫn từng bước để làm quen với Đảo Khủng Long trong vài phút.</p>
+    <div class="guides-grid">
+      <div class="guide-card reveal">
+        <div class="guide-num">01</div>
+        <span class="guide-emoji">🦴</span>
+        <div class="guide-title">Tạo Tài Khoản & Đăng Nhập</div>
+        <div class="guide-desc">Bắt đầu hành trình sinh tồn trong thế giới khủng long ngay hôm nay.</div>
+        <ul class="guide-steps">
+          <li><span class="step-dot">1</span>Nhấn "Tạo Tài Khoản" trên menu</li>
+          <li><span class="step-dot">2</span>Nhập tên tài khoản & mật khẩu</li>
+          <li><span class="step-dot">3</span>Xác minh số điện thoại (OTP)</li>
+          <li><span class="step-dot">4</span>Hoàn tất & đăng nhập lần đầu</li>
+        </ul>
+      </div>
+      <div class="guide-card reveal">
+        <div class="guide-num">02</div>
+        <span class="guide-emoji">💎</span>
+        <div class="guide-title">Nạp Game Lần Đầu</div>
+        <div class="guide-desc">Hỗ trợ đầy đủ phương thức thanh toán phổ biến tại Việt Nam.</div>
+        <ul class="guide-steps">
+          <li><span class="step-dot">1</span>Truy cập trang "Nạp Game"</li>
+          <li><span class="step-dot">2</span>Chọn gói xu phù hợp</li>
+          <li><span class="step-dot">3</span>Chọn phương thức thanh toán</li>
+          <li><span class="step-dot">4</span>Nhận xu ngay lập tức</li>
+        </ul>
+      </div>
+      <div class="guide-card reveal">
+        <div class="guide-num">03</div>
+        <span class="guide-emoji">⚔️</span>
+        <div class="guide-title">Tham Gia Lôi Đài Chiến</div>
+        <div class="guide-desc">Chiến đấu quy mô lớn giữa các phe phái để giành danh hiệu tối thượng.</div>
+        <ul class="guide-steps">
+          <li><span class="step-dot">1</span>Đăng nhập & vào trang Lôi Đài</li>
+          <li><span class="step-dot">2</span>Xem thông tin mùa giải hiện tại</li>
+          <li><span class="step-dot">3</span>Chọn phe (Hoá Long / Tu Tiên)</li>
+          <li><span class="step-dot">4</span>Tham gia trận và tích điểm</li>
+        </ul>
+      </div>
+      <div class="guide-card reveal">
+        <div class="guide-num">04</div>
+        <span class="guide-emoji">🏆</span>
+        <div class="guide-title">Leo BXH Top Nạp</div>
+        <div class="guide-desc">Chinh phục bảng xếp hạng để nhận các phần thưởng độc quyền theo mùa.</div>
+        <ul class="guide-steps">
+          <li><span class="step-dot">1</span>Nạp game để tích điểm BXH</li>
+          <li><span class="step-dot">2</span>Kiểm tra thứ hạng trên trang chủ</li>
+          <li><span class="step-dot">3</span>Top 3 nhận thưởng đặc biệt</li>
+          <li><span class="step-dot">4</span>Phần thưởng phát sau mùa kết thúc</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT FORM + INFO -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <!-- Left: Info -->
+      <div class="contact-info">
+        <span class="section-label reveal">Liên hệ trực tiếp</span>
+        <h2 class="contact-info-title reveal">CẦN THÊM <span>TRỢ GIÚP?</span></h2>
+        <p class="reveal">Không tìm thấy câu trả lời? Đội ngũ hỗ trợ tận tâm của chúng tôi luôn sẵn sàng giải quyết mọi vấn đề của bạn.</p>
+        <div class="contact-channels">
+          <a href="mailto:support@daokhunglong.vn" class="contact-channel reveal">
+            <div class="ch-icon email">📧</div>
+            <div>
+              <div class="ch-label">Email hỗ trợ</div>
+              <div class="ch-value">support@daokhunglong.vn</div>
+              <div class="ch-meta">⏱ Phản hồi trong 24h làm việc</div>
+            </div>
+          </a>
+          <a href="#" class="contact-channel reveal">
+            <div class="ch-icon discord">🎮</div>
+            <div>
+              <div class="ch-label">Discord Server</div>
+              <div class="ch-value">discord.gg/daokhunglong</div>
+              <div class="ch-meta">⚡ Hỗ trợ trực tuyến 24/7</div>
+            </div>
+          </a>
+          <a href="#" class="contact-channel reveal">
+            <div class="ch-icon facebook">📘</div>
+            <div>
+              <div class="ch-label">Facebook Fanpage</div>
+              <div class="ch-value">fb.com/DaoKhungLongVN</div>
+              <div class="ch-meta">📢 Cập nhật tin tức mới nhất</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div>
+        <div class="contact-form-wrap reveal">
+          <div class="form-msg" id="form-success">
+            ✅ Yêu cầu hỗ trợ đã được gửi thành công! Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.
+          </div>
+          <div class="form-msg" id="form-error-msg">
+            ❌ Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin và thử lại.
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="fg-name">
+              <label>Họ và tên <span>*</span></label>
+              <input type="text" class="form-control" id="inp-name" placeholder="Nguyễn Văn A">
+              <span class="form-error">Vui lòng nhập họ và tên.</span>
+            </div>
+            <div class="form-group" id="fg-email">
+              <label>Email <span>*</span></label>
+              <input type="email" class="form-control" id="inp-email" placeholder="example@gmail.com">
+              <span class="form-error">Vui lòng nhập email hợp lệ.</span>
+            </div>
+          </div>
+
+          <div class="form-group" id="fg-subject">
+            <label>Chủ đề <span>*</span></label>
+            <select class="form-control" id="inp-subject">
+              <option value="">-- Chọn chủ đề --</option>
+              <option value="account">Vấn đề tài khoản</option>
+              <option value="payment">Thanh toán / Nạp game</option>
+              <option value="bug">Báo cáo lỗi kỹ thuật</option>
+              <option value="gameplay">Hỏi về gameplay / tính năng</option>
+              <option value="appeal">Kháng cáo lệnh cấm</option>
+              <option value="other">Khác</option>
+            </select>
+            <span class="form-error">Vui lòng chọn chủ đề.</span>
+          </div>
+
+          <div class="form-group" id="fg-msg">
+            <label>Nội dung <span>*</span></label>
+            <textarea class="form-control" id="inp-msg" placeholder="Mô tả chi tiết vấn đề bạn gặp phải. Bao gồm tên tài khoản, thời điểm xảy ra sự cố và bất kỳ thông tin nào có thể giúp chúng tôi hỗ trợ bạn tốt hơn..."></textarea>
+            <span class="form-error">Vui lòng nhập nội dung (tối thiểu 20 ký tự).</span>
+          </div>
+
+          <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+            <div class="spinner" id="spinner"></div>
+            <span id="btn-text">GỬI YÊU CẦU HỖ TRỢ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">🦕 ĐẢO KHỦNG LONG</div>
+        <p>Trò chơi sinh tồn khủng long AAA thế hệ tiếp theo. Powered by Unreal Engine 5. Survive. Hunt. Dominate.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" title="Facebook">📘</a>
+          <a href="#" class="social-btn" title="Reddit">🤖</a>
+          <a href="#" class="social-btn" title="YouTube">▶️</a>
+          <a href="#" class="social-btn" title="Discord">🎮</a>
+          <a href="#" class="social-btn" title="TikTok">🎵</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>GAME</h4>
+        <ul>
+          <li><a href="#">Tải Game</a></li>
+          <li><a href="#">Patch Notes</a></li>
+          <li><a href="#">Lộ trình</a></li>
+          <li><a href="#">Phân Hạng</a></li>
+          <li><a href="#">Mùa Giải</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>CỘNG ĐỒNG</h4>
+        <ul>
+          <li><a href="#">Discord Server</a></li>
+          <li><a href="#">Diễn đàn</a></li>
+          <li><a href="#">Hướng dẫn</a></li>
+          <li><a href="#">Fanart</a></li>
+          <li><a href="#">Streamer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>HỖ TRỢ</h4>
+        <ul>
+          <li><a href="#" style="color: var(--orange-light);">Trung tâm hỗ trợ</a></li>
+          <li><a href="#">Báo lỗi</a></li>
+          <li><a href="#">Điều khoản</a></li>
+          <li><a href="#">Bảo mật</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-badges">
+        <div class="badge-esrb">
+          <span class="rating">T</span>
+          <div><div style="font-size:9px;opacity:0.5">ESRB</div><div style="font-size:10px">TEEN</div></div>
+        </div>
+        <div class="badge-pegi">
+          <span class="rating" style="font-size:18px;font-weight:800">12</span>
+          <div><div style="font-size:9px;opacity:0.5">PEGI</div><div style="font-size:10px">RATED</div></div>
+        </div>
+      </div>
+      <div class="footer-dev">
+        <div class="dev-badge">
+          <span class="icon">🖥️</span>
+          <div><div class="label">Developer</div><div class="name">PRIMAL STUDIOS</div></div>
+        </div>
+        <div class="dev-badge">
+          <span class="icon">🌐</span>
+          <div><div class="label">Publisher</div><div class="name">NEXUS GAMES</div></div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        © 2025 Monster Lair. All Rights Reserved.<br>
+        Unreal® Engine 5. All trademarks are property of their respective owners.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    // close all
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-answer').style.maxHeight = '0';
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  // FAQ tabs
+  document.querySelectorAll('.faq-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.tab;
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+          item.classList.remove('open');
+          item.querySelector('.faq-answer').style.maxHeight = '0';
+        }
+      });
+    });
+  });
+
+  // Form validation
+  function validate() {
+    let ok = true;
+    const checks = [
+      { id: 'inp-name', fg: 'fg-name', fn: v => v.trim().length >= 2 },
+      { id: 'inp-email', fg: 'fg-email', fn: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { id: 'inp-subject', fg: 'fg-subject', fn: v => v !== '' },
+      { id: 'inp-msg', fg: 'fg-msg', fn: v => v.trim().length >= 20 },
+    ];
+    checks.forEach(c => {
+      const el = document.getElementById(c.id);
+      const fg = document.getElementById(c.fg);
+      if (!c.fn(el.value)) {
+        fg.classList.add('has-error');
+        el.classList.add('error');
+        ok = false;
+      } else {
+        fg.classList.remove('has-error');
+        el.classList.remove('error');
+      }
+    });
+    return ok;
+  }
+
+  function submitForm() {
+    document.getElementById('form-success').className = 'form-msg';
+    document.getElementById('form-error-msg').className = 'form-msg';
+    if (!validate()) return;
+
+    const btn = document.getElementById('btn-submit');
+    const spinner = document.getElementById('spinner');
+    const btnText = document.getElementById('btn-text');
+
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    btnText.textContent = 'ĐANG GỬI...';
+
+    setTimeout(() => {
+      spinner.style.display = 'none';
+      btn.disabled = false;
+      btnText.textContent = 'GỬI YÊU CẦU HỖ TRỢ';
+
+      // 90% success simulation
+      if (Math.random() > 0.1) {
+        document.getElementById('form-success').className = 'form-msg success';
+        ['inp-name','inp-email','inp-subject','inp-msg'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el.tagName === 'SELECT') el.value = '';
+          else el.value = '';
+        });
+      } else {
+        document.getElementById('form-error-msg').className = 'form-msg error-msg';
+      }
+      window.scrollTo({ top: document.getElementById('contact').offsetTop - 80, behavior: 'smooth' });
+    }, 2000);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Live form validation on input
+  ['inp-name','inp-email','inp-subject','inp-msg'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      const fg = el.closest('.form-group');
+      if (fg.classList.contains('has-error')) {
+        fg.classList.remove('has-error');
+        el.classList.remove('error');
+      }
+    });
+  });
+</script>
+</body>
+</html>
