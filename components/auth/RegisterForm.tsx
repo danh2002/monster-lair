@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { theme } from '@/styles/theme';
 import { AiOutlineEye } from '@react-icons/all-files/ai/AiOutlineEye';
 import { AiOutlineEyeInvisible } from '@react-icons/all-files/ai/AiOutlineEyeInvisible';
+import { useTranslations } from 'next-intl';
 
 interface RegisterFormProps {
   onSwitchToLogin?: () => void;
@@ -258,6 +259,7 @@ const SuccessMessage = styled.p`
 
 export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
   const { register } = useAuth();
+  const t = useTranslations('auth');
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -284,29 +286,29 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
     setSuccess('');
 
     if (!formData.username || !formData.email || !formData.password || !formData.phone) {
-      setError('Vui lòng điền tất cả các trường bắt buộc');
+      setError(t('errorRegisterRequired'));
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Mật khẩu không khớp');
+      setError(t('errorRegisterPasswordMismatch'));
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Mật khẩu phải có ít nhất 6 ký tự');
+      setError(t('errorRegisterPasswordMin'));
       return;
     }
 
     if (!formData.verificationCode) {
-      setError('Vui lòng nhập mã xác thực');
+      setError(t('errorRegisterVerificationRequired'));
       return;
     }
 
     setIsLoading(true);
     try {
       await register(formData.username, formData.email, formData.password, formData.phone);
-      setSuccess('Đăng ký thành công!');
+      setSuccess(t('successRegister'));
       setTimeout(() => {
         setFormData({
           username: '',
@@ -318,7 +320,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
         });
       }, 1500);
     } catch {
-      setError('Đăng ký thất bại. Vui lòng thử lại.');
+      setError(t('errorRegisterFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -326,10 +328,10 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 
   const handleGetVerificationCode = () => {
     if (!formData.phone) {
-      setError('Vui lòng nhập số điện thoại trước');
+      setError(t('errorRegisterPhoneRequired'));
       return;
     }
-    setSuccess(`Mã xác thực đã được gửi đến ${formData.phone}`);
+    setSuccess(t('verificationSent', { phone: formData.phone }));
     setTimeout(() => setSuccess(''), 3000);
   };
 
@@ -339,7 +341,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
         <LogoArea>
           <Image
             src="/images/logo.png"
-            alt="Đăng ký"
+            alt={t('registerLogoAlt')}
             width={120}
             height={120}
             priority
@@ -347,8 +349,8 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           />
         </LogoArea>
 
-        <FormTitle>Đảo Khủng Long</FormTitle>
-        <FormSubtitle>Tham gia để khám phá thế giới khủng long!</FormSubtitle>
+        <FormTitle>{t('registerTitle')}</FormTitle>
+        <FormSubtitle>{t('registerSubtitle')}</FormSubtitle>
       </HeaderSection>
 
       <form onSubmit={handleSubmit}>
@@ -358,12 +360,12 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 
           <InputFieldWrapper>
             <InputIcon>
-              <Image src="/images/user.png" alt="User" width={18} height={18} />
+              <Image src="/images/user.png" alt={t('userAlt')} width={18} height={18} />
             </InputIcon>
             <InputField
               type="text"
               name="username"
-              placeholder="Tên tài khoản"
+              placeholder={t('username')}
               value={formData.username}
               onChange={handleChange}
             />
@@ -373,7 +375,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputIcon>
               <Image
                 src="/images/padlock.png"
-                alt="Password"
+                alt={t('passwordAlt')}
                 width={18}
                 height={18}
               />
@@ -381,14 +383,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputField
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Mật khẩu"
+              placeholder={t('password')}
               value={formData.password}
               onChange={handleChange}
             />
             <VisibilityToggle
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              title={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+              title={showPassword ? t('visibilityHide') : t('visibilityShow')}
             >
               {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </VisibilityToggle>
@@ -398,7 +400,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputIcon>
               <Image
                 src="/images/padlock.png"
-                alt="Confirm Password"
+                alt={t('confirmPasswordAlt')}
                 width={18}
                 height={18}
               />
@@ -406,14 +408,14 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputField
               type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
-              placeholder="Nhập lại mật khẩu"
+              placeholder={t('confirmPassword')}
               value={formData.confirmPassword}
               onChange={handleChange}
             />
             <VisibilityToggle
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              title={showConfirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+              title={showConfirmPassword ? t('visibilityHide') : t('visibilityShow')}
             >
               {showConfirmPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </VisibilityToggle>
@@ -423,7 +425,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputIcon>
               <Image
                 src="/images/phone-call.png"
-                alt="Phone icon"
+                alt={t('phoneAlt')}
                 width={18}
                 height={18}
                 priority
@@ -432,7 +434,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputField
               type="tel"
               name="phone"
-              placeholder="Số điện thoại"
+              placeholder={t('phone')}
               value={formData.phone}
               onChange={handleChange}
             />
@@ -442,7 +444,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <InputIcon style={{ left: 14, zIndex: 2 }}>
               <Image
                 src="/images/OTP.png"
-                alt="OTP icon"
+                alt={t('otpAlt')}
                 width={18}
                 height={18}
                 priority
@@ -451,23 +453,23 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
             <VerificationInput
               type="text"
               name="verificationCode"
-              placeholder="Nhập mã xác thực 6 số"
+              placeholder={t('verificationCode')}
               value={formData.verificationCode}
               onChange={handleChange}
               maxLength={6}
             />
             <VerificationButton type="button" onClick={handleGetVerificationCode}>
-              Lấy mã xác thực
+              {t('getVerificationCode')}
             </VerificationButton>
           </VerificationFieldWrapper>
 
           <RegisterButton type="submit" disabled={isLoading}>
-            {isLoading ? 'Đang xử lý...' : 'Đăng Ký'}
+            {isLoading ? t('registerLoading') : t('registerButton')}
           </RegisterButton>
 
           <LoginLink>
-            Đã có tài khoản?{' '}
-            <a onClick={onSwitchToLogin}>Đăng nhập ngay</a>
+            {t('signupPrompt')}{' '}
+            <a onClick={onSwitchToLogin}>{t('switchToLogin')}</a>
           </LoginLink>
         </FormGroup>
       </form>

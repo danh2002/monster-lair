@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { useTranslations } from 'next-intl';
 
 type OrderStatus = 'success' | 'pending' | 'failed';
 type Order = {
@@ -368,6 +369,7 @@ const mockOrders: Order[] = [
 ];
 
 export default function OrdersPage() {
+  const t = useTranslations('orders');
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<OrderStatus | 'all'>('all');
   const [dateFrom, setDateFrom] = useState<string>(''); // YYYY-MM-DD
@@ -410,9 +412,9 @@ export default function OrdersPage() {
   };
 
   const statusLabel = (s: OrderStatus) => {
-    if (s === 'success') return 'Thành Công';
-    if (s === 'pending') return 'Đang Xử Lý';
-    return 'Thất Bại';
+    if (s === 'success') return t('status.success');
+    if (s === 'pending') return t('status.pending');
+    return t('status.failed');
   };
 
   const handlePrevPage = () => {
@@ -430,25 +432,25 @@ export default function OrdersPage() {
     <PageShell>
       <PageContainer>
         <PageTitle>
-          LỊCH SỬ <span>ĐƠN HÀNG</span>
+          {t('titlePrefix')} <span>{t('titleEmphasis')}</span>
         </PageTitle>
 
         <ControlsRow>
           <FilterBarRow>
             <FilterField>
-              <FilterLabel>Tìm</FilterLabel>
+              <FilterLabel>{t('searchLabel')}</FilterLabel>
               <UniformInput
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                placeholder="Tìm theo mã đơn (ví dụ: #520...)"
+                placeholder={t('searchPlaceholder')}
               />
             </FilterField>
 
             <FilterField>
-              <FilterLabel>Tình trạng</FilterLabel>
+              <FilterLabel>{t('statusLabel')}</FilterLabel>
               <Select
                 value={status}
                 onChange={(e) => {
@@ -456,15 +458,15 @@ export default function OrdersPage() {
                   setPage(1);
                 }}
               >
-                <option value="all">Tất cả</option>
-                <option value="success">Thành Công</option>
-                <option value="pending">Đang Xử Lý</option>
-                <option value="failed">Thất Bại</option>
+                <option value="all">{t('status.all')}</option>
+                <option value="success">{t('status.success')}</option>
+                <option value="pending">{t('status.pending')}</option>
+                <option value="failed">{t('status.failed')}</option>
               </Select>
             </FilterField>
 
             <FilterField>
-              <FilterLabel>Từ:</FilterLabel>
+              <FilterLabel>{t('fromLabel')}</FilterLabel>
               <DateInput
                 type="date"
                 value={dateFrom}
@@ -476,7 +478,7 @@ export default function OrdersPage() {
             </FilterField>
 
             <FilterField>
-              <FilterLabel>Đến:</FilterLabel>
+              <FilterLabel>{t('toLabel')}</FilterLabel>
               <DateInput
                 type="date"
                 value={dateTo}
@@ -494,7 +496,7 @@ export default function OrdersPage() {
                   resetFilters();
                 }}
               >
-                Làm mới
+                {t('refresh')}
               </ResetButton>
             </div>
           </FilterBarRow>
@@ -505,11 +507,11 @@ export default function OrdersPage() {
           <Table>
             <thead>
               <tr>
-                <th style={{ width: 160 }}>Mã đơn</th>
-                <th style={{ width: 200 }}>Ngày</th>
-                <th style={{ width: 180 }}>Số tiền</th>
+                <th style={{ width: 160 }}>{t('table.orderId')}</th>
+                <th style={{ width: 200 }}>{t('table.date')}</th>
+                <th style={{ width: 180 }}>{t('table.amount')}</th>
                 <th style={{ width: 140 }}>Gems</th>
-                <th style={{ width: 180 }}>Trạng thái</th>
+                <th style={{ width: 180 }}>{t('table.status')}</th>
               </tr>
             </thead>
 
@@ -517,7 +519,7 @@ export default function OrdersPage() {
               {paged.length === 0 ? (
                 <tr>
                   <td colSpan={5} style={{ padding: theme.spacing['2xl'], color: theme.colors.text.secondary }}>
-                    Không có đơn hàng phù hợp bộ lọc.
+                    {t('empty')}
                   </td>
                 </tr>
               ) : (
@@ -527,7 +529,7 @@ export default function OrdersPage() {
                       <OrderId>{order.id}</OrderId>
                     </td>
                     <td>{order.date}</td>
-                    <td>{order.price} VND</td>
+                    <td>{order.price} {t('currency')}</td>
                     <td>
                       <span style={{ color: theme.colors.primary.main, fontWeight: theme.typography.fontWeight.bold }}>
                         +{order.gems}
@@ -548,18 +550,22 @@ export default function OrdersPage() {
 
         <PaginationRow>
           <PageInfo>
-            Hiển thị {filtered.length === 0 ? 0 : currentRangeStart} - {filtered.length === 0 ? 0 : currentRangeEnd} / {filtered.length}
+            {t('showing', {
+              start: filtered.length === 0 ? 0 : currentRangeStart,
+              end: filtered.length === 0 ? 0 : currentRangeEnd,
+              total: filtered.length
+            })}
           </PageInfo>
 
           <PaginationBtns>
             <Button variant="secondary" onClick={handlePrevPage} disabled={safePage <= 1}>
-              Trước
+              {t('prev')}
             </Button>
             <PageNumber variant="secondary" onClick={() => {}} disabled>
-              Trang {safePage}/{totalPages}
+              {t('page', {current: safePage, total: totalPages})}
             </PageNumber>
             <Button variant="secondary" onClick={handleNextPage} disabled={safePage >= totalPages}>
-              Sau
+              {t('next')}
             </Button>
           </PaginationBtns>
         </PaginationRow>

@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { theme } from '@/styles/theme';
 import { AiOutlineEye } from '@react-icons/all-files/ai/AiOutlineEye';
 import { AiOutlineEyeInvisible } from '@react-icons/all-files/ai/AiOutlineEyeInvisible';
+import { useTranslations } from 'next-intl';
 
 interface LoginFormProps {
   onSwitchToRegister?: () => void;
@@ -244,6 +245,7 @@ const SuccessMessage = styled.p`
 
 export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const { login } = useAuth();
+  const t = useTranslations('auth');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -266,20 +268,20 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
     setSuccess('');
 
     if (!formData.username || !formData.password) {
-      setError('Vui lòng nhập tên tài khoản và mật khẩu');
+      setError(t('errorLoginRequired'));
       return;
     }
 
     setIsLoading(true);
     try {
       await login(formData.username, formData.password);
-      setSuccess('Đăng nhập thành công!');
+      setSuccess(t('successLogin'));
       setFormData({ username: '', password: '' });
       if (rememberMe) {
         localStorage.setItem('rememberMe', formData.username);
       }
     } catch {
-      setError('Tên tài khoản hoặc mật khẩu không đúng');
+      setError(t('errorLoginInvalid'));
     } finally {
       setIsLoading(false);
     }
@@ -287,10 +289,10 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
 
   const handleForgotPassword = () => {
     if (!formData.username) {
-      setError('Vui lòng nhập tên tài khoản');
+      setError(t('errorLoginUsernameRequired'));
       return;
     }
-    setSuccess(`Link khôi phục mật khẩu đã được gửi đến email của bạn`);
+    setSuccess(t('forgotSuccess'));
     setTimeout(() => setSuccess(''), 3000);
   };
 
@@ -300,7 +302,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
         <LogoArea>
           <Image
             src="/images/logo.png"
-            alt="Đăng nhập"
+            alt={t('loginLogoAlt')}
             width={96}
             height={96}
             priority
@@ -308,8 +310,8 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
           />
         </LogoArea>
 
-        <FormTitle>Đảo Khủng Long</FormTitle>
-        <FormSubtitle>Chào mừng trở lại, Chiến Binh!</FormSubtitle>
+        <FormTitle>{t('loginTitle')}</FormTitle>
+        <FormSubtitle>{t('loginSubtitle')}</FormSubtitle>
       </HeaderSection>
 
       <form onSubmit={handleSubmit}>
@@ -324,7 +326,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             <InputField
               type="text"
               name="username"
-              placeholder="Tên tài khoản"
+              placeholder={t('username')}
               value={formData.username}
               onChange={handleChange}
             />
@@ -343,14 +345,14 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
             <InputField
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Mật khẩu"
+              placeholder={t('password')}
               value={formData.password}
               onChange={handleChange}
             />
             <VisibilityToggle
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              title={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+              title={showPassword ? t('visibilityHide') : t('visibilityShow')}
             >
               {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </VisibilityToggle>
@@ -363,20 +365,20 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-              Lưu mật khẩu
+              {t('rememberPassword')}
             </CheckboxLabel>
             <ForgotPasswordLink onClick={handleForgotPassword}>
-              Quên mật khẩu?
+              {t('forgotPassword')}
             </ForgotPasswordLink>
           </OptionsRow>
 
           <LoginButton type="submit" disabled={isLoading}>
-            {isLoading ? 'Đang xử lý...' : 'Đăng Nhập'}
+            {isLoading ? t('loginLoading') : t('loginButton')}
           </LoginButton>
 
           <SignUpLink>
-            Chưa có tài khoản?{' '}
-            <a onClick={onSwitchToRegister}>Đăng ký</a>
+            {t('signupPrompt')}{' '}
+            <a onClick={onSwitchToRegister}>{t('signupLink')}</a>
           </SignUpLink>
         </FormGroup>
       </form>

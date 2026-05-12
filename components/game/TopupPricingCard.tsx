@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { theme } from '@/styles/theme';
 import { FaGem } from '@react-icons/all-files/fa/FaGem';
+import { useTranslations } from 'next-intl';
 
 export interface TopupPricingCardProps {
   title: string;
@@ -162,6 +163,7 @@ export const TopupPricingCard: React.FC<TopupPricingCardProps> = ({
   badge,
   onClick,
 }) => {
+  const t = useTranslations('topupPricingCard');
   return (
     <CardContainer onClick={onClick}>
       <ImageContainer>
@@ -177,9 +179,9 @@ export const TopupPricingCard: React.FC<TopupPricingCardProps> = ({
           </GemsText>
         </GemsContainer>
         <PriceContainer>
-          <Price>{price} VND</Price>
+          <Price>{price} {t('currency')}</Price>
         </PriceContainer>
-        <Button>Nạp ngay</Button>
+        <Button>{t('topupNow')}</Button>
       </ContentContainer>
     </CardContainer>
   );

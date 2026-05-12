@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { LoginForm, RegisterForm } from '@/components/auth';
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 
 const AuthPageWrapper = styled.div`
   position: fixed;

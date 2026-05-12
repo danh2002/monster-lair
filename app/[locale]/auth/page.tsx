@@ -1,11 +1,11 @@
 'use client';
 
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { AuthPage } from '@/components/auth';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from '@/i18n/navigation';
 
 const PageWrapper = styled.div`
   width: 100%;

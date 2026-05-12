@@ -3,14 +3,14 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { FaChevronRight } from '@react-icons/all-files/fa/FaChevronRight';
 import { FaGamepad } from '@react-icons/all-files/fa/FaGamepad';
 import { FaUser } from '@react-icons/all-files/fa/FaUser';
 import { FaSignOutAlt } from '@react-icons/all-files/fa/FaSignOutAlt';
 import { theme } from '@/styles/theme';
 import { useAuth } from '@/context/AuthContext';
+import { Link, usePathname, useRouter } from '@/i18n/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 
 const NavContainer = styled.nav`
   position: fixed;
@@ -275,8 +275,6 @@ const LANGUAGES = [
   { code: 'zh', label: 'Chinese', flag: '🇨🇳' },
 ] as const;
 
-type LangCode = (typeof LANGUAGES)[number]['code'];
-
 interface NavbarProps {
   currentPage?: string;
   onAuthClick?: (type: 'login' | 'register') => void;
@@ -284,10 +282,12 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations('nav');
   const { isAuthenticated, user, logout } = useAuth();
 
   const [langOpen, setLangOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState<LangCode>('vi');
   const langRef = useRef<HTMLDivElement>(null);
 
   const activePage = currentPage ?? (
@@ -310,7 +310,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const currentLang = LANGUAGES.find((l) => l.code === selectedLang)!;
+  const currentLang = LANGUAGES.find((l) => l.code === locale) ?? LANGUAGES[0];
 
   const handleLogout = () => {
     logout();
@@ -318,7 +318,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
 
   return (
     <NavContainer>
-      <LogoContainer href="/" aria-label="Monster Lair">
+      <LogoContainer href="/" aria-label={t('home')}>
         <MarkWrap>
           <Image src="/images/dinosaur-mark.png" alt="" fill sizes="52px" style={{ objectFit: 'contain' }} priority />
         </MarkWrap>
@@ -326,17 +326,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
 
       <NavLinks>
         <Link href="/" className={activePage === 'home' ? 'active' : ''}>
-          Trang chủ
+          {t('home')}
         </Link>
         <Link href="/arena" className={activePage === 'arena' ? 'active' : ''}>
-          Lôi đài chiến
+          {t('arena')}
         </Link>
         <Link href="/topup" className={activePage === 'topup' ? 'active' : ''}>
-          Nạp game
+          {t('topup')}
         </Link>
-        <Link href="/guide">Hướng dẫn</Link>
+        <Link href="/guide">{t('guide')}</Link>
         <Link href="/support" className={activePage === 'support' ? 'active' : ''}>
-          Hỗ trợ
+          {t('support')}
         </Link>
       </NavLinks>
 
@@ -355,9 +355,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
             {LANGUAGES.map((lang) => (
               <LanguageOption
                 key={lang.code}
-                $active={selectedLang === lang.code}
+                $active={locale === lang.code}
                 onClick={() => {
-                  setSelectedLang(lang.code);
+                  router.replace(pathname, { locale: lang.code });
                   setLangOpen(false);
                 }}
               >
@@ -372,18 +372,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
           <>
             <ActionButton type="button" onClick={() => onAuthClick?.('login')}>
               <FaUser />
-              <span>Đăng nhập</span>
+              <span>{t('login')}</span>
             </ActionButton>
             <ActionButton type="button" $primary onClick={() => onAuthClick?.('register')}>
               <FaGamepad />
-              <span>Tạo tài khoản</span>
+              <span>{t('register')}</span>
             </ActionButton>
           </>
         ) : (
           <UserProfileSection>
             {user?.avatar && <UserAvatar src={user.avatar} alt={user.username} />}
             <UserUsername>{user?.username}</UserUsername>
-            <LogoutButton onClick={handleLogout} title="Đăng xuất">
+            <LogoutButton onClick={handleLogout} title={t('logout')}>
               <FaSignOutAlt />
             </LogoutButton>
           </UserProfileSection>

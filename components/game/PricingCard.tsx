@@ -1,6 +1,9 @@
+'use client';
+
 import styled from 'styled-components';
 import { theme } from '@/styles/theme';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 export interface PricingCardProps {
   icon?: React.ReactNode;
@@ -142,6 +145,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
   badge,
   onClick,
 }) => {
+  const t = useTranslations('pricingCard');
   const isPopular = Boolean(discount && discount > 0);
 
   const handleCardClick: React.MouseEventHandler<HTMLDivElement> | undefined = onClick
@@ -164,19 +168,19 @@ export const PricingCard: React.FC<PricingCardProps> = ({
         </div>
         {discount && (
           <div style={{ color: theme.colors.text.secondary, fontSize: theme.typography.fontSize.sm }}>
-            Tiết kiệm {discount}%
+            {t('savePercent', {percent: discount})}
           </div>
         )}
       </PriceContainer>
 
       <GemsBadge>
         <span>💎</span>
-        <span>+{gems} Gems</span>
+        <span>+{gems} {t('gemsSuffix')}</span>
       </GemsBadge>
 
       <ButtonContainer>
         <Button variant="primary" size="lg" fullWidth onClick={onClick}>
-          NẠP NGAY
+          {t('topupNow')}
         </Button>
       </ButtonContainer>
     </CardContainer>

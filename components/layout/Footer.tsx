@@ -8,21 +8,7 @@ import { FaFacebookF } from '@react-icons/all-files/fa/FaFacebookF';
 import { FaGlobe } from '@react-icons/all-files/fa/FaGlobe';
 import { FaPlay } from '@react-icons/all-files/fa/FaPlay';
 import { theme } from '@/styles/theme';
-
-const footerColumns = [
-  {
-    title: 'Game',
-    links: ['Tải Game', 'Patch Notes', 'Lộ trình', 'Phân Hạng', 'Mùa Giải'],
-  },
-  {
-    title: 'Cộng đồng',
-    links: ['Discord Server', 'Diễn đàn', 'Hướng dẫn', 'Fanart', 'Streamer'],
-  },
-  {
-    title: 'Hỗ trợ',
-    links: ['Trung tâm hỗ trợ', 'Báo lỗi', 'Điều khoản', 'Bảo mật', 'Liên hệ'],
-  },
-];
+import { useTranslations } from 'next-intl';
 
 const FooterContainer = styled.footer`
   background: #030303;
@@ -200,6 +186,23 @@ const Copyright = styled.div`
 `;
 
 export const Footer: React.FC = () => {
+  const t = useTranslations('footer');
+
+  const footerColumns = [
+    {
+      title: t('columns.game'),
+      links: [t('links.download'), t('links.patchNotes'), t('links.roadmap'), t('links.ranking'), t('links.season')],
+    },
+    {
+      title: t('columns.community'),
+      links: [t('links.discord'), t('links.forum'), t('links.guide'), t('links.fanart'), t('links.streamer')],
+    },
+    {
+      title: t('columns.support'),
+      links: [t('links.supportCenter'), t('links.reportBug'), t('links.terms'), t('links.privacy'), t('links.contact')],
+    },
+  ];
+
   return (
     <FooterContainer>
       <FooterInner>
@@ -209,23 +212,23 @@ export const Footer: React.FC = () => {
               <BrandMark>
                 <Image src="/images/dinosaur-mark.png" alt="" fill sizes="42px" style={{ objectFit: 'contain' }} />
               </BrandMark>
-              Đảo Khủng Long
+              {t('brand')}
             </Brand>
-            <BrandText>Trò chơi sinh tồn khủng long AAA thế hệ tiếp theo. Powered by Unreal Engine 5. Survive. Hunt. Dominate.</BrandText>
+            <BrandText>{t('brandText')}</BrandText>
             <SocialRow>
-              <SocialButton href="#facebook" aria-label="Facebook">
+              <SocialButton href="#facebook" aria-label={t('social.facebook')}>
                 <FaFacebookF />
               </SocialButton>
-              <SocialButton href="#community" aria-label="Community">
+              <SocialButton href="#community" aria-label={t('social.community')}>
                 ⌾
               </SocialButton>
-              <SocialButton href="#youtube" aria-label="Youtube">
+              <SocialButton href="#youtube" aria-label={t('social.youtube')}>
                 <FaPlay />
               </SocialButton>
-              <SocialButton href="#discord" aria-label="Discord">
+              <SocialButton href="#discord" aria-label={t('social.discord')}>
                 <FaDiscord />
               </SocialButton>
-              <SocialButton href="#tiktok" aria-label="Tiktok">
+              <SocialButton href="#tiktok" aria-label={t('social.tiktok')}>
                 ♪
               </SocialButton>
             </SocialRow>
@@ -251,14 +254,14 @@ export const Footer: React.FC = () => {
               <BadgeIcon>T</BadgeIcon>
               <span>
                 <strong>ESRB</strong>
-                Teen
+                {t('badges.teen')}
               </span>
             </Badge>
             <Badge>
               <BadgeIcon $accent>12</BadgeIcon>
               <span>
                 <strong>PEGI</strong>
-                Rated
+                {t('badges.rated')}
               </span>
             </Badge>
             <Badge>
@@ -266,8 +269,8 @@ export const Footer: React.FC = () => {
                 <FaCode />
               </BadgeIcon>
               <span>
-                <strong>Primal Studios</strong>
-                Developer
+                <strong>{t('studios.primal')}</strong>
+                {t('badges.developer')}
               </span>
             </Badge>
             <Badge>
@@ -275,16 +278,16 @@ export const Footer: React.FC = () => {
                 <FaGlobe />
               </BadgeIcon>
               <span>
-                <strong>Nexus Games</strong>
-                Publisher
+                <strong>{t('studios.nexus')}</strong>
+                {t('badges.publisher')}
               </span>
             </Badge>
           </Badges>
 
           <Copyright>
-            © 2025 Monster Lair. All Rights Reserved.
+            {t('copyright')}
             <br />
-            Unreal® Engine 5. All trademarks are property of their respective owners.
+            {t('trademark')}
           </Copyright>
         </FooterBottom>
       </FooterInner>

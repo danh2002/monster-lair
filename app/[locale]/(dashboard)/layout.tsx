@@ -2,10 +2,10 @@
 
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { theme } from '@/styles/theme';
+import { useRouter } from '@/i18n/navigation';
 
 const LayoutContainer = styled.div`
   display: flex;

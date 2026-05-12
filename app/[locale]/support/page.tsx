@@ -1,57 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-import Link from 'next/link';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { Link, useRouter } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 type FaqCategory = 'all' | 'account' | 'payment' | 'game' | 'tech';
 type FaqItem = { cat: Exclude<FaqCategory, 'all'>; q: string; a: string };
-
-const faqs: FaqItem[] = [
-  {
-    cat: 'account',
-    q: 'Làm thế nào để khôi phục mật khẩu tài khoản?',
-    a: `Truy cập trang đăng nhập và nhấp vào <strong>"Quên mật khẩu?"</strong>. Nhập số điện thoại hoặc email đã đăng ký. Bạn sẽ nhận được mã OTP trong vòng 2 phút. Nhập mã và đặt mật khẩu mới. Nếu không nhận được mã, hãy kiểm tra hộp thư rác hoặc liên hệ hỗ trợ trực tiếp.`,
-  },
-  {
-    cat: 'account',
-    q: 'Tài khoản của tôi bị khóa, phải làm gì?',
-    a: `Tài khoản có thể bị khóa do vi phạm điều khoản sử dụng hoặc hoạt động bất thường. Vui lòng liên hệ đội hỗ trợ qua email <strong>support@daokhunglong.vn</strong> hoặc Discord để được xem xét và giải quyết trong vòng 48 giờ làm việc.`,
-  },
-  {
-    cat: 'payment',
-    q: 'Các phương thức thanh toán nào được hỗ trợ?',
-    a: `Hiện tại Đảo Khủng Long hỗ trợ đầy đủ: <strong>Thẻ ATM nội địa, Visa/Mastercard, MoMo, ZaloPay, VNPay, thẻ cào điện thoại (Viettel, Vinaphone, Mobifone)</strong>. Chúng tôi liên tục cập nhật thêm phương thức thanh toán mới.`,
-  },
-  {
-    cat: 'payment',
-    q: 'Giao dịch thành công nhưng chưa nhận được xu, phải làm gì?',
-    a: `Thông thường xu sẽ được cộng ngay lập tức. Trong một số trường hợp hiếm gặp, quá trình xử lý có thể mất đến <strong>15 phút</strong>. Nếu sau 30 phút vẫn chưa nhận, hãy kiểm tra lịch sử đơn hàng. Nếu giao dịch ở trạng thái "Pending", hãy chờ thêm. Nếu "Rejected", liên hệ hỗ trợ kèm mã đơn hàng để được xử lý.`,
-  },
-  {
-    cat: 'game',
-    q: 'Lôi Đài Chiến là gì và cách tham gia như thế nào?',
-    a: `Lôi Đài Chiến là sự kiện PvP quy mô lớn, nơi các phe <strong>Hoá Long</strong> và <strong>Tu Tiên</strong> đối đầu nhau. Mỗi mùa giải kéo dài 10 ngày. Tham gia bằng cách đăng ký trong game, tích lũy điểm thông qua trận đấu và leo BXH để nhận phần thưởng xu độc quyền.`,
-  },
-  {
-    cat: 'game',
-    q: 'Làm sao để tải game về máy tính?',
-    a: `Nhấn vào nút <strong>"Tải Game Miễn Phí"</strong> trên trang chủ. Chọn phiên bản phù hợp (Windows 10/11 64-bit, tối thiểu 8GB RAM, GPU NVIDIA GTX 1060 trở lên). File cài đặt khoảng 35GB. Sau khi tải xong, chạy installer và làm theo hướng dẫn.`,
-  },
-  {
-    cat: 'tech',
-    q: 'Game bị lag hoặc giật, cách khắc phục như thế nào?',
-    a: `Thử các bước sau: <strong>1.</strong> Giảm chất lượng đồ họa trong Settings. <strong>2.</strong> Tắt các ứng dụng chạy ngầm. <strong>3.</strong> Kiểm tra kết nối mạng và đổi sang server gần nhất. <strong>4.</strong> Cập nhật driver GPU mới nhất. <strong>5.</strong> Xóa cache game trong thư mục cài đặt.`,
-  },
-  {
-    cat: 'tech',
-    q: 'Cấu hình máy tính tối thiểu để chơi game là gì?',
-    a: `<strong>Tối thiểu:</strong> Windows 10 64-bit, CPU Intel i5-8400 / AMD Ryzen 5 2600, RAM 8GB, GPU NVIDIA GTX 1060 6GB, SSD 50GB trống.<br><br><strong>Đề xuất:</strong> CPU Intel i7-10700K / Ryzen 7 5800X, RAM 16GB, GPU RTX 3070 / RX 6700 XT để trải nghiệm tốt nhất ở 1080p 60fps.`,
-  },
-];
 
 // ─── Styled Components ────────────────────────────────────────────────────────
 
@@ -274,7 +231,6 @@ const CategoryIcon = styled.div`
 `;
 
 const CategoryInfo = styled.div`flex: 1;`;
-
 const CategoryTitle = styled.div`
   font-weight: 800;
   font-size: 18px;
@@ -282,13 +238,11 @@ const CategoryTitle = styled.div`
   text-transform: uppercase;
   margin-bottom: 6px;
 `;
-
 const CategoryDesc = styled.div`
   color: rgba(245,240,232,0.6);
   font-size: 14px;
   line-height: 1.55;
 `;
-
 const CategoryCount = styled.span`
   font-size: 12px;
   color: rgba(255,140,46,1);
@@ -384,10 +338,7 @@ const FaqAnswerInner = styled.div`
   border-top: 1px solid rgba(255,255,255,0.06);
 `;
 
-const GuidesSection = styled.section`
-  padding: 80px 1rem;
-`;
-
+const GuidesSection = styled.section`padding: 80px 1rem;`;
 const GuidesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -505,19 +456,13 @@ const StepDot = styled.span`
   margin-top: 1px;
 `;
 
-const ContactSection = styled.section`
-  padding: 80px 1rem;
-`;
-
+const ContactSection = styled.section`padding: 80px 1rem;`;
 const ContactWrap = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 60px;
   align-items: start;
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
+  @media (max-width: 900px) { grid-template-columns: 1fr; gap: 36px; }
 `;
 
 const StickyInfo = styled.div`
@@ -543,11 +488,7 @@ const ContactP = styled.p`
   margin-bottom: 2rem;
 `;
 
-const Channels = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
+const Channels = styled.div`display: flex; flex-direction: column; gap: 12px;`;
 
 const ChannelLink = styled.a`
   display: flex;
@@ -585,18 +526,8 @@ const ChannelLabel = styled.div`
   font-weight: 700;
 `;
 
-const ChannelValue = styled.div`
-  font-size: 14px;
-  color: #f5f0e8;
-  font-weight: 600;
-  margin-top: 2px;
-`;
-
-const ChannelMeta = styled.div`
-  font-size: 12px;
-  color: rgba(255,140,46,0.8);
-  margin-top: 2px;
-`;
+const ChannelValue = styled.div`font-size: 14px; color: #f5f0e8; font-weight: 600; margin-top: 2px;`;
+const ChannelMeta = styled.div`font-size: 12px; color: rgba(255,140,46,0.8); margin-top: 2px;`;
 
 const FormWrap = styled.div`
   background: rgba(255,255,255,0.04);
@@ -637,10 +568,7 @@ const Control = styled.input<{ $error?: boolean }>`
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
-  &:focus {
-    border-color: rgba(232,101,10,0.5);
-    background: rgba(232,101,10,0.04);
-  }
+  &:focus { border-color: rgba(232,101,10,0.5); background: rgba(232,101,10,0.04); }
   &::placeholder { color: rgba(245,240,232,0.25); }
 `;
 
@@ -656,10 +584,7 @@ const ControlTextArea = styled.textarea<{ $error?: boolean }>`
   min-height: 130px;
   line-height: 1.6;
   transition: border-color 0.2s, background 0.2s;
-  &:focus {
-    border-color: rgba(232,101,10,0.5);
-    background: rgba(232,101,10,0.04);
-  }
+  &:focus { border-color: rgba(232,101,10,0.5); background: rgba(232,101,10,0.04); }
   &::placeholder { color: rgba(245,240,232,0.25); }
 `;
 
@@ -673,10 +598,7 @@ const ControlSelect = styled.select<{ $error?: boolean }>`
   outline: none;
   cursor: pointer;
   transition: border-color 0.2s;
-  &:focus {
-    border-color: rgba(232,101,10,0.5);
-    background: rgba(232,101,10,0.04);
-  }
+  &:focus { border-color: rgba(232,101,10,0.5); background: rgba(232,101,10,0.04); }
   option { background: #1a1008; color: #f5f0e8; }
 `;
 
@@ -731,8 +653,6 @@ const FormMsg = styled.div<{ $kind: 'success' | 'error' }>`
       : 'background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: #f87171;'}
 `;
 
-// ─── SVG Icon helpers ─────────────────────────────────────────────────────────
-
 const Ico = ({ children, color = 'currentColor', size = 22 }: { children: React.ReactNode; color?: string; size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
     {children}
@@ -743,19 +663,23 @@ const Ico = ({ children, color = 'currentColor', size = 22 }: { children: React.
 
 export default function SupportPage() {
   const router = useRouter();
+  const t = useTranslations('support');
+
   const [activeTab, setActiveTab] = useState<FaqCategory>('all');
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [search, setSearch] = useState('');
 
+  const rawFaqs = t.raw('faq.items') as FaqItem[];
+
   const filteredFaqs = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return faqs.filter((x) => {
+    return rawFaqs.filter((x) => {
       const matchCat = activeTab === 'all' || x.cat === activeTab;
       if (!matchCat) return false;
       if (!q) return true;
       return `${x.q} ${x.a}`.toLowerCase().includes(q);
     });
-  }, [activeTab, search]);
+  }, [activeTab, search, rawFaqs]);
 
   const [form, setForm] = useState({ name: '', email: '', subject: '', msg: '' });
   const [touched, setTouched] = useState({ name: false, email: false, subject: false, msg: false });
@@ -788,87 +712,37 @@ export default function SupportPage() {
     }, 2000);
   };
 
-  const categories = [
-    {
-      tab: 'all' as FaqCategory, href: '#faq', count: '24 bài viết',
-      title: 'Câu Hỏi Thường Gặp',
-      desc: 'Giải đáp nhanh các thắc mắc phổ biến nhất từ cộng đồng người chơi.',
-      icon: <Ico><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></Ico>,
-    },
-    {
-      tab: 'account' as FaqCategory, href: '#faq', count: '18 bài viết',
-      title: 'Vấn Đề Tài Khoản',
-      desc: 'Khôi phục tài khoản, đổi mật khẩu, xác minh danh tính và bảo mật.',
-      icon: <Ico><circle cx="12" cy="8" r="3.5" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></Ico>,
-    },
-    {
-      tab: 'payment' as FaqCategory, href: '#faq', count: '31 bài viết',
-      title: 'Thanh Toán & Nạp Game',
-      desc: 'Hướng dẫn nạp tiền, các phương thức thanh toán và xử lý giao dịch lỗi.',
-      icon: <Ico><rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" /><line x1="6" y1="15" x2="9" y2="15" /></Ico>,
-    },
-    {
-      tab: 'game' as FaqCategory, href: '#faq', count: '47 bài viết',
-      title: 'Gameplay & Tính Năng',
-      desc: 'Hướng dẫn chiến đấu, xây dựng quân đoàn, tham gia Lôi Đài Chiến.',
-      icon: <Ico><rect x="2" y="7" width="20" height="12" rx="3" /><line x1="12" y1="11" x2="12" y2="15" /><line x1="10" y1="13" x2="14" y2="13" /></Ico>,
-    },
-    {
-      tab: 'tech' as FaqCategory, href: '#faq', count: 'Gửi báo cáo',
-      title: 'Báo Cáo Lỗi',
-      desc: 'Gặp sự cố kỹ thuật? Gửi báo cáo lỗi để đội ngũ xử lý nhanh nhất.',
-      icon: <Ico><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></Ico>,
-    },
-    {
-      tab: null, href: '#contact', count: 'Phản hồi trong 24h',
-      title: 'Liên Hệ Hỗ Trợ',
-      desc: 'Không tìm thấy câu trả lời? Gửi yêu cầu trực tiếp đến đội hỗ trợ của chúng tôi.',
-      icon: <Ico><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></Ico>,
-    },
+  const tagCatMap: Record<string, FaqCategory> = {
+    [t('hero.tags.0')]: 'payment',
+    [t('hero.tags.1')]: 'account',
+    [t('hero.tags.2')]: 'account',
+    [t('hero.tags.3')]: 'payment',
+    [t('hero.tags.4')]: 'tech',
+  };
+
+  const categoryDefs = [
+    { key: 'faq',     tab: 'all' as FaqCategory,  href: '#faq',     icon: <Ico><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></Ico> },
+    { key: 'account', tab: 'account' as FaqCategory, href: '#faq',  icon: <Ico><circle cx="12" cy="8" r="3.5" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></Ico> },
+    { key: 'payment', tab: 'payment' as FaqCategory, href: '#faq',  icon: <Ico><rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" /><line x1="6" y1="15" x2="9" y2="15" /></Ico> },
+    { key: 'game',    tab: 'game' as FaqCategory,   href: '#faq',   icon: <Ico><rect x="2" y="7" width="20" height="12" rx="3" /><line x1="12" y1="11" x2="12" y2="15" /><line x1="10" y1="13" x2="14" y2="13" /></Ico> },
+    { key: 'tech',    tab: 'tech' as FaqCategory,   href: '#faq',   icon: <Ico><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></Ico> },
+    { key: 'contact', tab: null,                    href: '#contact',icon: <Ico><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></Ico> },
   ];
 
-  const guides = [
-    {
-      num: '01', title: 'Tạo Tài Khoản & Đăng Nhập',
-      desc: 'Bắt đầu hành trình sinh tồn trong thế giới khủng long ngay hôm nay.',
-      steps: ['Nhấn "Tạo Tài Khoản" trên menu', 'Nhập tên tài khoản & mật khẩu', 'Xác minh số điện thoại (OTP)', 'Hoàn tất & đăng nhập lần đầu'],
-    },
-    {
-      num: '02', title: 'Nạp Game Lần Đầu',
-      desc: 'Hỗ trợ đầy đủ phương thức thanh toán phổ biến tại Việt Nam.',
-      steps: ['Truy cập trang "Nạp Game"', 'Chọn gói xu phù hợp', 'Chọn phương thức thanh toán', 'Nhận xu ngay lập tức'],
-    },
-    {
-      num: '03', title: 'Tham Gia Lôi Đài Chiến',
-      desc: 'Chiến đấu quy mô lớn giữa các phe phái để giành danh hiệu tối thượng.',
-      steps: ['Đăng nhập & vào trang Lôi Đài', 'Xem thông tin mùa giải hiện tại', 'Chọn phe (Hoá Long / Tu Tiên)', 'Tham gia trận và tích điểm'],
-    },
-    {
-      num: '04', title: 'Leo BXH Top Nạp',
-      desc: 'Chinh phục bảng xếp hạng để nhận các phần thưởng độc quyền theo mùa.',
-      steps: ['Nạp game để tích điểm BXH', 'Kiểm tra thứ hạng trên trang chủ', 'Top 3 nhận thưởng đặc biệt', 'Phần thưởng phát sau mùa kết thúc'],
-    },
-  ];
+  const guideItems = t.raw('guides.items') as { num: string; title: string; desc: string; steps: string[] }[];
 
   return (
     <>
-      <Navbar
-        currentPage="support"
-        onAuthClick={(type) => router.push(`/auth?mode=${type}`)}
-      />
+      <Navbar currentPage="support" onAuthClick={(type) => router.push(`/auth?mode=${type}`)} />
 
       <Page>
-
-        {/* ── HERO ── */}
+        {/* HERO */}
         <Hero>
           <HeroBg />
           <HeroInner>
-            <HeroLabel>Trung Tâm Hỗ Trợ</HeroLabel>
-            <HeroTitle>HỖ TRỢ &amp; <span>GIẢI ĐÁP</span></HeroTitle>
-            <HeroSub>
-              Tìm câu trả lời nhanh chóng cho mọi thắc mắc. Đội ngũ hỗ trợ luôn sẵn sàng đồng hành
-              cùng bạn trên hành trình chinh phục Đảo Khủng Long.
-            </HeroSub>
+            <HeroLabel>{t('hero.label')}</HeroLabel>
+            <HeroTitle>{t('hero.title1')} <span>{t('hero.title2')}</span></HeroTitle>
+            <HeroSub>{t('hero.sub')}</HeroSub>
             <SearchBar>
               <div style={{ display: 'flex', alignItems: 'center', paddingLeft: 14, paddingRight: 4 }}>
                 <Ico size={18} color="rgba(245,240,232,0.35)">
@@ -879,58 +753,49 @@ export default function SupportPage() {
               <SearchInput
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Tìm kiếm bài viết hỗ trợ..."
-                aria-label="Tìm kiếm"
+                placeholder={t('hero.searchPlaceholder')}
+                aria-label={t('hero.searchAriaLabel')}
               />
-              <SearchButton
-                type="button"
-                onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              >
-                Tìm kiếm
+              <SearchButton type="button" onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+                {t('hero.searchBtn')}
               </SearchButton>
             </SearchBar>
             <TagRow>
-              {(['Nạp game', 'Quên mật khẩu', 'Lỗi đăng nhập', 'Hoàn tiền', 'Báo lỗi'] as const).map((label) => {
-                const map: Record<string, FaqCategory> = {
-                  'Nạp game': 'payment', 'Quên mật khẩu': 'account',
-                  'Lỗi đăng nhập': 'account', 'Hoàn tiền': 'payment', 'Báo lỗi': 'tech',
-                };
-                return (
-                  <Tag key={label} type="button" onClick={() => {
-                    setActiveTab(map[label]);
-                    document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }}>
-                    {label}
-                  </Tag>
-                );
-              })}
+              {(t.raw('hero.tags') as string[]).map((label) => (
+                <Tag key={label} type="button" onClick={() => {
+                  setActiveTab(tagCatMap[label] ?? 'all');
+                  document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}>
+                  {label}
+                </Tag>
+              ))}
             </TagRow>
           </HeroInner>
         </Hero>
 
         <Divider />
 
-        {/* ── CATEGORIES ── */}
+        {/* CATEGORIES */}
         <Section>
           <Container>
-            <SectionLabel>Danh mục hỗ trợ</SectionLabel>
-            <SectionTitle>CHỌN <span>CHỦ ĐỀ</span></SectionTitle>
-            <SectionSub>Chọn danh mục phù hợp để tìm câu trả lời nhanh nhất.</SectionSub>
+            <SectionLabel>{t('categories.label')}</SectionLabel>
+            <SectionTitle>{t('categories.title1')} <span>{t('categories.title2')}</span></SectionTitle>
+            <SectionSub>{t('categories.sub')}</SectionSub>
             <CategoriesGrid>
-              {categories.map((c) => (
-                <Link key={c.title} href={c.href} scroll={false} style={{ textDecoration: 'none' }}>
+              {categoryDefs.map((c) => (
+                <Link key={c.key} href={c.href} scroll={false} style={{ textDecoration: 'none' }}>
                   <CategoryCard
                     onClick={() => {
                       if (c.tab) setActiveTab(c.tab);
                       else document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    aria-label={c.title}
+                    aria-label={t(`categories.${c.key}.title`)}
                   >
                     <CategoryIcon>{c.icon}</CategoryIcon>
                     <CategoryInfo>
-                      <CategoryTitle>{c.title}</CategoryTitle>
-                      <CategoryDesc>{c.desc}</CategoryDesc>
-                      <CategoryCount>{c.count}</CategoryCount>
+                      <CategoryTitle>{t(`categories.${c.key}.title`)}</CategoryTitle>
+                      <CategoryDesc>{t(`categories.${c.key}.desc`)}</CategoryDesc>
+                      <CategoryCount>{t(`categories.${c.key}.count`)}</CategoryCount>
                     </CategoryInfo>
                   </CategoryCard>
                 </Link>
@@ -941,36 +806,31 @@ export default function SupportPage() {
 
         <Divider />
 
-        {/* ── FAQ ── */}
+        {/* FAQ */}
         <FaqSection id="faq">
           <Container>
-            <SectionLabel>Giải đáp thắc mắc</SectionLabel>
-            <SectionTitle>CÂU HỎI <span>THƯỜNG GẶP</span></SectionTitle>
-            <SectionSub>Những câu hỏi phổ biến nhất từ cộng đồng Đảo Khủng Long.</SectionSub>
+            <SectionLabel>{t('faq.label')}</SectionLabel>
+            <SectionTitle>{t('faq.title1')} <span>{t('faq.title2')}</span></SectionTitle>
+            <SectionSub>{t('faq.sub')}</SectionSub>
             <FaqTabs>
-              {([
-                ['all', 'Tất cả'], ['account', 'Tài khoản'],
-                ['payment', 'Thanh toán'], ['game', 'Gameplay'], ['tech', 'Kỹ thuật'],
-              ] as const).map(([key, label]) => (
+              {(['all', 'account', 'payment', 'game', 'tech'] as const).map((key) => (
                 <TabButton key={key} $active={activeTab === key} type="button"
                   onClick={() => { setActiveTab(key); setOpenIndex(0); }}>
-                  {label}
+                  {t(`faq.tabs.${key}`)}
                 </TabButton>
               ))}
             </FaqTabs>
             <FaqList>
               {filteredFaqs.length === 0 && (
                 <div style={{ color: 'rgba(245,240,232,0.4)', padding: '20px 4px', fontSize: 15 }}>
-                  Không tìm thấy câu trả lời phù hợp.
+                  {t('faq.noResult')}
                 </div>
               )}
               {filteredFaqs.map((item, idx) => {
                 const isOpen = openIndex === idx;
                 return (
                   <FaqCard key={`${item.cat}-${idx}`} $open={isOpen}>
-                    <FaqQuestion type="button"
-                      onClick={() => setOpenIndex(isOpen ? null : idx)}
-                      aria-expanded={isOpen}>
+                    <FaqQuestion type="button" onClick={() => setOpenIndex(isOpen ? null : idx)} aria-expanded={isOpen}>
                       <span>{item.q}</span>
                       <PlusIcon $open={isOpen}>
                         <Ico size={14} color="#ff8c2e">
@@ -991,18 +851,18 @@ export default function SupportPage() {
 
         <Divider />
 
-        {/* ── GUIDES ── */}
+        {/* GUIDES */}
         <GuidesSection id="guides">
           <Container>
-            <SectionLabel>Hướng dẫn nhanh</SectionLabel>
-            <SectionTitle>BẮT ĐẦU <span>DỄ DÀNG</span></SectionTitle>
-            <SectionSub>Các hướng dẫn từng bước để làm quen với Đảo Khủng Long trong vài phút.</SectionSub>
+            <SectionLabel>{t('guides.label')}</SectionLabel>
+            <SectionTitle>{t('guides.title1')} <span>{t('guides.title2')}</span></SectionTitle>
+            <SectionSub>{t('guides.sub')}</SectionSub>
             <GuidesGrid>
-              {guides.map((g) => (
+              {guideItems.map((g) => (
                 <GuideCard key={g.num}>
                   <GuideNum>{g.num}</GuideNum>
                   <GuideStepBadge>
-                    <GuideBadgePill>Bước {g.num}</GuideBadgePill>
+                    <GuideBadgePill>{t('guides.stepBadge')} {g.num}</GuideBadgePill>
                     <GuideLine />
                   </GuideStepBadge>
                   <GuideTitle>{g.title}</GuideTitle>
@@ -1020,119 +880,83 @@ export default function SupportPage() {
 
         <Divider />
 
-        {/* ── CONTACT ── */}
+        {/* CONTACT */}
         <ContactSection id="contact">
           <Container>
             <ContactWrap>
               <StickyInfo>
-                <SectionLabel>Liên hệ trực tiếp</SectionLabel>
-                <ContactTitle>CẦN THÊM <span>TRỢ GIÚP?</span></ContactTitle>
-                <ContactP>
-                  Không tìm thấy câu trả lời? Đội ngũ hỗ trợ tận tâm của chúng tôi luôn sẵn sàng
-                  giải quyết mọi vấn đề của bạn.
-                </ContactP>
+                <SectionLabel>{t('contact.label')}</SectionLabel>
+                <ContactTitle>{t('contact.title1')} <span>{t('contact.title2')}</span></ContactTitle>
+                <ContactP>{t('contact.desc')}</ContactP>
                 <Channels>
-                  <ChannelLink href="mailto:support@daokhunglong.vn" aria-label="Email hỗ trợ">
-                    <ChannelIcon $kind="email">
-                      <Ico size={20} color="#60a5fa">
-                        <rect x="2" y="4" width="20" height="16" rx="2" />
-                        <polyline points="2,4 12,13 22,4" />
-                      </Ico>
-                    </ChannelIcon>
-                    <div>
-                      <ChannelLabel>Email hỗ trợ</ChannelLabel>
-                      <ChannelValue>support@daokhunglong.vn</ChannelValue>
-                      <ChannelMeta>Phản hồi trong 24h làm việc</ChannelMeta>
-                    </div>
-                  </ChannelLink>
-                  <ChannelLink href="#" aria-label="Discord Server">
-                    <ChannelIcon $kind="discord">
-                      <Ico size={20} color="#818cf8">
-                        <path d="M9 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm9 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" fill="currentColor" stroke="none" />
-                        <path d="M8.5 4.5S6 5 4 8c-1 3-1 6-1 6s1.5 2 4 2.5l1-2s-1.5-.5-2-1.5c1 .5 2.5.5 6 .5s5-.2 6-.5c-.5 1-2 1.5-2 1.5l1 2c2.5-.5 4-2.5 4-2.5s0-3-1-6c-2-3-4.5-3.5-4.5-3.5L15 6H9L8.5 4.5z" />
-                      </Ico>
-                    </ChannelIcon>
-                    <div>
-                      <ChannelLabel>Discord Server</ChannelLabel>
-                      <ChannelValue>discord.gg/daokhunglong</ChannelValue>
-                      <ChannelMeta>Hỗ trợ trực tuyến 24/7</ChannelMeta>
-                    </div>
-                  </ChannelLink>
-                  <ChannelLink href="#" aria-label="Facebook Fanpage">
-                    <ChannelIcon $kind="facebook">
-                      <Ico size={20} color="#3b82f6">
-                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                      </Ico>
-                    </ChannelIcon>
-                    <div>
-                      <ChannelLabel>Facebook Fanpage</ChannelLabel>
-                      <ChannelValue>fb.com/DaoKhungLongVN</ChannelValue>
-                      <ChannelMeta>Cập nhật tin tức mới nhất</ChannelMeta>
-                    </div>
-                  </ChannelLink>
+                  {(['email', 'discord', 'facebook'] as const).map((kind) => (
+                    <ChannelLink key={kind} href={kind === 'email' ? `mailto:${t(`contact.channels.${kind}.value`)}` : '#'} aria-label={t(`contact.channels.${kind}.label`)}>
+                      <ChannelIcon $kind={kind}>
+                        <Ico size={20} color={kind === 'email' ? '#60a5fa' : kind === 'discord' ? '#818cf8' : '#3b82f6'}>
+                          {kind === 'email' && <><rect x="2" y="4" width="20" height="16" rx="2" /><polyline points="2,4 12,13 22,4" /></>}
+                          {kind === 'discord' && <><path d="M9 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm9 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" fill="currentColor" stroke="none" /><path d="M8.5 4.5S6 5 4 8c-1 3-1 6-1 6s1.5 2 4 2.5l1-2s-1.5-.5-2-1.5c1 .5 2.5.5 6 .5s5-.2 6-.5c-.5 1-2 1.5-2 1.5l1 2c2.5-.5 4-2.5 4-2.5s0-3-1-6c-2-3-4.5-3.5-4.5-3.5L15 6H9L8.5 4.5z" /></>}
+                          {kind === 'facebook' && <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />}
+                        </Ico>
+                      </ChannelIcon>
+                      <div>
+                        <ChannelLabel>{t(`contact.channels.${kind}.label`)}</ChannelLabel>
+                        <ChannelValue>{t(`contact.channels.${kind}.value`)}</ChannelValue>
+                        <ChannelMeta>{t(`contact.channels.${kind}.meta`)}</ChannelMeta>
+                      </div>
+                    </ChannelLink>
+                  ))}
                 </Channels>
               </StickyInfo>
 
               <div>
                 <FormWrap>
-                  {msgKind === 'success' && (
-                    <FormMsg $kind="success">
-                      Yêu cầu hỗ trợ đã được gửi thành công. Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.
-                    </FormMsg>
-                  )}
-                  {msgKind === 'error' && (
-                    <FormMsg $kind="error">
-                      Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin và thử lại.
-                    </FormMsg>
-                  )}
+                  {msgKind === 'success' && <FormMsg $kind="success">{t('contact.form.successMsg')}</FormMsg>}
+                  {msgKind === 'error' && <FormMsg $kind="error">{t('contact.form.errorMsg')}</FormMsg>}
 
                   <FormRow>
                     <Field $hasError={touched.name && errors.name}>
-                      <label>Họ và tên <span>*</span></label>
+                      <label>{t('contact.form.nameLabel')} <span>*</span></label>
                       <Control value={form.name} $error={touched.name && errors.name}
                         onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
                         onBlur={() => setTouched((p) => ({ ...p, name: true }))}
-                        placeholder="Nguyễn Văn A" />
-                      <FieldErrorText $show={touched.name && errors.name}>Vui lòng nhập họ và tên.</FieldErrorText>
+                        placeholder={t('contact.form.namePlaceholder')} />
+                      <FieldErrorText $show={touched.name && errors.name}>{t('contact.form.nameError')}</FieldErrorText>
                     </Field>
                     <Field $hasError={touched.email && errors.email}>
-                      <label>Email <span>*</span></label>
+                      <label>{t('contact.form.emailLabel')} <span>*</span></label>
                       <Control value={form.email} type="email" $error={touched.email && errors.email}
                         onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
                         onBlur={() => setTouched((p) => ({ ...p, email: true }))}
-                        placeholder="example@gmail.com" />
-                      <FieldErrorText $show={touched.email && errors.email}>Vui lòng nhập email hợp lệ.</FieldErrorText>
+                        placeholder={t('contact.form.emailPlaceholder')} />
+                      <FieldErrorText $show={touched.email && errors.email}>{t('contact.form.emailError')}</FieldErrorText>
                     </Field>
                   </FormRow>
 
                   <Field $hasError={touched.subject && errors.subject}>
-                    <label>Chủ đề <span>*</span></label>
+                    <label>{t('contact.form.subjectLabel')} <span>*</span></label>
                     <ControlSelect value={form.subject} $error={touched.subject && errors.subject}
                       onChange={(e) => setForm((p) => ({ ...p, subject: e.target.value }))}
                       onBlur={() => setTouched((p) => ({ ...p, subject: true }))}>
-                      <option value="">-- Chọn chủ đề --</option>
-                      <option value="account">Vấn đề tài khoản</option>
-                      <option value="payment">Thanh toán / Nạp game</option>
-                      <option value="bug">Báo cáo lỗi kỹ thuật</option>
-                      <option value="gameplay">Hỏi về gameplay / tính năng</option>
-                      <option value="appeal">Kháng cáo lệnh cấm</option>
-                      <option value="other">Khác</option>
+                      <option value="">{t('contact.form.subjectPlaceholder')}</option>
+                      {(['account', 'payment', 'bug', 'gameplay', 'appeal', 'other'] as const).map((k) => (
+                        <option key={k} value={k}>{t(`contact.form.subjectOptions.${k}`)}</option>
+                      ))}
                     </ControlSelect>
-                    <FieldErrorText $show={touched.subject && errors.subject}>Vui lòng chọn chủ đề.</FieldErrorText>
+                    <FieldErrorText $show={touched.subject && errors.subject}>{t('contact.form.subjectError')}</FieldErrorText>
                   </Field>
 
                   <Field $hasError={touched.msg && errors.msg}>
-                    <label>Nội dung <span>*</span></label>
+                    <label>{t('contact.form.msgLabel')} <span>*</span></label>
                     <ControlTextArea value={form.msg} $error={touched.msg && errors.msg}
                       onChange={(e) => setForm((p) => ({ ...p, msg: e.target.value }))}
                       onBlur={() => setTouched((p) => ({ ...p, msg: true }))}
-                      placeholder="Mô tả chi tiết vấn đề bạn gặp phải. Bao gồm tên tài khoản, thời điểm xảy ra sự cố..." />
-                    <FieldErrorText $show={touched.msg && errors.msg}>Vui lòng nhập nội dung (tối thiểu 20 ký tự).</FieldErrorText>
+                      placeholder={t('contact.form.msgPlaceholder')} />
+                    <FieldErrorText $show={touched.msg && errors.msg}>{t('contact.form.msgError')}</FieldErrorText>
                   </Field>
 
                   <SubmitButton type="button" disabled={submitting} onClick={handleSubmit}>
                     {submitting && <Spinner />}
-                    <span>{submitting ? 'Đang gửi...' : 'Gửi yêu cầu hỗ trợ'}</span>
+                    <span>{submitting ? t('contact.form.submitting') : t('contact.form.submitBtn')}</span>
                   </SubmitButton>
                 </FormWrap>
               </div>

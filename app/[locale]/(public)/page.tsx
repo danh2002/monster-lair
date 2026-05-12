@@ -8,6 +8,7 @@ import { FaPlayCircle } from '@react-icons/all-files/fa/FaPlayCircle';
 import { FaShareAlt } from '@react-icons/all-files/fa/FaShareAlt';
 import { FaYoutube } from '@react-icons/all-files/fa/FaYoutube';
 import { theme } from '@/styles/theme';
+import { useTranslations } from 'next-intl';
 
 const rankers = [
   { name: 'Cody Fisher', rank: 1, points: 1500 },
@@ -26,33 +27,33 @@ const podium = [
 const featureCards = [
   {
     icon: '☠',
-    title: 'Sinh tồn khắc nghiệt',
+    title: 'feature1Title',
     image: '/images/hero-dinosaur.png',
-    description: 'Đối mặt với thiên nhiên khắc nghiệt nhất trong lịch sử trái đất. Quản lý đói, khát, thân nhiệt và nguy hiểm luôn rình rập.',
-    tags: ['HP System', 'Thirst/Hunger', 'Weather'],
+    description: 'feature1Description',
+    tags: ['feature1Tag1', 'feature1Tag2', 'feature1Tag3'],
   },
   {
     icon: '●',
-    title: 'Xây dựng quân đoàn',
+    title: 'feature2Title',
     image: '/images/feature-herd.webp',
-    badge: 'Đặc sắc',
-    description: 'Xây dựng tộc khủng long của riêng bạn để thống trị mọi khu vực.',
-    tags: ['DNA Breeding', 'Nest System', 'Evolution'],
+    badge: 'feature2Badge',
+    description: 'feature2Description',
+    tags: ['feature2Tag1', 'feature2Tag2', 'feature2Tag3'],
   },
   {
     icon: '♘',
-    title: 'PVP đại chiến',
+    title: 'feature3Title',
     image: '/images/feature-war.jpg',
-    description: 'Tham gia các trận chiến 100v100 người chơi thực thụ, leo bảng xếp hạng và giành danh hiệu Apex Predator tối thượng.',
-    tags: ['Ranked', '100v100', 'Seasons'],
+    description: 'feature3Description',
+    tags: ['feature3Tag1', 'feature3Tag2', 'feature3Tag3'],
   },
 ];
 
 const stats = [
-  { value: '2M+', label: 'Người chơi' },
-  { value: '50+', label: 'Loài khủng long' },
-  { value: '100v100', label: 'PVP Battles' },
-  { value: '4.8★', label: 'Đánh giá' },
+  { value: '2M+', label: 'statsPlayer' },
+  { value: '50+', label: 'statsSpecies' },
+  { value: '100v100', label: 'statsPvp' },
+  { value: '4.8★', label: 'statsRating' },
 ];
 
 const HomeShell = styled.section`
@@ -782,32 +783,34 @@ const StatItem = styled.div`
 `;
 
 export default function HomePage() {
+  const t = useTranslations('home');
+
   return (
     <>
       <HomeShell>
         <ContentGrid>
           <HeroCopy>
-            <Eyebrow>Dinosaur Survival MMORPG</Eyebrow>
+            <Eyebrow>{t('eyebrow')}</Eyebrow>
             <LogoWrap>
-              <Image src="/images/dao-khung-long-logo.png" alt="Đảo Khủng Long" fill sizes="430px" style={{ objectFit: 'contain' }} priority />
+              <Image src="/images/dao-khung-long-logo.png" alt={t('logoAlt')} fill sizes="430px" style={{ objectFit: 'contain' }} priority />
             </LogoWrap>
-            <Tagline>Survive the primordial apocalypse</Tagline>
-            <Description>Thống trị kỷ nguyên khủng long, xây dựng quân đoàn. Chiến đấu sinh tồn.</Description>
+            <Tagline>{t('tagline')}</Tagline>
+            <Description>{t('description')}</Description>
             <ButtonRow>
               <HeroButton type="button" $primary>
                 <FaFire />
-                Tải game
+                {t('loadGame')}
               </HeroButton>
               <HeroButton type="button">
                 <FaPlayCircle />
-                Xem trailer
+                {t('watchTrailer')}
               </HeroButton>
             </ButtonRow>
           </HeroCopy>
 
           <RankingPanel>
             <RankingTitle>
-              BXH <span>Top Nạp</span>
+              {t('rankingTitlePrefix')} <span>{t('rankingTitleHighlight')}</span>
             </RankingTitle>
             <Podium>
               {podium.map((item) => (
@@ -826,9 +829,9 @@ export default function HomePage() {
 
             <RankingTable>
               <TableHead>
-                <div>Tên</div>
-                <div>Thứ Hạng</div>
-                <div>Points</div>
+                <div>{t('tableName')}</div>
+                <div>{t('tableRank')}</div>
+                <div>{t('tablePoints')}</div>
               </TableHead>
               {rankers.map((player) => (
                 <RankingRow key={player.name}>
@@ -845,16 +848,16 @@ export default function HomePage() {
             </RankingTable>
           </RankingPanel>
         </ContentGrid>
-        <ScrollHint>Cuộn xuống</ScrollHint>
+        <ScrollHint>{t('scrollDown')}</ScrollHint>
       </HomeShell>
 
       <LandingSection>
         <SectionInner>
           <SectionHeading>
-            <MiniLabel>Tính năng</MiniLabel>
+            <MiniLabel>{t('featuresMiniLabel')}</MiniLabel>
             <SectionTitle>
-              Thế giới của
-              <span>Quái vật</span>
+              {t('featuresSectionTitleTop')}
+              <span>{t('featuresSectionTitleBottom')}</span>
             </SectionTitle>
           </SectionHeading>
 
@@ -865,16 +868,16 @@ export default function HomePage() {
                   <Image src={card.image} alt="" fill sizes="(max-width: 1024px) 100vw, 370px" style={{ objectFit: 'cover' }} />
                 </FeatureImage>
                 <FeatureIcon>{card.icon}</FeatureIcon>
-                {card.badge && <FeatureBadge>{card.badge}</FeatureBadge>}
+                {card.badge && <FeatureBadge>{t(card.badge)}</FeatureBadge>}
                 <FeatureBody>
-                  <FeatureTitle>{card.title}</FeatureTitle>
-                  <FeatureText>{card.description}</FeatureText>
+                  <FeatureTitle>{t(card.title)}</FeatureTitle>
+                  <FeatureText>{t(card.description)}</FeatureText>
                   <TagRow>
                     {card.tags.map((tag) => (
-                      <span key={tag}>◆ {tag}</span>
+                      <span key={tag}>◆ {t(tag)}</span>
                     ))}
                   </TagRow>
-                  <FeatureLink href="#feature">Khám phá thêm →</FeatureLink>
+                  <FeatureLink href="#feature">{t('learnMore')}</FeatureLink>
                 </FeatureBody>
               </FeatureCard>
             ))}
@@ -885,34 +888,34 @@ export default function HomePage() {
       <TrailerSection $background="/images/feature-war.jpg">
         <SectionInner>
           <SectionHeading>
-            <MiniLabel>Official trailer</MiniLabel>
+            <MiniLabel>{t('officialTrailerMiniLabel')}</MiniLabel>
             <SectionTitle>
-              Xem trailer
-              <span>Chính thức</span>
+              {t('watchOfficialTrailer')}
+              <span>{t('official')}</span>
             </SectionTitle>
           </SectionHeading>
 
           <VideoFrame>
-            <Image src="/images/trailer-dinosaur.webp" alt="Official cinematic trailer" fill sizes="930px" style={{ objectFit: 'cover' }} />
-            <PlayButton type="button" aria-label="Play trailer">
+            <Image src="/images/trailer-dinosaur.webp" alt={t('trailerCaptionTitle')} fill sizes="930px" style={{ objectFit: 'cover' }} />
+            <PlayButton type="button" aria-label={t('playTrailerAriaLabel')}>
               <FaPlayCircle />
             </PlayButton>
             <TrailerCaption>
-              Official cinematic trailer
-              <span>2:47 phút • 4K Ultra HD</span>
+              {t('trailerCaptionTitle')}
+              <span>{t('trailerCaptionMeta')}</span>
             </TrailerCaption>
           </VideoFrame>
           <VideoMeta>
             <MetaGroup>
-              <span>🔥 2.4M lượt xem</span>
-              <span>🧡 98K lượt thích</span>
+              <span>{t('trailerViews')}</span>
+              <span>{t('trailerLikes')}</span>
             </MetaGroup>
             <MetaGroup>
               <span>
-                <FaShareAlt /> Chia sẻ
+                <FaShareAlt /> {t('share')}
               </span>
               <MetaButton type="button">
-                <FaYoutube /> Xem trên Youtube
+                <FaYoutube /> {t('watchOnYoutube')}
               </MetaButton>
             </MetaGroup>
           </VideoMeta>
@@ -923,15 +926,15 @@ export default function HomePage() {
         <CtaInner>
           <div>
             <CtaTitle>
-              Sẵn sàng
+              {t('readyTitleLine1')}
               <br />
-              thống trị
-              <span>kỷ nguyên?</span>
+              {t('readyTitleLine2')}
+              <span>{t('readyTitleEmphasis')}</span>
             </CtaTitle>
-            <CtaText>Tham gia 2 triệu người chơi đang chiến đấu sinh tồn trong thế giới tiền sử khắc nghiệt nhất từng được tạo ra.</CtaText>
+            <CtaText>{t('ctaText')}</CtaText>
             <DownloadButton type="button" $primary>
               <FaDownload />
-              Tải game miễn phí
+              {t('downloadFree')}
             </DownloadButton>
           </div>
 
@@ -939,7 +942,7 @@ export default function HomePage() {
             {stats.map((stat) => (
               <StatItem key={stat.label}>
                 {stat.value}
-                <span>{stat.label}</span>
+                <span>{t(stat.label)}</span>
               </StatItem>
             ))}
           </StatGrid>

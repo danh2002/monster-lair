@@ -7,8 +7,9 @@ import { useState } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { FaRegClock } from '@react-icons/all-files/fa/FaRegClock';
+import { useTranslations } from 'next-intl';
 
 
 const PageWrapper = styled.div`
@@ -200,36 +201,37 @@ const ServerSelectChevron = styled.div`
 
 const PricingPackages = [
   {
-    title: 'GÓI KHỞI ĐẦU',
+    titleKey: 'packageStarter',
     price: '130.000',
     gems: 50,
     image: '/images/goikhoidau.png',
-    badge: 'PHỐ BIẾN NHẤT',
+    badgeKey: 'badgeMostPopular',
   },
   {
-    title: 'GÓI KHỦNG LONG CHIẾN',
+    titleKey: 'packageBattleDino',
     price: '250.000',
     gems: 100,
     image: '/images/goikhunglongchien.png',
-    badge: '',
+    badgeKey: '',
   },
   {
-    title: 'GÓI CHÚA TỂ ĐẢO HOANG',
+    titleKey: 'packageIslandOverlord',
     price: '2.200.000',
     gems: 1000,
     image: '/images/goichuatedaohoang.png',
-    badge: '',
+    badgeKey: '',
   },
   {
-    title: 'GÓI CHÍ TÔN KHỦNG LONG TIỀN SỬ',
+    titleKey: 'packageAncientSupreme',
     price: '9.000.000',
     gems: 5000,
     image: '/images/goichitonkhunglongtiensu.png',
-    badge: '',
+    badgeKey: '',
   },
 ];
 
 export default function TopUpPage() {
+  const t = useTranslations('topup');
   const [selectedPackage, setSelectedPackage] = useState<(typeof PricingPackages)[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedServer, setSelectedServer] = useState<string>('');
@@ -243,18 +245,18 @@ export default function TopUpPage() {
   return (
     <PageWrapper>
       <PageContainer>
-        <PreTitle>Chọn gói nạp</PreTitle>
+        <PreTitle>{t('preTitle')}</PreTitle>
         <PageTitle>
-          NẠP GAME <span>NGAY</span>
+          {t('pageTitleTop')} <span>{t('pageTitleEmphasis')}</span>
         </PageTitle>
-        <Subtitle>Hỗ trợ đầy đủ tất cả phương thức thanh toán</Subtitle>
+        <Subtitle>{t('subtitle')}</Subtitle>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 28, marginBottom: 24 }}>
-          <Link href="/orders" style={{ textDecoration: 'none' }} aria-label="Xem lịch sử đơn hàng">
+          <Link href="/orders" style={{ textDecoration: 'none' }} aria-label={t('orderHistoryAriaLabel')}>
             <Button variant="secondary">
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                 <FaRegClock />
-                Lịch sử đơn hàng
+                {t('orderHistory')}
               </span>
             </Button>
           </Link>
@@ -265,11 +267,11 @@ export default function TopUpPage() {
           {PricingPackages.map((pkg, idx) => (
             <TopupPricingCard
               key={idx}
-              title={pkg.title}
+              title={t(pkg.titleKey)}
               price={pkg.price}
               gems={pkg.gems}
               image={pkg.image}
-              badge={pkg.badge || undefined}
+              badge={pkg.badgeKey ? t(pkg.badgeKey) : undefined}
               onClick={() => handlePurchase(pkg)}
             />
           ))}
@@ -278,22 +280,22 @@ export default function TopUpPage() {
 
       <Modal
         isOpen={isModalOpen}
-        title={`Thanh Toán - ${selectedPackage?.title}`}
+        title={`Thanh Toán - ${selectedPackage ? t(selectedPackage.titleKey) : ''}`}
         onClose={() => setIsModalOpen(false)}
         width="90%"
       >
         <ModalContent>
           <div>
             <h3 style={{ color: theme.colors.text.primary, marginBottom: theme.spacing.lg }}>
-              Thông Tin Gói Nạp
+              {t('packagesInfoTitle')}
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: theme.spacing.lg }}>
               <div>
                 <p style={{ color: theme.colors.text.secondary, fontSize: theme.typography.fontSize.sm }}>
-                  Gói
+                  {t('packageLabel')}
                 </p>
                 <p style={{ color: theme.colors.text.primary, fontSize: theme.typography.fontSize.lg, fontWeight: 700 }}>
-                  {selectedPackage?.title}
+                  {selectedPackage ? t(selectedPackage.titleKey) : ''}
                 </p>
                 </div>
               </div>
@@ -301,7 +303,7 @@ export default function TopUpPage() {
 
             <div>
                 <p style={{ color: theme.colors.text.secondary, fontSize: theme.typography.fontSize.sm }}>
-                  Gems Nhận
+                  {t('gemsReceived')}
                 </p>
                 <p style={{ color: theme.colors.text.primary, fontSize: theme.typography.fontSize.lg, fontWeight: 700 }}>
                   +{selectedPackage?.gems} Gems
@@ -310,19 +312,19 @@ export default function TopUpPage() {
 
               <div>
                 <h3 style={{ color: theme.colors.text.primary, marginBottom: theme.spacing.lg }}>
-              Phương Thức Thanh Toán
+              {t('paymentMethodTitle')}
             </h3>
             <ServerSelectWrapper>
-              <ServerSelectLabel htmlFor="server-select">Chọn máy chủ</ServerSelectLabel>
+              <ServerSelectLabel htmlFor="server-select">{t('selectServer')}</ServerSelectLabel>
               <ServerSelectContainer>
                 <ServerSelect
                   id="server-select"
                   value={selectedServer}
                   onChange={(e) => setSelectedServer(e.target.value)}
                 >
-                  <option value="">Chọn máy chủ của bạn</option>
-                  <option value="quan-doan-chien">Quân Đoàn Chiến</option>
-                  <option value="khung-long-chi-chien">Khủng Long Chi Chiến</option>
+                  <option value="">{t('selectServerPlaceholder')}</option>
+                  <option value="quan-doan-chien">{t('serverQuanDoanChien')}</option>
+                  <option value="khung-long-chi-chien">{t('serverKhungLongChiChien')}</option>
                 </ServerSelect>
                 <ServerSelectChevron>
                   <FaChevronDown />
@@ -333,10 +335,10 @@ export default function TopUpPage() {
 
           <div style={{ display: 'flex', gap: theme.spacing.lg }}>
             <Button variant="secondary" fullWidth onClick={() => setIsModalOpen(false)}>
-              Hủy
+              {t('cancel')}
             </Button>
             <Button variant="primary" fullWidth onClick={() => setIsModalOpen(false)}>
-              Tiến Hành Thanh Toán
+              {t('proceedToPayment')}
             </Button>
           </div>
         </ModalContent>

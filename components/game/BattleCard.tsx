@@ -1,7 +1,10 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '@/styles/theme';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { useTranslations } from 'next-intl';
 
 export interface BattleCardProps {
   faction1: {
@@ -201,6 +204,7 @@ export const BattleCard: React.FC<BattleCardProps> = ({
   animated = true,
   onViewDetails,
 }) => {
+  const t = useTranslations('battleCard');
   const maxScore = faction1.maxScore || 100;
 
   return (
@@ -238,7 +242,7 @@ export const BattleCard: React.FC<BattleCardProps> = ({
         </FactionContainer>
 
         {/* VS Badge */}
-        <VSBadge>VS</VSBadge>
+        <VSBadge>{t('vs')}</VSBadge>
 
         {/* Faction 2 - Right */}
         <FactionContainer align="left">

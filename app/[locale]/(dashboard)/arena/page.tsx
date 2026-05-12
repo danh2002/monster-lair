@@ -1,11 +1,55 @@
 'use client';
 
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { FaClock } from '@react-icons/all-files/fa/FaClock';
 import { FaGem } from '@react-icons/all-files/fa/FaGem';
 import { FaTrophy } from '@react-icons/all-files/fa/FaTrophy';
+import { useTranslations } from 'next-intl';
 import { theme } from '@/styles/theme';
+
+// ============================================================
+// ⚙️ CẤU HÌNH ĐẾM NGƯỢC — chỉnh ở đây
+// ============================================================
+const CYCLE_DAYS = 10; // Số ngày mỗi chu kỳ reset
+const EPOCH = new Date('2025-01-01T00:00:00'); // Mốc gốc để tính chu kỳ
+// ============================================================
+
+function getNextResetDate(cycleDays: number): Date {
+  const now = new Date();
+  const cycleMs = cycleDays * 24 * 60 * 60 * 1000;
+  const elapsed = now.getTime() - EPOCH.getTime();
+  const cyclesPassed = Math.floor(elapsed / cycleMs);
+  return new Date(EPOCH.getTime() + (cyclesPassed + 1) * cycleMs);
+}
+
+function useCountdown(targetDate: Date) {
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+
+  useEffect(() => {
+    setTimeLeft(Math.max(0, targetDate.getTime() - Date.now()));
+
+    const interval = setInterval(() => {
+      setTimeLeft(Math.max(0, targetDate.getTime() - Date.now()));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  if (timeLeft === null) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, done: false, mounted: false };
+  }
+
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  return { days, hours, minutes, seconds, done: timeLeft === 0, mounted: true };
+}
+
+// ============================================================
 
 const podiumPlayers = [
   { name: 'Brian Ngo', reward: '50,000', score: '2,000 điểm', place: 2, height: 178 },
@@ -263,7 +307,6 @@ const ProgressLine = styled.div<{ $side: 'red' | 'blue'; $value: number }>`
   color: #fff;
   font-size: 0.78rem;
 
-  /* Bên đỏ: đảo chiều để thanh bar nằm sát phải */
   flex-direction: ${(props) => (props.$side === 'red' ? 'row-reverse' : 'row')};
   justify-content: flex-start;
 
@@ -384,7 +427,7 @@ const WinnerCard = styled.div<{ $height: number; $first?: boolean }>`
   border: 1.5px solid rgba(255, 160, 60, 0.45);
   border-radius: 20px;
   backdrop-filter: blur(12px);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.4),
     inset 0 1px 1px rgba(255, 200, 100, 0.2),
     inset 0 -1px 0 rgba(0, 0, 0, 0.2);
@@ -416,7 +459,7 @@ const WinnerAvatar = styled.div`
   border-radius: 12px;
   overflow: hidden;
   border: 2px solid rgba(255, 200, 100, 0.5);
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.5),
     0 0 20px rgba(255, 140, 40, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -521,7 +564,7 @@ const LeaderboardTable = styled.div`
   border: 1px solid rgba(255, 160, 60, 0.35);
   border-radius: 18px;
   backdrop-filter: blur(12px);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 200, 100, 0.15);
 `;
@@ -595,11 +638,9 @@ const PointsCell = styled.div`
   font-weight: 700;
   font-size: 0.95rem;
   color: #fff;
-  /* Thay đổi từ right sang left */
-  text-align: left; 
+  text-align: left;
   font-family: var(--font-inter), monospace;
 
-  /* Loại bỏ hoặc đồng nhất media query để tránh nhảy hàng trên mobile */
   @media (max-width: ${theme.breakpoints.md}) {
     text-align: left;
   }
@@ -608,8 +649,7 @@ const PointsCell = styled.div`
 const RewardCell = styled.div`
   display: flex;
   align-items: center;
-  /* Thay đổi từ flex-end sang flex-start */
-  justify-content: flex-start; 
+  justify-content: flex-start;
   gap: 0.5rem;
   font-weight: 700;
   font-size: 0.95rem;
@@ -627,6 +667,12 @@ const RewardCell = styled.div`
 `;
 
 export default function ArenaPage() {
+  const t = useTranslations('arena');
+  const targetDate = useMemo(() => getNextResetDate(CYCLE_DAYS), []);
+  const { days, hours, minutes, seconds, done, mounted } = useCountdown(targetDate);
+
+  const pad = (n: number) => String(n).padStart(2, '0');
+
   return (
     <Page>
       <ArenaHero>
@@ -635,44 +681,44 @@ export default function ArenaPage() {
         </HeroCorner>
         <HeroContent>
           <HeroLogo>
-            <Image src="/images/dao-khung-long-logo.png" alt="Đảo Khủng Long" fill sizes="300px" style={{ objectFit: 'contain' }} priority />
+            <Image src="/images/dao-khung-long-logo.png" alt={t('logoAlt')} fill sizes="300px" style={{ objectFit: 'contain' }} priority />
           </HeroLogo>
           <HeroTitle>
-            <span>LÔI ĐÀI</span>
-            <span>CHIẾN</span>
+            <span>{t('heroTitleLine1')}</span>
+            <span>{t('heroTitleLine2')}</span>
           </HeroTitle>
         </HeroContent>
-        <DownMark>⌄</DownMark>
+        <DownMark>{t('downMark')}</DownMark>
       </ArenaHero>
 
       <BattleSection>
         <SectionInner>
           <SectionTitle>
-            Trận đấu <span>Lôi Đài</span>
+            {t('battleSectionTitleTop')} <span>{t('battleSectionTitleEmphasis')}</span>
           </SectionTitle>
 
           <BattleList>
             {battles.map((battle) => (
               <BattleCard key={battle.id}>
                 <Faction $side="red">
-                  <FactionName $side="red">Hoả Long</FactionName>
-                  <PlayerCount>100 Người</PlayerCount>
+                  <FactionName $side="red">{t('factionHoaLong')}</FactionName>
+                  <PlayerCount>{t('playerCount')}</PlayerCount>
                   <ProgressLine $side="red" $value={battle.redProgress}>
-                    <span>Tiến độ (50000)</span>
+                    <span>{t('progressLabel')}</span>
                     <span className="bar" />
                     <span>{battle.redProgress}%</span>
                   </ProgressLine>
                 </Faction>
 
                 <Vs>
-                  <span>VS</span>
+                  <span>{t('vs')}</span>
                 </Vs>
 
                 <Faction $side="blue">
-                  <FactionName $side="blue">Tu Tiên</FactionName>
-                  <PlayerCount>100 Người</PlayerCount>
+                  <FactionName $side="blue">{t('factionTuTien')}</FactionName>
+                  <PlayerCount>{t('playerCount')}</PlayerCount>
                   <ProgressLine $side="blue" $value={battle.blueProgress}>
-                    <span>Tiến độ (50000)</span>
+                    <span>{t('progressLabel')}</span>
                     <span className="bar" />
                     <span>{battle.blueProgress}%</span>
                   </ProgressLine>
@@ -686,7 +732,7 @@ export default function ArenaPage() {
       <LeaderboardSection>
         <SectionInner>
           <SectionTitle>
-            BXH Top <span>Lôi Đài</span>
+            {t('leaderboardSectionTitleTop')} <span>{t('leaderboardSectionTitleEmphasis')}</span>
           </SectionTitle>
 
           <PodiumGrid>
@@ -703,7 +749,7 @@ export default function ArenaPage() {
                 <Reward>
                   <FaGem />
                   {player.reward}
-                  <span>Xu</span>
+                  <span>{t('rewardSuffix')}</span>
                 </Reward>
               </WinnerCard>
             ))}
@@ -711,16 +757,18 @@ export default function ArenaPage() {
 
           <Countdown>
             <FaClock />
-            Kết thúc trong
-            <strong>10d 23h 59m 29s</strong>
+            {done ? t('countdownDone') : t('countdownLabel')}
+            <strong>
+              {!mounted ? '...' : done ? '---' : `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`}
+            </strong>
           </Countdown>
 
           <LeaderboardTable>
             <TableHeader>
-              <div>Rank</div>
-              <div>Người chơi</div>
-              <div>Điểm</div>
-              <div>Phần thưởng</div>
+              <div>{t('tableRank')}</div>
+              <div>{t('tablePlayers')}</div>
+              <div>{t('tablePoints')}</div>
+              <div>{t('tableReward')}</div>
             </TableHeader>
             {rankingRows.map((row) => (
               <TableRow key={row.rank}>
@@ -734,7 +782,6 @@ export default function ArenaPage() {
               </TableRow>
             ))}
           </LeaderboardTable>
-
         </SectionInner>
       </LeaderboardSection>
     </Page>
