@@ -4,7 +4,7 @@
     "home": "Home",
     "arena": "Arena",
     "topup": "Top Up",
-    "guide": "Guide",
+    "guide": "Leaderboard",
     "support": "Support",
     "login": "Log in",
     "register": "Create account",
@@ -165,92 +165,313 @@
     "badgeMostPopular": "Most popular"
   },
   "support": {
-  "hero": {
-    "label": "Support Center",
-    "title1": "SUPPORT &",
-    "title2": "ANSWERS",
-    "sub": "Find quick answers to all your questions. Our support team is always ready to accompany you on your journey to conquer Dinosaur Island.",
-    "searchPlaceholder": "Search support articles...",
-    "searchBtn": "Search",
-    "searchAriaLabel": "Search",
-    "tags": ["Top up", "Forgot password", "Login error", "Refund", "Report bug"]
-  },
-  "categories": {
-    "label": "Support categories",
-    "title1": "CHOOSE",
-    "title2": "A TOPIC",
-    "sub": "Select the right category to find answers fast.",
-    "faq":      { "title": "Frequently Asked Questions", "desc": "Quick answers to the most common questions from our player community.",                        "count": "24 articles" },
-    "account":  { "title": "Account Issues",             "desc": "Account recovery, password change, identity verification and security.",                      "count": "18 articles" },
-    "payment":  { "title": "Payment & Top Up",           "desc": "Top-up guides, supported payment methods and failed transaction support.",                    "count": "31 articles" },
-    "game":     { "title": "Gameplay & Features",        "desc": "Combat guides, building your army, and joining the Battle Arena.",                           "count": "47 articles" },
-    "tech":     { "title": "Bug Reports",                "desc": "Experiencing a technical issue? Submit a bug report for our team to handle quickly.",         "count": "Submit report" },
-    "contact":  { "title": "Contact Support",            "desc": "Can't find an answer? Send a request directly to our support team.",                         "count": "Reply within 24h" }
-  },
-  "faq": {
-    "label": "FAQ",
-    "title1": "FREQUENTLY",
-    "title2": "ASKED QUESTIONS",
-    "sub": "The most common questions from the Dinosaur Island community.",
-    "tabs": {
-      "all": "All",
-      "account": "Account",
-      "payment": "Payment",
-      "game": "Gameplay",
-      "tech": "Technical"
+    "hero": {
+      "label": "Support Center",
+      "title1": "SUPPORT &",
+      "title2": "ANSWERS",
+      "sub": "Find quick answers to all your questions. Our support team is always ready to accompany you on your journey to conquer Dinosaur Island.",
+      "searchPlaceholder": "Search support articles...",
+      "searchBtn": "Search",
+      "searchAriaLabel": "Search",
+      "tags": [
+        "Top up",
+        "Forgot password",
+        "Login error",
+        "Refund",
+        "Report bug"
+      ]
     },
-    "noResult": "No matching answers found.",
-    "items": [
-      { "cat": "account", "q": "How do I recover my account password?", "a": "Go to the login page and click <strong>\"Forgot password?\"</strong>. Enter your registered phone number or email. You will receive an OTP within 2 minutes. Enter the code and set a new password. If you don't receive the code, check your spam folder or contact support directly." },
-      { "cat": "account", "q": "My account is locked — what should I do?", "a": "Accounts may be locked due to terms of service violations or unusual activity. Please contact our support team via <strong>support@daokhunglong.vn</strong> or Discord for review and resolution within 48 business hours." },
-      { "cat": "payment", "q": "What payment methods are supported?", "a": "Dinosaur Island currently supports: <strong>Domestic ATM cards, Visa/Mastercard, MoMo, ZaloPay, VNPay, and phone top-up cards (Viettel, Vinaphone, Mobifone)</strong>. We continuously add new payment methods." },
-      { "cat": "payment", "q": "Transaction successful but coins not received — what should I do?", "a": "Coins are usually credited instantly. In rare cases, processing may take up to <strong>15 minutes</strong>. If you haven't received them after 30 minutes, check your order history. If the transaction shows \"Pending\", wait a bit longer. If \"Rejected\", contact support with your order ID." },
-      { "cat": "game", "q": "What is the Battle Arena and how do I join?", "a": "The Battle Arena is a large-scale PvP event where the <strong>Dragon</strong> and <strong>Immortal</strong> factions face off. Each season lasts 10 days. Join by registering in-game, earn points through battles, and climb the leaderboard to earn exclusive coin rewards." },
-      { "cat": "game", "q": "How do I download the game on PC?", "a": "Click the <strong>\"Download Free\"</strong> button on the homepage. Choose the right version (Windows 10/11 64-bit, min 8GB RAM, NVIDIA GTX 1060 or above). The installer is around 35GB. Once downloaded, run the installer and follow the instructions." },
-      { "cat": "tech", "q": "The game is lagging — how do I fix it?", "a": "Try these steps: <strong>1.</strong> Lower graphics quality in Settings. <strong>2.</strong> Close background applications. <strong>3.</strong> Check your network and switch to the nearest server. <strong>4.</strong> Update your GPU driver. <strong>5.</strong> Clear the game cache in the install folder." },
-      { "cat": "tech", "q": "What are the minimum PC requirements?", "a": "<strong>Minimum:</strong> Windows 10 64-bit, Intel i5-8400 / AMD Ryzen 5 2600, 8GB RAM, NVIDIA GTX 1060 6GB, 50GB SSD free.<br><br><strong>Recommended:</strong> Intel i7-10700K / Ryzen 7 5800X, 16GB RAM, RTX 3070 / RX 6700 XT for best experience at 1080p 60fps." }
-    ]
-  },
-  "guides": {
-    "label": "Quick guides",
-    "title1": "GET STARTED",
-    "title2": "EASILY",
-    "sub": "Step-by-step guides to get familiar with Dinosaur Island in minutes.",
-    "stepBadge": "Step",
-    "items": [
-      { "num": "01", "title": "Create Account & Log In", "desc": "Start your survival journey in the dinosaur world today.", "steps": ["Click \"Create Account\" in the menu", "Enter your username & password", "Verify your phone number (OTP)", "Complete setup & log in for the first time"] },
-      { "num": "02", "title": "First Top Up", "desc": "Full support for popular payment methods.", "steps": ["Go to the \"Top Up\" page", "Choose a coin package", "Select a payment method", "Receive coins instantly"] },
-      { "num": "03", "title": "Join the Battle Arena", "desc": "Large-scale faction warfare to claim the ultimate title.", "steps": ["Log in & go to Battle Arena", "Check current season info", "Choose a faction (Dragon / Immortal)", "Join battles and earn points"] },
-      { "num": "04", "title": "Climb the Top-Up Leaderboard", "desc": "Conquer the rankings to earn exclusive seasonal rewards.", "steps": ["Top up to earn leaderboard points", "Check your rank on the homepage", "Top 3 receive special rewards", "Rewards distributed after season ends"] }
-    ]
-  },
-  "contact": {
-    "label": "Direct contact",
-    "title1": "NEED MORE",
-    "title2": "HELP?",
-    "desc": "Can't find an answer? Our dedicated support team is always ready to resolve any issue you have.",
-    "channels": {
-      "email":    { "label": "Support email",   "value": "support@daokhunglong.vn", "meta": "Reply within 24 business hours" },
-      "discord":  { "label": "Discord Server",  "value": "discord.gg/daokhunglong",  "meta": "Live support 24/7" },
-      "facebook": { "label": "Facebook Page",   "value": "fb.com/DaoKhungLongVN",   "meta": "Latest news and updates" }
-    },
-    "form": {
-      "nameLabel": "Full name", "namePlaceholder": "John Doe", "nameError": "Please enter your full name.",
-      "emailLabel": "Email", "emailPlaceholder": "example@gmail.com", "emailError": "Please enter a valid email.",
-      "subjectLabel": "Subject", "subjectPlaceholder": "-- Select a subject --", "subjectError": "Please select a subject.",
-      "subjectOptions": {
-        "account": "Account issue",
-        "payment": "Payment / Top up",
-        "bug": "Bug report",
-        "gameplay": "Gameplay / Features question",
-        "appeal": "Ban appeal",
-        "other": "Other"
+    "categories": {
+      "label": "Support categories",
+      "title1": "CHOOSE",
+      "title2": "A TOPIC",
+      "sub": "Select the right category to find answers fast.",
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "desc": "Quick answers to the most common questions from our player community.",
+        "count": "24 articles"
       },
-      "msgLabel": "Message", "msgPlaceholder": "Describe your issue in detail. Include your account name and when the problem occurred...", "msgError": "Please enter a message (minimum 20 characters).",
-      "submitBtn": "Send support request", "submitting": "Sending...",
-      "successMsg": "Your support request was sent successfully. We will respond within 24 business hours.",
-      "errorMsg": "An error occurred. Please check your information and try again."
+      "account": {
+        "title": "Account Issues",
+        "desc": "Account recovery, password change, identity verification and security.",
+        "count": "18 articles"
+      },
+      "payment": {
+        "title": "Payment & Top Up",
+        "desc": "Top-up guides, supported payment methods and failed transaction support.",
+        "count": "31 articles"
+      },
+      "game": {
+        "title": "Gameplay & Features",
+        "desc": "Combat guides, building your army, and joining the Battle Arena.",
+        "count": "47 articles"
+      },
+      "tech": {
+        "title": "Bug Reports",
+        "desc": "Experiencing a technical issue? Submit a bug report for our team to handle quickly.",
+        "count": "Submit report"
+      },
+      "contact": {
+        "title": "Contact Support",
+        "desc": "Can't find an answer? Send a request directly to our support team.",
+        "count": "Reply within 24h"
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "title1": "FREQUENTLY",
+      "title2": "ASKED QUESTIONS",
+      "sub": "The most common questions from the Dinosaur Island community.",
+      "tabs": {
+        "all": "All",
+        "account": "Account",
+        "payment": "Payment",
+        "game": "Gameplay",
+        "tech": "Technical"
+      },
+      "noResult": "No matching answers found.",
+      "items": [
+        {
+          "cat": "account",
+          "q": "How do I recover my account password?",
+          "a": "Go to the login page and click <strong>\"Forgot password?\"</strong>. Enter your registered phone number or email. You will receive an OTP within 2 minutes. Enter the code and set a new password. If you don't receive the code, check your spam folder or contact support directly."
+        },
+        {
+          "cat": "account",
+          "q": "My account is locked — what should I do?",
+          "a": "Accounts may be locked due to terms of service violations or unusual activity. Please contact our support team via <strong>support@daokhunglong.vn</strong> or Discord for review and resolution within 48 business hours."
+        },
+        {
+          "cat": "payment",
+          "q": "What payment methods are supported?",
+          "a": "Dinosaur Island currently supports: <strong>Domestic ATM cards, Visa/Mastercard, MoMo, ZaloPay, VNPay, and phone top-up cards (Viettel, Vinaphone, Mobifone)</strong>. We continuously add new payment methods."
+        },
+        {
+          "cat": "payment",
+          "q": "Transaction successful but coins not received — what should I do?",
+          "a": "Coins are usually credited instantly. In rare cases, processing may take up to <strong>15 minutes</strong>. If you haven't received them after 30 minutes, check your order history. If the transaction shows \"Pending\", wait a bit longer. If \"Rejected\", contact support with your order ID."
+        },
+        {
+          "cat": "game",
+          "q": "What is the Battle Arena and how do I join?",
+          "a": "The Battle Arena is a large-scale PvP event where the <strong>Dragon</strong> and <strong>Immortal</strong> factions face off. Each season lasts 10 days. Join by registering in-game, earn points through battles, and climb the leaderboard to earn exclusive coin rewards."
+        },
+        {
+          "cat": "game",
+          "q": "How do I download the game on PC?",
+          "a": "Click the <strong>\"Download Free\"</strong> button on the homepage. Choose the right version (Windows 10/11 64-bit, min 8GB RAM, NVIDIA GTX 1060 or above). The installer is around 35GB. Once downloaded, run the installer and follow the instructions."
+        },
+        {
+          "cat": "tech",
+          "q": "The game is lagging — how do I fix it?",
+          "a": "Try these steps: <strong>1.</strong> Lower graphics quality in Settings. <strong>2.</strong> Close background applications. <strong>3.</strong> Check your network and switch to the nearest server. <strong>4.</strong> Update your GPU driver. <strong>5.</strong> Clear the game cache in the install folder."
+        },
+        {
+          "cat": "tech",
+          "q": "What are the minimum PC requirements?",
+          "a": "<strong>Minimum:</strong> Windows 10 64-bit, Intel i5-8400 / AMD Ryzen 5 2600, 8GB RAM, NVIDIA GTX 1060 6GB, 50GB SSD free.<br><br><strong>Recommended:</strong> Intel i7-10700K / Ryzen 7 5800X, 16GB RAM, RTX 3070 / RX 6700 XT for best experience at 1080p 60fps."
+        }
+      ]
+    },
+    "guides": {
+      "label": "Quick guides",
+      "title1": "GET STARTED",
+      "title2": "EASILY",
+      "sub": "Step-by-step guides to get familiar with Dinosaur Island in minutes.",
+      "stepBadge": "Step",
+      "items": [
+        {
+          "num": "01",
+          "title": "Create Account & Log In",
+          "desc": "Start your survival journey in the dinosaur world today.",
+          "steps": [
+            "Click \"Create Account\" in the menu",
+            "Enter your username & password",
+            "Verify your phone number (OTP)",
+            "Complete setup & log in for the first time"
+          ]
+        },
+        {
+          "num": "02",
+          "title": "First Top Up",
+          "desc": "Full support for popular payment methods.",
+          "steps": [
+            "Go to the \"Top Up\" page",
+            "Choose a coin package",
+            "Select a payment method",
+            "Receive coins instantly"
+          ]
+        },
+        {
+          "num": "03",
+          "title": "Join the Battle Arena",
+          "desc": "Large-scale faction warfare to claim the ultimate title.",
+          "steps": [
+            "Log in & go to Battle Arena",
+            "Check current season info",
+            "Choose a faction (Dragon / Immortal)",
+            "Join battles and earn points"
+          ]
+        },
+        {
+          "num": "04",
+          "title": "Climb the Top-Up Leaderboard",
+          "desc": "Conquer the rankings to earn exclusive seasonal rewards.",
+          "steps": [
+            "Top up to earn leaderboard points",
+            "Check your rank on the homepage",
+            "Top 3 receive special rewards",
+            "Rewards distributed after season ends"
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "label": "Direct contact",
+      "title1": "NEED MORE",
+      "title2": "HELP?",
+      "desc": "Can't find an answer? Our dedicated support team is always ready to resolve any issue you have.",
+      "channels": {
+        "email": {
+          "label": "Support email",
+          "value": "support@daokhunglong.vn",
+          "meta": "Reply within 24 business hours"
+        },
+        "discord": {
+          "label": "Discord Server",
+          "value": "discord.gg/daokhunglong",
+          "meta": "Live support 24/7"
+        },
+        "facebook": {
+          "label": "Facebook Page",
+          "value": "fb.com/DaoKhungLongVN",
+          "meta": "Latest news and updates"
+        }
+      },
+      "form": {
+        "nameLabel": "Full name",
+        "namePlaceholder": "John Doe",
+        "nameError": "Please enter your full name.",
+        "emailLabel": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "emailError": "Please enter a valid email.",
+        "subjectLabel": "Subject",
+        "subjectPlaceholder": "-- Select a subject --",
+        "subjectError": "Please select a subject.",
+        "subjectOptions": {
+          "account": "Account issue",
+          "payment": "Payment / Top up",
+          "bug": "Bug report",
+          "gameplay": "Gameplay / Features question",
+          "appeal": "Ban appeal",
+          "other": "Other"
+        },
+        "msgLabel": "Message",
+        "msgPlaceholder": "Describe your issue in detail. Include your account name and when the problem occurred...",
+        "msgError": "Please enter a message (minimum 20 characters).",
+        "submitBtn": "Send support request",
+        "submitting": "Sending...",
+        "successMsg": "Your support request was sent successfully. We will respond within 24 business hours.",
+        "errorMsg": "An error occurred. Please check your information and try again."
+      }
+    }
+  },
+  "topupPricingCard": {
+    "currency": "VND",
+    "topupNow": "Top Up Now"
+  },
+  "footer": {
+    "brand": "DINOSAUR ISLAND",
+    "brandText": "A brutal survival world where dinosaurs rule. Build your empire, conquer the island, and become the ultimate overlord.",
+    "columns": {
+      "game": "Game",
+      "community": "Community",
+      "support": "Support"
+    },
+    "links": {
+      "download": "Download",
+      "patchNotes": "Patch Notes",
+      "roadmap": "Roadmap",
+      "ranking": "Leaderboard",
+      "season": "Season",
+      "discord": "Discord",
+      "forum": "Forum",
+      "guide": "Guide",
+      "fanart": "Fan Art",
+      "streamer": "Streamer",
+      "supportCenter": "Support Center",
+      "reportBug": "Report Bug",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "contact": "Contact Us"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "community": "Community",
+      "youtube": "YouTube",
+      "discord": "Discord",
+      "tiktok": "TikTok"
+    },
+    "badges": {
+      "teen": "Teen",
+      "rated": "Rated 12+",
+      "developer": "Developer",
+      "publisher": "Publisher"
+    },
+    "studios": {
+      "primal": "PRIMAL STUDIO",
+      "nexus": "NEXUS GAMES"
+    },
+    "copyright": "© 2024 Dinosaur Island. All rights reserved.",
+    "trademark": "Dinosaur Island and its logo are registered trademarks."
+  },
+  "ranking": {
+    "logoAlt": "Dinosaur Island",
+    "heroTitle": "LEADERBOARD",
+    "heroSubtitle": "Fight your way to the top ? exclusive rewards await the finest warriors.",
+    "tabs": {
+      "topup": "Top Up",
+      "arena": "Arena",
+      "daily": "Daily",
+      "weekly": "Weekly"
+    },
+    "table": {
+      "rank": "Rank",
+      "player": "Player",
+      "clan": "Guild / Clan",
+      "value": "Value",
+      "streak": "Win Streak",
+      "title": "Title",
+      "reward": "Reward",
+      "status": "Status",
+      "trend": "Trend"
+    },
+    "status": {
+      "online": "Online",
+      "battle": "In Battle",
+      "offline": "Offline"
+    },
+    "trend": {
+      "stable": "Stable",
+      "rankSuffix": "ranks"
+    },
+    "mobileNote": "Leaderboard is shown in card view for better readability on small screens.",
+    "rewardPreview": {
+      "title": "Ranking Rewards",
+      "coinSuffix": "Coins"
+    },
+    "hallOfFame": {
+      "title": "Hall of Fame",
+      "coinSuffix": "Coins"
+    },
+    "season": {
+      "currentLabel": "Current Season",
+      "name": "Alpha Hunt Season",
+      "countdown": "10 days 23 hours 59 minutes",
+      "totalRewardLabel": "Total Rewards",
+      "totalReward": "500,000 Coins",
+      "participantsLabel": "Participants",
+      "participants": "2,148"
     }
   }
-}
 }

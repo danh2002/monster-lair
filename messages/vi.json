@@ -4,7 +4,7 @@
     "home": "Trang chủ",
     "arena": "Lôi đài chiến",
     "topup": "Nạp game",
-    "guide": "Hướng dẫn",
+    "guide": "Bảng xếp hạng",
     "support": "Hỗ trợ",
     "login": "Đăng nhập",
     "register": "Tạo tài khoản",
@@ -165,92 +165,313 @@
     "badgeMostPopular": "Phổ biến nhất"
   },
   "support": {
-  "hero": {
-    "label": "Trung Tâm Hỗ Trợ",
-    "title1": "HỖ TRỢ &",
-    "title2": "GIẢI ĐÁP",
-    "sub": "Tìm câu trả lời nhanh chóng cho mọi thắc mắc. Đội ngũ hỗ trợ luôn sẵn sàng đồng hành cùng bạn trên hành trình chinh phục Đảo Khủng Long.",
-    "searchPlaceholder": "Tìm kiếm bài viết hỗ trợ...",
-    "searchBtn": "Tìm kiếm",
-    "searchAriaLabel": "Tìm kiếm",
-    "tags": ["Nạp game", "Quên mật khẩu", "Lỗi đăng nhập", "Hoàn tiền", "Báo lỗi"]
-  },
-  "categories": {
-    "label": "Danh mục hỗ trợ",
-    "title1": "CHỌN",
-    "title2": "CHỦ ĐỀ",
-    "sub": "Chọn danh mục phù hợp để tìm câu trả lời nhanh nhất.",
-    "faq":      { "title": "Câu Hỏi Thường Gặp",    "desc": "Giải đáp nhanh các thắc mắc phổ biến nhất từ cộng đồng người chơi.",                          "count": "24 bài viết" },
-    "account":  { "title": "Vấn Đề Tài Khoản",       "desc": "Khôi phục tài khoản, đổi mật khẩu, xác minh danh tính và bảo mật.",                          "count": "18 bài viết" },
-    "payment":  { "title": "Thanh Toán & Nạp Game",   "desc": "Hướng dẫn nạp tiền, các phương thức thanh toán và xử lý giao dịch lỗi.",                      "count": "31 bài viết" },
-    "game":     { "title": "Gameplay & Tính Năng",    "desc": "Hướng dẫn chiến đấu, xây dựng quân đoàn, tham gia Lôi Đài Chiến.",                            "count": "47 bài viết" },
-    "tech":     { "title": "Báo Cáo Lỗi",            "desc": "Gặp sự cố kỹ thuật? Gửi báo cáo lỗi để đội ngũ xử lý nhanh nhất.",                           "count": "Gửi báo cáo" },
-    "contact":  { "title": "Liên Hệ Hỗ Trợ",         "desc": "Không tìm thấy câu trả lời? Gửi yêu cầu trực tiếp đến đội hỗ trợ của chúng tôi.",             "count": "Phản hồi trong 24h" }
-  },
-  "faq": {
-    "label": "Giải đáp thắc mắc",
-    "title1": "CÂU HỎI",
-    "title2": "THƯỜNG GẶP",
-    "sub": "Những câu hỏi phổ biến nhất từ cộng đồng Đảo Khủng Long.",
-    "tabs": {
-      "all": "Tất cả",
-      "account": "Tài khoản",
-      "payment": "Thanh toán",
-      "game": "Gameplay",
-      "tech": "Kỹ thuật"
+    "hero": {
+      "label": "Trung Tâm Hỗ Trợ",
+      "title1": "HỖ TRỢ &",
+      "title2": "GIẢI ĐÁP",
+      "sub": "Tìm câu trả lời nhanh chóng cho mọi thắc mắc. Đội ngũ hỗ trợ luôn sẵn sàng đồng hành cùng bạn trên hành trình chinh phục Đảo Khủng Long.",
+      "searchPlaceholder": "Tìm kiếm bài viết hỗ trợ...",
+      "searchBtn": "Tìm kiếm",
+      "searchAriaLabel": "Tìm kiếm",
+      "tags": [
+        "Nạp game",
+        "Quên mật khẩu",
+        "Lỗi đăng nhập",
+        "Hoàn tiền",
+        "Báo lỗi"
+      ]
     },
-    "noResult": "Không tìm thấy câu trả lời phù hợp.",
-    "items": [
-      { "cat": "account", "q": "Làm thế nào để khôi phục mật khẩu tài khoản?", "a": "Truy cập trang đăng nhập và nhấp vào <strong>\"Quên mật khẩu?\"</strong>. Nhập số điện thoại hoặc email đã đăng ký. Bạn sẽ nhận được mã OTP trong vòng 2 phút. Nhập mã và đặt mật khẩu mới. Nếu không nhận được mã, hãy kiểm tra hộp thư rác hoặc liên hệ hỗ trợ trực tiếp." },
-      { "cat": "account", "q": "Tài khoản của tôi bị khóa, phải làm gì?", "a": "Tài khoản có thể bị khóa do vi phạm điều khoản sử dụng hoặc hoạt động bất thường. Vui lòng liên hệ đội hỗ trợ qua email <strong>support@daokhunglong.vn</strong> hoặc Discord để được xem xét và giải quyết trong vòng 48 giờ làm việc." },
-      { "cat": "payment", "q": "Các phương thức thanh toán nào được hỗ trợ?", "a": "Hiện tại Đảo Khủng Long hỗ trợ đầy đủ: <strong>Thẻ ATM nội địa, Visa/Mastercard, MoMo, ZaloPay, VNPay, thẻ cào điện thoại (Viettel, Vinaphone, Mobifone)</strong>. Chúng tôi liên tục cập nhật thêm phương thức thanh toán mới." },
-      { "cat": "payment", "q": "Giao dịch thành công nhưng chưa nhận được xu, phải làm gì?", "a": "Thông thường xu sẽ được cộng ngay lập tức. Trong một số trường hợp hiếm gặp, quá trình xử lý có thể mất đến <strong>15 phút</strong>. Nếu sau 30 phút vẫn chưa nhận, hãy kiểm tra lịch sử đơn hàng. Nếu giao dịch ở trạng thái \"Pending\", hãy chờ thêm. Nếu \"Rejected\", liên hệ hỗ trợ kèm mã đơn hàng để được xử lý." },
-      { "cat": "game", "q": "Lôi Đài Chiến là gì và cách tham gia như thế nào?", "a": "Lôi Đài Chiến là sự kiện PvP quy mô lớn, nơi các phe <strong>Hoá Long</strong> và <strong>Tu Tiên</strong> đối đầu nhau. Mỗi mùa giải kéo dài 10 ngày. Tham gia bằng cách đăng ký trong game, tích lũy điểm thông qua trận đấu và leo BXH để nhận phần thưởng xu độc quyền." },
-      { "cat": "game", "q": "Làm sao để tải game về máy tính?", "a": "Nhấn vào nút <strong>\"Tải Game Miễn Phí\"</strong> trên trang chủ. Chọn phiên bản phù hợp (Windows 10/11 64-bit, tối thiểu 8GB RAM, GPU NVIDIA GTX 1060 trở lên). File cài đặt khoảng 35GB. Sau khi tải xong, chạy installer và làm theo hướng dẫn." },
-      { "cat": "tech", "q": "Game bị lag hoặc giật, cách khắc phục như thế nào?", "a": "Thử các bước sau: <strong>1.</strong> Giảm chất lượng đồ họa trong Settings. <strong>2.</strong> Tắt các ứng dụng chạy ngầm. <strong>3.</strong> Kiểm tra kết nối mạng và đổi sang server gần nhất. <strong>4.</strong> Cập nhật driver GPU mới nhất. <strong>5.</strong> Xóa cache game trong thư mục cài đặt." },
-      { "cat": "tech", "q": "Cấu hình máy tính tối thiểu để chơi game là gì?", "a": "<strong>Tối thiểu:</strong> Windows 10 64-bit, CPU Intel i5-8400 / AMD Ryzen 5 2600, RAM 8GB, GPU NVIDIA GTX 1060 6GB, SSD 50GB trống.<br><br><strong>Đề xuất:</strong> CPU Intel i7-10700K / Ryzen 7 5800X, RAM 16GB, GPU RTX 3070 / RX 6700 XT để trải nghiệm tốt nhất ở 1080p 60fps." }
-    ]
-  },
-  "guides": {
-    "label": "Hướng dẫn nhanh",
-    "title1": "BẮT ĐẦU",
-    "title2": "DỄ DÀNG",
-    "sub": "Các hướng dẫn từng bước để làm quen với Đảo Khủng Long trong vài phút.",
-    "stepBadge": "Bước",
-    "items": [
-      { "num": "01", "title": "Tạo Tài Khoản & Đăng Nhập", "desc": "Bắt đầu hành trình sinh tồn trong thế giới khủng long ngay hôm nay.", "steps": ["Nhấn \"Tạo Tài Khoản\" trên menu", "Nhập tên tài khoản & mật khẩu", "Xác minh số điện thoại (OTP)", "Hoàn tất & đăng nhập lần đầu"] },
-      { "num": "02", "title": "Nạp Game Lần Đầu", "desc": "Hỗ trợ đầy đủ phương thức thanh toán phổ biến tại Việt Nam.", "steps": ["Truy cập trang \"Nạp Game\"", "Chọn gói xu phù hợp", "Chọn phương thức thanh toán", "Nhận xu ngay lập tức"] },
-      { "num": "03", "title": "Tham Gia Lôi Đài Chiến", "desc": "Chiến đấu quy mô lớn giữa các phe phái để giành danh hiệu tối thượng.", "steps": ["Đăng nhập & vào trang Lôi Đài", "Xem thông tin mùa giải hiện tại", "Chọn phe (Hoá Long / Tu Tiên)", "Tham gia trận và tích điểm"] },
-      { "num": "04", "title": "Leo BXH Top Nạp", "desc": "Chinh phục bảng xếp hạng để nhận các phần thưởng độc quyền theo mùa.", "steps": ["Nạp game để tích điểm BXH", "Kiểm tra thứ hạng trên trang chủ", "Top 3 nhận thưởng đặc biệt", "Phần thưởng phát sau mùa kết thúc"] }
-    ]
-  },
-  "contact": {
-    "label": "Liên hệ trực tiếp",
-    "title1": "CẦN THÊM",
-    "title2": "TRỢ GIÚP?",
-    "desc": "Không tìm thấy câu trả lời? Đội ngũ hỗ trợ tận tâm của chúng tôi luôn sẵn sàng giải quyết mọi vấn đề của bạn.",
-    "channels": {
-      "email":    { "label": "Email hỗ trợ",    "value": "support@daokhunglong.vn", "meta": "Phản hồi trong 24h làm việc" },
-      "discord":  { "label": "Discord Server",  "value": "discord.gg/daokhunglong",  "meta": "Hỗ trợ trực tuyến 24/7" },
-      "facebook": { "label": "Facebook Fanpage","value": "fb.com/DaoKhungLongVN",   "meta": "Cập nhật tin tức mới nhất" }
-    },
-    "form": {
-      "nameLabel": "Họ và tên", "namePlaceholder": "Nguyễn Văn A", "nameError": "Vui lòng nhập họ và tên.",
-      "emailLabel": "Email", "emailPlaceholder": "example@gmail.com", "emailError": "Vui lòng nhập email hợp lệ.",
-      "subjectLabel": "Chủ đề", "subjectPlaceholder": "-- Chọn chủ đề --", "subjectError": "Vui lòng chọn chủ đề.",
-      "subjectOptions": {
-        "account": "Vấn đề tài khoản",
-        "payment": "Thanh toán / Nạp game",
-        "bug": "Báo cáo lỗi kỹ thuật",
-        "gameplay": "Hỏi về gameplay / tính năng",
-        "appeal": "Kháng cáo lệnh cấm",
-        "other": "Khác"
+    "categories": {
+      "label": "Danh mục hỗ trợ",
+      "title1": "CHỌN",
+      "title2": "CHỦ ĐỀ",
+      "sub": "Chọn danh mục phù hợp để tìm câu trả lời nhanh nhất.",
+      "faq": {
+        "title": "Câu Hỏi Thường Gặp",
+        "desc": "Giải đáp nhanh các thắc mắc phổ biến nhất từ cộng đồng người chơi.",
+        "count": "24 bài viết"
       },
-      "msgLabel": "Nội dung", "msgPlaceholder": "Mô tả chi tiết vấn đề bạn gặp phải. Bao gồm tên tài khoản, thời điểm xảy ra sự cố...", "msgError": "Vui lòng nhập nội dung (tối thiểu 20 ký tự).",
-      "submitBtn": "Gửi yêu cầu hỗ trợ", "submitting": "Đang gửi...",
-      "successMsg": "Yêu cầu hỗ trợ đã được gửi thành công. Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.",
-      "errorMsg": "Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin và thử lại."
+      "account": {
+        "title": "Vấn Đề Tài Khoản",
+        "desc": "Khôi phục tài khoản, đổi mật khẩu, xác minh danh tính và bảo mật.",
+        "count": "18 bài viết"
+      },
+      "payment": {
+        "title": "Thanh Toán & Nạp Game",
+        "desc": "Hướng dẫn nạp tiền, các phương thức thanh toán và xử lý giao dịch lỗi.",
+        "count": "31 bài viết"
+      },
+      "game": {
+        "title": "Gameplay & Tính Năng",
+        "desc": "Hướng dẫn chiến đấu, xây dựng quân đoàn, tham gia Lôi Đài Chiến.",
+        "count": "47 bài viết"
+      },
+      "tech": {
+        "title": "Báo Cáo Lỗi",
+        "desc": "Gặp sự cố kỹ thuật? Gửi báo cáo lỗi để đội ngũ xử lý nhanh nhất.",
+        "count": "Gửi báo cáo"
+      },
+      "contact": {
+        "title": "Liên Hệ Hỗ Trợ",
+        "desc": "Không tìm thấy câu trả lời? Gửi yêu cầu trực tiếp đến đội hỗ trợ của chúng tôi.",
+        "count": "Phản hồi trong 24h"
+      }
+    },
+    "faq": {
+      "label": "Giải đáp thắc mắc",
+      "title1": "CÂU HỎI",
+      "title2": "THƯỜNG GẶP",
+      "sub": "Những câu hỏi phổ biến nhất từ cộng đồng Đảo Khủng Long.",
+      "tabs": {
+        "all": "Tất cả",
+        "account": "Tài khoản",
+        "payment": "Thanh toán",
+        "game": "Gameplay",
+        "tech": "Kỹ thuật"
+      },
+      "noResult": "Không tìm thấy câu trả lời phù hợp.",
+      "items": [
+        {
+          "cat": "account",
+          "q": "Làm thế nào để khôi phục mật khẩu tài khoản?",
+          "a": "Truy cập trang đăng nhập và nhấp vào <strong>\"Quên mật khẩu?\"</strong>. Nhập số điện thoại hoặc email đã đăng ký. Bạn sẽ nhận được mã OTP trong vòng 2 phút. Nhập mã và đặt mật khẩu mới. Nếu không nhận được mã, hãy kiểm tra hộp thư rác hoặc liên hệ hỗ trợ trực tiếp."
+        },
+        {
+          "cat": "account",
+          "q": "Tài khoản của tôi bị khóa, phải làm gì?",
+          "a": "Tài khoản có thể bị khóa do vi phạm điều khoản sử dụng hoặc hoạt động bất thường. Vui lòng liên hệ đội hỗ trợ qua email <strong>support@daokhunglong.vn</strong> hoặc Discord để được xem xét và giải quyết trong vòng 48 giờ làm việc."
+        },
+        {
+          "cat": "payment",
+          "q": "Các phương thức thanh toán nào được hỗ trợ?",
+          "a": "Hiện tại Đảo Khủng Long hỗ trợ đầy đủ: <strong>Thẻ ATM nội địa, Visa/Mastercard, MoMo, ZaloPay, VNPay, thẻ cào điện thoại (Viettel, Vinaphone, Mobifone)</strong>. Chúng tôi liên tục cập nhật thêm phương thức thanh toán mới."
+        },
+        {
+          "cat": "payment",
+          "q": "Giao dịch thành công nhưng chưa nhận được xu, phải làm gì?",
+          "a": "Thông thường xu sẽ được cộng ngay lập tức. Trong một số trường hợp hiếm gặp, quá trình xử lý có thể mất đến <strong>15 phút</strong>. Nếu sau 30 phút vẫn chưa nhận, hãy kiểm tra lịch sử đơn hàng. Nếu giao dịch ở trạng thái \"Pending\", hãy chờ thêm. Nếu \"Rejected\", liên hệ hỗ trợ kèm mã đơn hàng để được xử lý."
+        },
+        {
+          "cat": "game",
+          "q": "Lôi Đài Chiến là gì và cách tham gia như thế nào?",
+          "a": "Lôi Đài Chiến là sự kiện PvP quy mô lớn, nơi các phe <strong>Hoá Long</strong> và <strong>Tu Tiên</strong> đối đầu nhau. Mỗi mùa giải kéo dài 10 ngày. Tham gia bằng cách đăng ký trong game, tích lũy điểm thông qua trận đấu và leo BXH để nhận phần thưởng xu độc quyền."
+        },
+        {
+          "cat": "game",
+          "q": "Làm sao để tải game về máy tính?",
+          "a": "Nhấn vào nút <strong>\"Tải Game Miễn Phí\"</strong> trên trang chủ. Chọn phiên bản phù hợp (Windows 10/11 64-bit, tối thiểu 8GB RAM, GPU NVIDIA GTX 1060 trở lên). File cài đặt khoảng 35GB. Sau khi tải xong, chạy installer và làm theo hướng dẫn."
+        },
+        {
+          "cat": "tech",
+          "q": "Game bị lag hoặc giật, cách khắc phục như thế nào?",
+          "a": "Thử các bước sau: <strong>1.</strong> Giảm chất lượng đồ họa trong Settings. <strong>2.</strong> Tắt các ứng dụng chạy ngầm. <strong>3.</strong> Kiểm tra kết nối mạng và đổi sang server gần nhất. <strong>4.</strong> Cập nhật driver GPU mới nhất. <strong>5.</strong> Xóa cache game trong thư mục cài đặt."
+        },
+        {
+          "cat": "tech",
+          "q": "Cấu hình máy tính tối thiểu để chơi game là gì?",
+          "a": "<strong>Tối thiểu:</strong> Windows 10 64-bit, CPU Intel i5-8400 / AMD Ryzen 5 2600, RAM 8GB, GPU NVIDIA GTX 1060 6GB, SSD 50GB trống.<br><br><strong>Đề xuất:</strong> CPU Intel i7-10700K / Ryzen 7 5800X, RAM 16GB, GPU RTX 3070 / RX 6700 XT để trải nghiệm tốt nhất ở 1080p 60fps."
+        }
+      ]
+    },
+    "guides": {
+      "label": "Hướng dẫn nhanh",
+      "title1": "BẮT ĐẦU",
+      "title2": "DỄ DÀNG",
+      "sub": "Các hướng dẫn từng bước để làm quen với Đảo Khủng Long trong vài phút.",
+      "stepBadge": "Bước",
+      "items": [
+        {
+          "num": "01",
+          "title": "Tạo Tài Khoản & Đăng Nhập",
+          "desc": "Bắt đầu hành trình sinh tồn trong thế giới khủng long ngay hôm nay.",
+          "steps": [
+            "Nhấn \"Tạo Tài Khoản\" trên menu",
+            "Nhập tên tài khoản & mật khẩu",
+            "Xác minh số điện thoại (OTP)",
+            "Hoàn tất & đăng nhập lần đầu"
+          ]
+        },
+        {
+          "num": "02",
+          "title": "Nạp Game Lần Đầu",
+          "desc": "Hỗ trợ đầy đủ phương thức thanh toán phổ biến tại Việt Nam.",
+          "steps": [
+            "Truy cập trang \"Nạp Game\"",
+            "Chọn gói xu phù hợp",
+            "Chọn phương thức thanh toán",
+            "Nhận xu ngay lập tức"
+          ]
+        },
+        {
+          "num": "03",
+          "title": "Tham Gia Lôi Đài Chiến",
+          "desc": "Chiến đấu quy mô lớn giữa các phe phái để giành danh hiệu tối thượng.",
+          "steps": [
+            "Đăng nhập & vào trang Lôi Đài",
+            "Xem thông tin mùa giải hiện tại",
+            "Chọn phe (Hoá Long / Tu Tiên)",
+            "Tham gia trận và tích điểm"
+          ]
+        },
+        {
+          "num": "04",
+          "title": "Leo BXH Top Nạp",
+          "desc": "Chinh phục bảng xếp hạng để nhận các phần thưởng độc quyền theo mùa.",
+          "steps": [
+            "Nạp game để tích điểm BXH",
+            "Kiểm tra thứ hạng trên trang chủ",
+            "Top 3 nhận thưởng đặc biệt",
+            "Phần thưởng phát sau mùa kết thúc"
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "label": "Liên hệ trực tiếp",
+      "title1": "CẦN THÊM",
+      "title2": "TRỢ GIÚP?",
+      "desc": "Không tìm thấy câu trả lời? Đội ngũ hỗ trợ tận tâm của chúng tôi luôn sẵn sàng giải quyết mọi vấn đề của bạn.",
+      "channels": {
+        "email": {
+          "label": "Email hỗ trợ",
+          "value": "support@daokhunglong.vn",
+          "meta": "Phản hồi trong 24h làm việc"
+        },
+        "discord": {
+          "label": "Discord Server",
+          "value": "discord.gg/daokhunglong",
+          "meta": "Hỗ trợ trực tuyến 24/7"
+        },
+        "facebook": {
+          "label": "Facebook Fanpage",
+          "value": "fb.com/DaoKhungLongVN",
+          "meta": "Cập nhật tin tức mới nhất"
+        }
+      },
+      "form": {
+        "nameLabel": "Họ và tên",
+        "namePlaceholder": "Nguyễn Văn A",
+        "nameError": "Vui lòng nhập họ và tên.",
+        "emailLabel": "Email",
+        "emailPlaceholder": "example@gmail.com",
+        "emailError": "Vui lòng nhập email hợp lệ.",
+        "subjectLabel": "Chủ đề",
+        "subjectPlaceholder": "-- Chọn chủ đề --",
+        "subjectError": "Vui lòng chọn chủ đề.",
+        "subjectOptions": {
+          "account": "Vấn đề tài khoản",
+          "payment": "Thanh toán / Nạp game",
+          "bug": "Báo cáo lỗi kỹ thuật",
+          "gameplay": "Hỏi về gameplay / tính năng",
+          "appeal": "Kháng cáo lệnh cấm",
+          "other": "Khác"
+        },
+        "msgLabel": "Nội dung",
+        "msgPlaceholder": "Mô tả chi tiết vấn đề bạn gặp phải. Bao gồm tên tài khoản, thời điểm xảy ra sự cố...",
+        "msgError": "Vui lòng nhập nội dung (tối thiểu 20 ký tự).",
+        "submitBtn": "Gửi yêu cầu hỗ trợ",
+        "submitting": "Đang gửi...",
+        "successMsg": "Yêu cầu hỗ trợ đã được gửi thành công. Chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.",
+        "errorMsg": "Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin và thử lại."
+      }
+    }
+  },
+  "topupPricingCard": {
+    "currency": "VNĐ",
+    "topupNow": "Nạp Ngay"
+  },
+  "footer": {
+    "brand": "ĐẢO KHỦNG LONG",
+    "brandText": "Thế giới sinh tồn khốc liệt nơi khủng long thống trị. Hãy xây dựng đế chế, chinh phục đảo và trở thành bá chủ tối thượng.",
+    "columns": {
+      "game": "Trò Chơi",
+      "community": "Cộng Đồng",
+      "support": "Hỗ Trợ"
+    },
+    "links": {
+      "download": "Tải Game",
+      "patchNotes": "Cập Nhật",
+      "roadmap": "Lộ Trình",
+      "ranking": "Bảng Xếp Hạng",
+      "season": "Mùa Giải",
+      "discord": "Discord",
+      "forum": "Diễn Đàn",
+      "guide": "Hướng Dẫn",
+      "fanart": "Fan Art",
+      "streamer": "Streamer",
+      "supportCenter": "Trung Tâm Hỗ Trợ",
+      "reportBug": "Báo Lỗi",
+      "terms": "Điều Khoản",
+      "privacy": "Bảo Mật",
+      "contact": "Liên Hệ"
+    },
+    "social": {
+      "facebook": "Facebook",
+      "community": "Cộng đồng",
+      "youtube": "YouTube",
+      "discord": "Discord",
+      "tiktok": "TikTok"
+    },
+    "badges": {
+      "teen": "Dành cho Teen",
+      "rated": "Được xếp hạng 12+",
+      "developer": "Nhà phát triển",
+      "publisher": "Nhà phát hành"
+    },
+    "studios": {
+      "primal": "PRIMAL STUDIO",
+      "nexus": "NEXUS GAMES"
+    },
+    "copyright": "© 2024 Đảo Khủng Long. Bản quyền được bảo lưu.",
+    "trademark": "Đảo Khủng Long và logo là thương hiệu đã đăng ký."
+  },
+  "ranking": {
+    "logoAlt": "Đảo Khủng Long",
+    "heroTitle": "BẢNG XẾP HẠNG",
+    "heroSubtitle": "Tranh đấu để leo lên đỉnh cao — phần thưởng độc quyền chờ đón những chiến binh xuất sắc nhất.",
+    "tabs": {
+      "topup": "Nạp Game",
+      "arena": "Lôi Đài",
+      "daily": "Hàng Ngày",
+      "weekly": "Hàng Tuần"
+    },
+    "table": {
+      "rank": "Hạng",
+      "player": "Người Chơi",
+      "clan": "Qu?n ?o?n",
+      "value": "Giá Trị",
+      "streak": "Chuỗi Thắng",
+      "title": "Danh Hiệu",
+      "reward": "Phần Thưởng",
+      "status": "Trạng Thái",
+      "trend": "Xu Hướng"
+    },
+    "status": {
+      "online": "Trực Tuyến",
+      "battle": "Trong Trận",
+      "offline": "Ngoại Tuyến"
+    },
+    "trend": {
+      "stable": "Ổn Định",
+      "rankSuffix": "bậc"
+    },
+    "mobileNote": "Bảng xếp hạng đang ở dạng card để dễ nhìn trên màn hình nhỏ.",
+    "rewardPreview": {
+      "title": "Phần Thưởng Xếp Hạng",
+      "coinSuffix": "Xu"
+    },
+    "hallOfFame": {
+      "title": "Đại Sảnh Danh Vọng",
+      "coinSuffix": "Xu"
+    },
+    "season": {
+      "currentLabel": "Mùa Giải Hiện Tại",
+      "name": "Mùa Săn Alpha",
+      "countdown": "10 ngày 23 giờ 59 phút",
+      "totalRewardLabel": "Tổng Giải Thưởng",
+      "totalReward": "500,000 Xu",
+      "participantsLabel": "Người Tham Gia",
+      "participants": "2,148"
     }
   }
-}
 }
