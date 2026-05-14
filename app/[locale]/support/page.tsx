@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { Fragment, ReactNode, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -9,6 +9,26 @@ import { useTranslations } from 'next-intl';
 
 type FaqCategory = 'all' | 'account' | 'payment' | 'game' | 'tech';
 type FaqItem = { cat: Exclude<FaqCategory, 'all'>; q: string; a: string };
+
+function renderFaqAnswer(answer: string): ReactNode[] {
+  // Render localized rich text without injecting raw HTML.
+  const parts = answer.split(/(<strong>.*?<\/strong>|<br\s*\/?>)/gi);
+
+  return parts.map((part, index) => {
+    if (!part) return null;
+
+    if (/^<br\s*\/?>$/i.test(part)) {
+      return <br key={`br-${index}`} />;
+    }
+
+    const strongMatch = part.match(/^<strong>(.*?)<\/strong>$/i);
+    if (strongMatch) {
+      return <strong key={`strong-${index}`}>{strongMatch[1]}</strong>;
+    }
+
+    return <Fragment key={`text-${index}`}>{part}</Fragment>;
+  });
+}
 
 // ─── Styled Components ────────────────────────────────────────────────────────
 
@@ -840,7 +860,7 @@ export default function SupportPage() {
                       </PlusIcon>
                     </FaqQuestion>
                     <FaqAnswer $open={isOpen}>
-                      <FaqAnswerInner dangerouslySetInnerHTML={{ __html: item.a }} />
+                      <FaqAnswerInner>{renderFaqAnswer(item.a)}</FaqAnswerInner>
                     </FaqAnswer>
                   </FaqCard>
                 );
