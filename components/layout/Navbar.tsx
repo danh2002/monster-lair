@@ -270,9 +270,9 @@ const LogoutButton = styled.button`
 `;
 
 const LANGUAGES = [
-  { code: 'vi', label: 'Việt Nam', flag: '🇻🇳' },
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'zh', label: 'Chinese', flag: '🇨🇳' },
+  { code: 'vi', label: 'Việt Nam', flagSrc: 'https://flagcdn.com/w20/vn.png' },
+  { code: 'en', label: 'English', flagSrc: 'https://flagcdn.com/w20/gb.png' },
+  { code: 'zh', label: 'Chinese', flagSrc: 'https://flagcdn.com/w20/cn.png' },
 ] as const;
 
 interface NavbarProps {
@@ -337,7 +337,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
           {t('topup')}
         </Link>
         <Link href="/ranking" className={activePage === 'ranking' ? 'active' : ''}>
-          {t('guide')}
+          {t('ranking')}
         </Link>
         <Link href="/support" className={activePage === 'support' ? 'active' : ''}>
           {t('support')}
@@ -351,7 +351,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
             $open={langOpen}
             onClick={() => setLangOpen((v) => !v)}
           >
-            <span>{currentLang.flag} {currentLang.label}</span>
+            <img
+              src={currentLang.flagSrc}
+              alt={currentLang.label}
+              width={20}
+              height={14}
+              style={{ borderRadius: '2px', objectFit: 'cover', display: 'inline-block' }}
+            />
+            {currentLang.label}
             <FaChevronRight />
           </LanguageButton>
 
@@ -365,7 +372,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
                   setLangOpen(false);
                 }}
               >
-                <span className="flag">{lang.flag}</span>
+                <img
+                  src={lang.flagSrc}
+                  alt={lang.label}
+                  width={20}
+                  height={14}
+                  style={{ borderRadius: '2px', objectFit: 'cover', display: 'inline-block' }}
+                />
                 {lang.label}
               </LanguageOption>
             ))}

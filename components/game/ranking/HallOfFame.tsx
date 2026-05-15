@@ -203,13 +203,13 @@ export function HallOfFame({ items }: HallOfFameProps) {
               </Meta>
             </TextCol>
             <Value>
-              {formatCompactXu(item.value)} Xu
+              {formatCompactXu(item.value)} {t('hallOfFame.coinSuffix')}
             </Value>
           </Row>
         ))}
       </List>
 
-      <ViewAllButton type="button">XEM TẤT CẢ</ViewAllButton>
+      <ViewAllButton type="button">{t('hallOfFame.viewAll')}</ViewAllButton>
     </Wrap>
   );
 }

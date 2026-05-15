@@ -4,7 +4,7 @@
     "home": "首页",
     "arena": "竞技场",
     "topup": "充值",
-    "guide": "Pai hang bang",
+    "guide": "排行榜",
     "support": "支持",
     "login": "登录",
     "register": "创建账号",
@@ -13,7 +13,8 @@
       "vi": "越南语",
       "en": "英语",
       "zh": "中文"
-    }
+    },
+    "ranking": "排行榜"
   },
   "home": {
     "eyebrow": "恐龙生存 MMORPG",
@@ -426,52 +427,105 @@
     "trademark": "恐龙岛及其标志是注册商标。"
   },
   "ranking": {
-    "logoAlt": "???",
-    "heroTitle": "???",
-    "heroSubtitle": "?????????????????????",
+    "logoAlt": "恐龙岛",
+    "heroTitle": "排行榜",
+    "heroSubtitle": "奋力攀登榜首——专属奖励等待最优秀的勇士。",
     "tabs": {
-      "topup": "??",
-      "arena": "???",
-      "daily": "??",
-      "weekly": "??"
+      "topup": "充值",
+      "arena": "竞技场",
+      "daily": "每日",
+      "weekly": "每周"
     },
     "table": {
-      "rank": "??",
-      "player": "??",
-      "clan": "??",
-      "value": "??",
-      "streak": "??",
-      "title": "??",
-      "reward": "??",
-      "status": "??",
-      "trend": "??"
+      "rank": "排名",
+      "player": "玩家",
+      "clan": "公会",
+      "value": "数值",
+      "title": "称号",
+      "reward": "奖励"
     },
     "status": {
-      "online": "??",
-      "battle": "???",
-      "offline": "??"
+      "online": "在线",
+      "battle": "战斗中",
+      "offline": "离线"
     },
     "trend": {
-      "stable": "??",
-      "rankSuffix": "?"
+      "stable": "稳定",
+      "rankSuffix": "名"
     },
-    "mobileNote": "???????????????????????",
+    "mobileNote": "排行榜以卡片形式显示，以便在小屏幕上更易阅读。",
     "rewardPreview": {
-      "title": "????",
-      "coinSuffix": "??"
+      "title": "排名奖励",
+      "coinSuffix": "金币",
+      "viewAll": "[-] 查看所有奖励"
     },
     "hallOfFame": {
-      "title": "???",
-      "coinSuffix": "??"
+      "title": "名人堂",
+      "coinSuffix": "金币",
+      "viewAll": "查看全部"
     },
     "season": {
-      "currentLabel": "????",
-      "name": "??Alpha??",
-      "countdown": "10?23??59??",
-      "totalRewardLabel": "???",
-      "totalReward": "500,000 ??",
-      "participantsLabel": "????",
-      "participants": "2,148"
-    }
+      "currentLabel": "当前赛季",
+      "name": "猎人Alpha赛季",
+      "countdown": "10天23小时59分钟",
+      "totalRewardLabel": "总奖励",
+      "totalReward": "500,000 金币",
+      "participantsLabel": "参与人数",
+      "participants": "2,148",
+      "endLabel": "剩余时间",
+      "days": "天",
+      "hours": "小时",
+      "minutes": "分钟",
+      "seconds": "秒"
+    },
+    "rewardItems": [
+      {
+        "skin": "独家皮肤",
+        "badge": "金色称号徽章",
+        "title": "顶尖霍主",
+        "frame": "黄金头像框"
+      },
+      {
+        "skin": "稀有皮肤",
+        "badge": "银色称号徽章",
+        "title": "古代领主",
+        "frame": "银色头像框"
+      },
+      {
+        "skin": "稀有皮肤",
+        "badge": "銅色称号徽章",
+        "title": "风暴猎人",
+        "frame": "銅色头像框"
+      }
+    ]
+  },
+  "orders": {
+    "titlePrefix": "订单",
+    "titleEmphasis": "历史",
+    "searchLabel": "搜索",
+    "searchPlaceholder": "搜索订单号...",
+    "statusLabel": "状态",
+    "fromLabel": "从",
+    "toLabel": "到",
+    "refresh": "刷新",
+    "currency": "越南盾",
+    "table": {
+      "orderId": "订单号",
+      "date": "日期",
+      "amount": "金额",
+      "status": "状态",
+      "gems": "宝石"
+    },
+    "status": {
+      "all": "全部",
+      "success": "成功",
+      "failed": "失败",
+      "pending": "处理中"
+    },
+    "showing": "显示",
+    "prev": "上一页",
+    "next": "下一页",
+    "page": "页",
+    "empty": "暂无订单"
   }
 }

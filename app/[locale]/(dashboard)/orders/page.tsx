@@ -510,7 +510,7 @@ export default function OrdersPage() {
                 <th style={{ width: 160 }}>{t('table.orderId')}</th>
                 <th style={{ width: 200 }}>{t('table.date')}</th>
                 <th style={{ width: 180 }}>{t('table.amount')}</th>
-                <th style={{ width: 140 }}>Gems</th>
+                <th style={{ width: 140 }}>{t('table.gems')}</th>
                 <th style={{ width: 180 }}>{t('table.status')}</th>
               </tr>
             </thead>

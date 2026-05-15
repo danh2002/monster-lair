@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { FaClock } from '@react-icons/all-files/fa/FaClock';
 import { FaGem } from '@react-icons/all-files/fa/FaGem';
 import { FaTrophy } from '@react-icons/all-files/fa/FaTrophy';
+import { FaCrown } from '@react-icons/all-files/fa/FaCrown';
 import { useTranslations } from 'next-intl';
 import { theme } from '@/styles/theme';
 
@@ -52,9 +53,9 @@ function useCountdown(targetDate: Date) {
 // ============================================================
 
 const podiumPlayers = [
-  { name: 'Brian Ngo', reward: '50,000', score: '2,000 điểm', place: 2, height: 178 },
-  { name: 'Jolie Joie', reward: '100,000', score: '2,000 điểm', place: 1, height: 210 },
-  { name: 'David Do', reward: '20,000', score: '2,000 điểm', place: 3, height: 178 },
+  { name: 'Brian Ngo', reward: '50,000', score: '2,000 điểm', place: 2, height: 178, avatar: '/images/top2loidai.png' },
+  { name: 'Jolie Joie', reward: '100,000', score: '2,000 điểm', place: 1, height: 210, avatar: '/images/top1loidai.png' },
+  { name: 'David Do', reward: '20,000', score: '2,000 điểm', place: 3, height: 178, avatar: '/images/top3loidai.png' },
 ];
 
 const rankingRows = [
@@ -369,17 +370,16 @@ const LeaderboardSection = styled.section`
   overflow: hidden;
   isolation: isolate;
   min-height: 900px;
-  background-attachment: fixed;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -3;
-    background-image: url('/images/hero-dinosaur.png');
+    background-image: url('/images/backgroundloidai.png');
     background-size: cover;
-    background-position: center 35%;
-    opacity: 0.7;
+    background-position: center 30%;
+    transform: scale(1.05);
   }
 
   &::after {
@@ -388,9 +388,48 @@ const LeaderboardSection = styled.section`
     inset: 0;
     z-index: -2;
     background:
-      linear-gradient(135deg, rgba(60, 20, 10, 0.75), rgba(30, 15, 40, 0.75)),
-      linear-gradient(180deg, rgba(20, 10, 15, 0.8), rgba(25, 15, 35, 0.9));
+      linear-gradient(180deg,
+        rgba(0,0,0,0.55) 0%,
+        rgba(10,4,2,0.38) 40%,
+        rgba(10,4,2,0.72) 100%
+      );
   }
+`;
+
+const LeaderboardHeading = styled.div`
+  text-align: center;
+  margin: 0 0 clamp(2.2rem, 4vw, 3rem);
+`;
+
+const LeaderboardTitle = styled.h2`
+  margin: 0;
+  font-size: clamp(2.6rem, 5vw, 4.3rem);
+  font-style: italic;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 8px 12px rgba(0, 0, 0, 0.38);
+  color: #fff;
+
+  span {
+    color: #ff6a00;
+  }
+`;
+
+const HeadingGem = styled(FaGem)`
+  margin: 0.8rem auto 0.7rem;
+  display: block;
+  color: #ff6a00;
+  font-size: 0.95rem;
+`;
+
+const LeaderboardSubtitle = styled.p`
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 `;
 
 const PodiumGrid = styled.div`
@@ -400,7 +439,7 @@ const PodiumGrid = styled.div`
   gap: clamp(1.5rem, 3vw, 3rem);
   width: min(100%, 1100px);
   margin: 0 auto 4rem;
-  padding: 2rem 1rem 0;
+  padding: 60px 1rem 0;
   position: relative;
   z-index: 1;
 
@@ -412,68 +451,162 @@ const PodiumGrid = styled.div`
   }
 `;
 
-const WinnerCard = styled.div<{ $height: number; $first?: boolean }>`
+const WinnerCard = styled.div<{ $height: number; $place: 1 | 2 | 3 }>`
+  ${(props) => {
+    const borderColor = props.$place === 1 ? '#C8960C' : props.$place === 2 ? '#4A6FA5' : '#8B5E3C';
+    const bg =
+      props.$place === 1
+        ? 'linear-gradient(160deg, #1A1200 0%, #2C1E00 40%, #1A1200 100%)'
+        : props.$place === 2
+          ? 'linear-gradient(160deg, #060D1F 0%, #0D1A35 40%, #060D1F 100%)'
+          : 'linear-gradient(160deg, #150C04 0%, #221408 40%, #150C04 100%)';
+    const glow =
+      props.$place === 1
+        ? '0 0 0 1px #C8960C, 0 0 40px rgba(255,200,50,0.6), 0 20px 60px rgba(0,0,0,0.8)'
+        : props.$place === 2
+          ? '0 0 20px rgba(74,111,165,0.4), 0 16px 40px rgba(0,0,0,0.7)'
+          : '0 0 20px rgba(139,94,60,0.4), 0 16px 40px rgba(0,0,0,0.7)';
+    return `
+      --winner-border: ${borderColor};
+      --winner-bg: ${bg};
+      --winner-glow: ${glow};
+    `;
+  }}
   position: relative;
-  min-height: ${(props) => props.$height - 40}px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2.5rem 1.8rem 2.2rem;
-  padding-top: ${(props) => (props.$first ? '3.5rem' : '2.5rem')};
-  background:
-    linear-gradient(135deg, rgba(200, 90, 30, 0.35) 0%, rgba(180, 70, 20, 0.3) 100%),
-    linear-gradient(180deg, rgba(255, 140, 40, 0.15), rgba(200, 80, 20, 0.1));
-  border: 1.5px solid rgba(255, 160, 60, 0.45);
-  border-radius: 20px;
+  min-height: ${(props) => (props.$place === 1 ? '560px' : '460px')};
+  padding: 0;
+  background: linear-gradient(180deg, rgba(255, 180, 0, 0.12), rgba(0, 0, 0, 0.92));
+  border: 2px solid var(--winner-border);
+  border-radius: 18px;
   backdrop-filter: blur(12px);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(255, 200, 100, 0.2),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-  transform: ${(props) => (props.$first ? 'translateY(-15px) scale(1.05)' : 'none')};
+  box-shadow: var(--winner-glow), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: ${(props) => (props.$place === 1 ? 'translateY(-40px)' : 'none')};
   transition: all 0.3s ease;
+  overflow: hidden;
 
   @media (max-width: ${theme.breakpoints.md}) {
     transform: none;
   }
 
+  &::before {
+    content: ${(props) => (props.$place === 1 ? "''" : 'none')};
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(200, 150, 12, 0.18) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
   &::after {
     content: '';
     position: absolute;
-    top: 35%;
-    left: 15%;
-    right: 15%;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
     height: 1px;
-    background: rgba(255, 200, 100, 0.15);
+    background: linear-gradient(90deg, transparent, var(--winner-border), transparent);
+    opacity: 0.5;
   }
 `;
 
-const WinnerAvatar = styled.div`
+const WinnerPortrait = styled.div<{ $place: 1 | 2 | 3 }>`
   position: absolute;
-  top: -50px;
-  left: 50%;
-  width: 85px;
-  height: 85px;
-  transform: translateX(-50%);
-  border-radius: 12px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
-  border: 2px solid rgba(255, 200, 100, 0.5);
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(255, 140, 40, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg, rgba(200, 100, 40, 0.4), rgba(150, 80, 30, 0.3));
-  backdrop-filter: blur(8px);
-  z-index: 2;
+  border-radius: 0;
 `;
 
-const WinnerName = styled.h3`
-  margin: 0 0 1.4rem;
+const CardInfo = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.25rem 1.5rem;
+  gap: 0.3rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.97) 0%,
+    rgba(0, 0, 0, 0.92) 40%,
+    rgba(0, 0, 0, 0.7) 70%,
+    transparent 100%
+  );
+`;
+
+const CrownIcon = styled(FaCrown)`
+  position: absolute;
+  left: 50%;
+  top: -28px;
+  transform: translateX(-50%);
+  color: #ffd700;
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
+  z-index: 10;
+`;
+
+const BadgeRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto 0.95rem;
+  position: relative;
+`;
+
+const WingDecor = styled.svg<{ $color: string; $mirror?: boolean }>`
+  width: 28px;
+  height: 20px;
+  transform: ${(props) => (props.$mirror ? 'scaleX(-1)' : 'none')};
+`;
+
+const LaurelWreath = styled.svg`
+  width: 120px;
+  height: 44px;
+  margin: -0.25rem auto 0.65rem;
+  display: block;
+`;
+
+const RankBadge = styled.div<{ $place: 1 | 2 | 3 }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 0.95rem;
+  border-radius: 999px;
+  border: ${(props) => (props.$place === 1 ? '3px solid #FFD700' : props.$place === 2 ? '2px solid #AEBBCB' : '2px solid #8B5E3C')};
+  background: ${(props) =>
+    props.$place === 1
+      ? 'radial-gradient(circle at 30% 30%, #ffd76a 0%, #c8960c 68%, #7f5c00 100%)'
+      : props.$place === 2
+        ? 'rgba(174, 187, 203, 0.16)'
+        : 'rgba(139, 94, 60, 0.18)'};
   color: #fff;
-  font-size: 1.32rem;
   font-weight: 900;
-  text-shadow: 0 3px 5px rgba(0, 0, 0, 0.36);
+  font-size: 1.08rem;
+  position: relative;
+  box-shadow: ${(props) => (props.$place === 1 ? '0 0 12px rgba(255,215,0,0.7)' : 'none')};
+`;
+
+const WinnerName = styled.h3<{ $place: 1 | 2 | 3 }>`
+  margin: 0 0 1.2rem;
+  color: #fff;
+  font-size: ${(props) => (props.$place === 1 ? '1.5rem' : '1.25rem')};
+  font-weight: 900;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  text-align: center;
 `;
 
 const TrophyBox = styled.div`
@@ -490,17 +623,18 @@ const TrophyBox = styled.div`
 
 const WinnerScore = styled.div`
   color: #fff;
-  font-size: 0.75rem;
-  margin-bottom: 1.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 1.1rem;
 `;
 
-const Reward = styled.div`
+const Reward = styled.div<{ $place: 1 | 2 | 3 }>`
   color: #fff;
-  font-size: 1.58rem;
+  font-size: ${(props) => (props.$place === 1 ? '1.9rem' : '1.6rem')};
   font-weight: 900;
 
   svg {
-    color: #ffcf24;
+    color: ${(props) => (props.$place === 1 ? '#FF8C00' : props.$place === 2 ? '#4BA3FF' : '#E53935')};
     margin-right: 0.4rem;
   }
 
@@ -517,15 +651,31 @@ const Countdown = styled.div`
   position: relative;
   z-index: 1;
   width: auto;
-  margin: 0 auto 3rem;
+  margin: 0 auto 2.5rem;
   text-align: center;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
+  color: #fff;
+  font-size: 0.85rem;
   font-weight: 600;
+
+  .label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .label::before,
+  .label::after {
+    content: '';
+    width: clamp(48px, 10vw, 96px);
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200, 150, 60, 0), rgba(200, 150, 60, 0.9), rgba(200, 150, 60, 0));
+  }
 
   svg {
     display: inline-block;
-    margin: 0 0.6rem 0.2rem 0;
     color: #ff3333;
     font-size: 1.2rem;
     animation: pulse 2s infinite;
@@ -534,10 +684,10 @@ const Countdown = styled.div`
   strong {
     display: block;
     margin-top: 0.4rem;
-    color: #fff;
-    font-size: 1.1rem;
+    color: #ff6a00;
+    font-size: 2.2rem;
     font-weight: 900;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
   }
 
   @keyframes pulse {
@@ -552,64 +702,84 @@ const Countdown = styled.div`
 
 const LeaderboardTable = styled.div`
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 1.8rem;
   position: relative;
   z-index: 1;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
-  padding: 1.8rem;
-  background:
-    linear-gradient(135deg, rgba(150, 70, 30, 0.25) 0%, rgba(120, 60, 25, 0.2) 100%);
-  border: 1px solid rgba(255, 160, 60, 0.35);
-  border-radius: 18px;
-  backdrop-filter: blur(12px);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 200, 100, 0.15);
+  background: rgba(20, 12, 8, 0.85);
+  border: 1px solid rgba(200, 150, 60, 0.45);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 200, 100, 0.1);
 `;
 
 const TableHeader = styled.div`
   display: grid;
-  grid-template-columns: 80px 2.5fr 1.2fr 150px;
+  grid-template-columns:
+    90px
+    minmax(280px, 1.8fr)
+    minmax(180px, 1fr)
+    160px;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  background: rgba(255, 160, 60, 0.2);
-  border-bottom: 2px solid rgba(255, 160, 60, 0.4);
-  border-radius: 8px;
+  gap: 0;
+  padding: 1rem 1.8rem;
+  border-bottom: 1px solid rgba(200, 150, 60, 0.4);
   font-weight: 700;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  text-transform: capitalize;
-  letter-spacing: 0.02em;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 
   @media (max-width: ${theme.breakpoints.md}) {
     grid-template-columns: 1fr;
     gap: 0.8rem;
     padding: 1rem;
   }
+
+  > div:nth-child(1) {
+    text-align: center;
+  }
+
+  > div:nth-child(2) {
+    text-align: left;
+    padding-left: 0.5rem;
+  }
+
+  > div:nth-child(3),
+  > div:nth-child(4) {
+    text-align: center;
+  }
 `;
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 80px 2.5fr 1.2fr 150px;
+  grid-template-columns:
+    90px
+    minmax(280px, 1.8fr)
+    minmax(180px, 1fr)
+    160px;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1.2rem 1.5rem;
-  margin-bottom: 0.6rem;
-  background: rgba(120, 50, 20, 0.2);
-  border-left: 3px solid ${theme.colors.primary.main};
-  border-radius: 10px;
-  backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 160, 60, 0.2);
+  gap: 0;
+  padding: 1.3rem 1.8rem;
+  transition: background 0.2s ease;
+  border-bottom: 1px solid rgba(200, 150, 60, 0.18);
+
+  &:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &:nth-child(even) {
+    background: transparent;
+  }
 
   &:hover {
-    background: rgba(150, 70, 30, 0.3);
-    border-left-color: ${theme.colors.primary.light};
-    box-shadow: 0 4px 12px rgba(255, 140, 40, 0.2);
+    background: rgba(255, 150, 30, 0.1);
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 
   @media (max-width: ${theme.breakpoints.md}) {
@@ -621,44 +791,50 @@ const TableRow = styled.div`
 
 const RankCell = styled.div`
   font-weight: 900;
-  font-size: 1.3rem;
-  color: ${theme.colors.primary.main};
-  text-align: left;
-  text-shadow: 0 2px 8px rgba(255, 140, 40, 0.3);
+  font-size: 1.2rem;
+  color: #ff6a00;
+  text-align: center;
 `;
 
 const NameCell = styled.div`
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: #fff;
   letter-spacing: 0.005em;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 0.5rem;
 `;
 
 const PointsCell = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: #fff;
-  text-align: left;
   font-family: var(--font-inter), monospace;
 
   @media (max-width: ${theme.breakpoints.md}) {
-    text-align: left;
+    text-align: center;
   }
 `;
 
 const RewardCell = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.45rem;
   font-weight: 700;
   font-size: 0.95rem;
-  color: ${theme.colors.primary.main};
+  color: #ff6a00;
 
   svg {
-    color: #ffcf24;
-    font-size: 1.1rem;
-    filter: drop-shadow(0 0 3px rgba(255, 207, 36, 0.5));
+    color: #ff6a00;
+    font-size: 1rem;
   }
 
   @media (max-width: ${theme.breakpoints.md}) {
@@ -731,33 +907,99 @@ export default function ArenaPage() {
 
       <LeaderboardSection>
         <SectionInner>
-          <SectionTitle>
-            {t('leaderboardSectionTitleTop')} <span>{t('leaderboardSectionTitleEmphasis')}</span>
-          </SectionTitle>
+          <LeaderboardHeading>
+            <LeaderboardTitle>
+              BXH TOP <span>LÔI ĐÀI</span>
+            </LeaderboardTitle>
+            <HeadingGem />
+            <LeaderboardSubtitle>AI SẼ LÀ CHÚA TẾ LÔI ĐÀI?</LeaderboardSubtitle>
+          </LeaderboardHeading>
 
           <PodiumGrid>
             {podiumPlayers.map((player) => (
-              <WinnerCard key={player.name} $height={player.height} $first={player.place === 1}>
-                <WinnerAvatar>
-                  <Image src="/images/rank-avatar.webp" alt={player.name} fill sizes="90px" style={{ objectFit: 'cover' }} />
-                </WinnerAvatar>
-                <WinnerName>{player.name}</WinnerName>
-                <TrophyBox>
-                  <FaTrophy />
-                </TrophyBox>
-                <WinnerScore>{player.score}</WinnerScore>
-                <Reward>
-                  <FaGem />
-                  {player.reward}
-                  <span>{t('rewardSuffix')}</span>
-                </Reward>
+              <WinnerCard key={player.name} $height={player.height} $place={player.place as 1 | 2 | 3}>
+                <WinnerPortrait $place={player.place as 1 | 2 | 3}>
+                  <Image
+                    src={player.avatar}
+                    alt={player.name}
+                    fill
+                    priority={player.place === 1}
+                    sizes="(max-width:768px) 100vw, 33vw"
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center top',
+                      transform:
+                        player.place === 1
+                          ? 'scale(1.12)'
+                          : 'scale(1.08)',
+                    }}
+                  />
+                </WinnerPortrait>
+                <CardInfo>
+                  {player.place === 1 && <CrownIcon />}
+                  <BadgeRow>
+                    {player.place !== 1 && (
+                      <WingDecor
+                        $color={player.place === 2 ? '#AEBBCB' : '#8B5E3C'}
+                        viewBox="0 0 28 20"
+                        fill="none"
+                      >
+                        <ellipse cx="20" cy="14" rx="6" ry="3" fill={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} opacity="0.85" transform="rotate(-30 20 14)" />
+                        <ellipse cx="13" cy="9" rx="5" ry="2.5" fill={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} opacity="0.7" transform="rotate(-50 13 9)" />
+                        <ellipse cx="8" cy="5" rx="4" ry="2" fill={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} opacity="0.55" transform="rotate(-65 8 5)" />
+                        <line x1="24" y1="16" x2="6" y2="4" stroke={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} strokeWidth="1" opacity="0.5" />
+                      </WingDecor>
+                    )}
+                    <RankBadge $place={player.place as 1 | 2 | 3}>{player.place}</RankBadge>
+                    {player.place !== 1 && (
+                      <WingDecor
+                        $color={player.place === 2 ? '#AEBBCB' : '#8B5E3C'}
+                        $mirror
+                        viewBox="0 0 28 20"
+                        fill="none"
+                      >
+                        <ellipse cx="20" cy="14" rx="6" ry="3" fill={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} opacity="0.85" transform="rotate(-30 20 14)" />
+                        <ellipse cx="13" cy="9" rx="5" ry="2.5" fill={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} opacity="0.7" transform="rotate(-50 13 9)" />
+                        <ellipse cx="8" cy="5" rx="4" ry="2" fill={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} opacity="0.55" transform="rotate(-65 8 5)" />
+                        <line x1="24" y1="16" x2="6" y2="4" stroke={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} strokeWidth="1" opacity="0.5" />
+                      </WingDecor>
+                    )}
+                  </BadgeRow>
+                  {player.place === 1 && (
+                    <LaurelWreath viewBox="0 0 120 44" fill="none">
+                      <ellipse cx="18" cy="28" rx="7" ry="4" fill="#C8960C" opacity="0.9" transform="rotate(-35 18 28)" />
+                      <ellipse cx="10" cy="22" rx="6" ry="3.5" fill="#C8960C" opacity="0.85" transform="rotate(-55 10 22)" />
+                      <ellipse cx="6" cy="14" rx="5.5" ry="3" fill="#C8960C" opacity="0.75" transform="rotate(-70 6 14)" />
+                      <ellipse cx="8" cy="6" rx="5" ry="2.5" fill="#C8960C" opacity="0.6" transform="rotate(-80 8 6)" />
+                      <line x1="60" y1="38" x2="8" y2="8" stroke="#8B6914" strokeWidth="1.2" opacity="0.6" />
+                      <ellipse cx="102" cy="28" rx="7" ry="4" fill="#C8960C" opacity="0.9" transform="rotate(35 102 28)" />
+                      <ellipse cx="110" cy="22" rx="6" ry="3.5" fill="#C8960C" opacity="0.85" transform="rotate(55 110 22)" />
+                      <ellipse cx="114" cy="14" rx="5.5" ry="3" fill="#C8960C" opacity="0.75" transform="rotate(70 114 14)" />
+                      <ellipse cx="112" cy="6" rx="5" ry="2.5" fill="#C8960C" opacity="0.6" transform="rotate(80 112 6)" />
+                      <line x1="60" y1="38" x2="112" y2="8" stroke="#8B6914" strokeWidth="1.2" opacity="0.6" />
+                      <polygon points="60,30 56,38 60,36 64,38" fill="#FFD700" opacity="0.9" />
+                    </LaurelWreath>
+                  )}
+                  <WinnerName $place={player.place as 1 | 2 | 3}>{player.name}</WinnerName>
+                  <TrophyBox>
+                    <FaTrophy />
+                  </TrophyBox>
+                  <WinnerScore>{player.score}</WinnerScore>
+                  <Reward $place={player.place as 1 | 2 | 3}>
+                    <FaGem />
+                    {player.reward}
+                    <span>{t('rewardSuffix')}</span>
+                  </Reward>
+                </CardInfo>
               </WinnerCard>
             ))}
           </PodiumGrid>
 
           <Countdown>
-            <FaClock />
-            {done ? t('countdownDone') : t('countdownLabel')}
+            <div className="label">
+              <FaClock />
+              KẾT THÚC TRONG
+            </div>
             <strong>
               {!mounted ? '...' : done ? '---' : `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`}
             </strong>
@@ -765,10 +1007,10 @@ export default function ArenaPage() {
 
           <LeaderboardTable>
             <TableHeader>
-              <div>{t('tableRank')}</div>
-              <div>{t('tablePlayers')}</div>
-              <div>{t('tablePoints')}</div>
-              <div>{t('tableReward')}</div>
+              <div>RANK</div>
+              <div>NGƯỜI CHƠI</div>
+              <div>ĐIỂM</div>
+              <div>PHẦN THƯỞNG</div>
             </TableHeader>
             {rankingRows.map((row) => (
               <TableRow key={row.rank}>

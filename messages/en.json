@@ -13,7 +13,8 @@
       "vi": "Vietnamese",
       "en": "English",
       "zh": "Chinese"
-    }
+    },
+    "ranking": "Leaderboard"
   },
   "home": {
     "eyebrow": "Dinosaur Survival MMORPG",
@@ -458,11 +459,13 @@
     "mobileNote": "Leaderboard is shown in card view for better readability on small screens.",
     "rewardPreview": {
       "title": "Ranking Rewards",
-      "coinSuffix": "Coins"
+      "coinSuffix": "Coins",
+      "viewAll": "[-] View All Rewards"
     },
     "hallOfFame": {
       "title": "Hall of Fame",
-      "coinSuffix": "Coins"
+      "coinSuffix": "Coins",
+      "viewAll": "View All"
     },
     "season": {
       "currentLabel": "Current Season",
@@ -471,7 +474,61 @@
       "totalRewardLabel": "Total Rewards",
       "totalReward": "500,000 Coins",
       "participantsLabel": "Participants",
-      "participants": "2,148"
-    }
+      "participants": "2,148",
+      "endLabel": "Ends In",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "rewardItems": [
+      {
+        "skin": "Exclusive Skin",
+        "badge": "Gold Title Badge",
+        "title": "Apex Overlord",
+        "frame": "Golden Avatar Frame"
+      },
+      {
+        "skin": "Rare Skin",
+        "badge": "Silver Title Badge",
+        "title": "Ancient Warlord",
+        "frame": "Silver Avatar Frame"
+      },
+      {
+        "skin": "Rare Skin",
+        "badge": "Bronze Title Badge",
+        "title": "Storm Hunter",
+        "frame": "Bronze Avatar Frame"
+      }
+    ]
+  },
+  "orders": {
+    "titlePrefix": "ORDER",
+    "titleEmphasis": "HISTORY",
+    "searchLabel": "SEARCH",
+    "searchPlaceholder": "Search order ID...",
+    "statusLabel": "STATUS",
+    "fromLabel": "FROM",
+    "toLabel": "TO",
+    "refresh": "Refresh",
+    "currency": "VND",
+    "table": {
+      "orderId": "ORDER ID",
+      "date": "DATE",
+      "amount": "AMOUNT",
+      "status": "STATUS",
+      "gems": "Gems"
+    },
+    "status": {
+      "all": "All",
+      "success": "Success",
+      "failed": "Failed",
+      "pending": "Pending"
+    },
+    "showing": "Showing",
+    "prev": "Prev",
+    "next": "Next",
+    "page": "Page",
+    "empty": "No orders found"
   }
 }

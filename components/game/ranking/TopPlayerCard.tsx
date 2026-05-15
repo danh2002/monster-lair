@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { FaCrown } from '@react-icons/all-files/fa/FaCrown';
 import { FaGem } from '@react-icons/all-files/fa/FaGem';
 import { FaCoins } from '@react-icons/all-files/fa/FaCoins';
@@ -158,6 +159,8 @@ const RewardItem = styled.div`
 `;
 
 export function TopPlayerCard({ player }: TopPlayerCardProps) {
+  const t = useTranslations('ranking');
+
   return (
     <Card
       $rank={player.rank}
@@ -176,7 +179,7 @@ export function TopPlayerCard({ player }: TopPlayerCardProps) {
       <Name>{player.username}</Name>
       <Clan>{player.clan}</Clan>
       <Value>
-        <FaGem /> {player.value.toLocaleString()} Xu
+        <FaGem /> {player.value.toLocaleString()} {t('rewardPreview.coinSuffix')}
       </Value>
       <RewardGrid>
         <RewardItem>

@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: var(--font-inter), sans-serif !important;
+    font-family: var(--font-roboto), sans-serif !important;
     background: linear-gradient(135deg, ${theme.colors.background.darker} 0%, ${theme.colors.background.dark} 100%);
     color: ${theme.colors.text.primary};
     line-height: 1.6;
@@ -22,7 +22,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   *, *::before, *::after {
-    font-family: var(--font-inter), sans-serif !important;
+    font-family: var(--font-roboto), sans-serif !important;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -43,12 +43,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   button {
-    font-family: ${theme.typography.fontFamily.primary};
+    font-family: var(--font-roboto), sans-serif;
     cursor: pointer;
   }
 
   input, textarea, select {
-    font-family: ${theme.typography.fontFamily.primary};
+    font-family: var(--font-roboto), sans-serif;
   }
 
   /* Scrollbar styling */

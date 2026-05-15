@@ -13,7 +13,8 @@
       "vi": "Việt Nam",
       "en": "English",
       "zh": "Chinese"
-    }
+    },
+    "ranking": "Bảng xếp hạng"
   },
   "home": {
     "eyebrow": "Dinosaur Survival MMORPG",
@@ -458,11 +459,13 @@
     "mobileNote": "Bảng xếp hạng đang ở dạng card để dễ nhìn trên màn hình nhỏ.",
     "rewardPreview": {
       "title": "Phần Thưởng Xếp Hạng",
-      "coinSuffix": "Xu"
+      "coinSuffix": "Xu",
+      "viewAll": "[-] Xem Tất Cả Phần Thưởng"
     },
     "hallOfFame": {
       "title": "Đại Sảnh Danh Vọng",
-      "coinSuffix": "Xu"
+      "coinSuffix": "Xu",
+      "viewAll": "Xem Tất Cả"
     },
     "season": {
       "currentLabel": "Mùa Giải Hiện Tại",
@@ -471,7 +474,61 @@
       "totalRewardLabel": "Tổng Giải Thưởng",
       "totalReward": "500,000 Xu",
       "participantsLabel": "Người Tham Gia",
-      "participants": "2,148"
-    }
+      "participants": "2,148",
+      "endLabel": "Kết Thúc Sau",
+      "days": "Ngày",
+      "hours": "Giờ",
+      "minutes": "Phút",
+      "seconds": "Giây"
+    },
+    "rewardItems": [
+      {
+        "skin": "Skin Độc Quyền",
+        "badge": "Danh Hiệu Vàng",
+        "title": "Apex Chúa Tể",
+        "frame": "Khung Avatar Hoàng Kim"
+      },
+      {
+        "skin": "Skin Hiếm",
+        "badge": "Danh Hiệu Bạc",
+        "title": "Lãnh Chúa Cổ Đại",
+        "frame": "Khung Avatar Bạc"
+      },
+      {
+        "skin": "Skin Hiếm",
+        "badge": "Danh Hiệu Đồng",
+        "title": "Bão Chủ Săn Mồi",
+        "frame": "Khung Avatar Đồng"
+      }
+    ]
+  },
+  "orders": {
+    "titlePrefix": "Lịch Sử",
+    "titleEmphasis": "Đơn Hàng",
+    "searchLabel": "Tìm Kiếm",
+    "searchPlaceholder": "Tìm mã đơn hàng...",
+    "statusLabel": "Trạng Thái",
+    "fromLabel": "Từ Ngày",
+    "toLabel": "Đến Ngày",
+    "refresh": "Làm mới",
+    "currency": "VNĐ",
+    "table": {
+      "orderId": "Mã Đơn",
+      "date": "Ngày",
+      "amount": "Số Tiền",
+      "status": "Trạng Thái",
+      "gems": "Gems"
+    },
+    "status": {
+      "all": "Tất cả",
+      "success": "Thành công",
+      "failed": "Thất bại",
+      "pending": "Đang xử lý"
+    },
+    "showing": "Hiển thị",
+    "prev": "Trước",
+    "next": "Tiếp",
+    "page": "Trang",
+    "empty": "Không có đơn hàng"
   }
 }

@@ -225,24 +225,24 @@ export function SeasonCountdown() {
         <SeasonName>
           <span>{t('season.name')}</span>
         </SeasonName>
-        <EndLabel>KẾT THÚC SAU</EndLabel>
+        <EndLabel>{t('season.endLabel')}</EndLabel>
 
         <CountdownRow>
           <TimeBox>
             <strong>{pad(days)}</strong>
-            <span>NGÀY</span>
+            <span>{t('season.days')}</span>
           </TimeBox>
           <TimeBox>
             <strong>{pad(hours)}</strong>
-            <span>GIỜ</span>
+            <span>{t('season.hours')}</span>
           </TimeBox>
           <TimeBox>
             <strong>{pad(minutes)}</strong>
-            <span>PHÚT</span>
+            <span>{t('season.minutes')}</span>
           </TimeBox>
           <TimeBox>
             <strong>{pad(seconds)}</strong>
-            <span>GIÂY</span>
+            <span>{t('season.seconds')}</span>
           </TimeBox>
         </CountdownRow>
 

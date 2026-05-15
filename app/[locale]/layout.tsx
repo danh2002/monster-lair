@@ -1,16 +1,18 @@
 import type { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import StyledComponentsRegistry from '@/lib/registry';
 import { GlobalStyles } from '@/styles/globalStyles';
 import { AuthProvider } from '@/context/AuthContext';
 import { notFound } from 'next/navigation';
 
-const inter = Inter({
+const roboto = Roboto({
   subsets: ['latin', 'vietnamese'],
+  weight: ['300', '400', '500', '700', '900'],
+  style: ['normal', 'italic'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-roboto',
 });
 
 const LOCALES = ['vi', 'en', 'zh'] as const;
@@ -35,7 +37,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${inter.className} ${inter.variable}`}>
+    <html lang={locale} className={`${roboto.className} ${roboto.variable}`}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <StyledComponentsRegistry>

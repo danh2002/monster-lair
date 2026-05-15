@@ -34,8 +34,8 @@ export const theme = {
   },
   typography: {
     fontFamily: {
-      primary: "var(--font-inter), sans-serif",
-      secondary: "var(--font-inter), sans-serif",
+      primary: "var(--font-roboto), 'Roboto', sans-serif",
+      secondary: "var(--font-roboto), 'Roboto', sans-serif",
     },
     fontSize: {
       xs: '0.75rem',

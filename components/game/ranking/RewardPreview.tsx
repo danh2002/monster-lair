@@ -17,6 +17,8 @@ interface RewardPreviewProps {
 
 type TierTone = 'gold' | 'silver' | 'bronze';
 
+const TOP_IMAGES = ['/images/top1.png', '/images/top2.png', '/images/top3.png'] as const;
+
 const Wrap = styled(motion.section)`
   position: relative;
   min-height: 600px;
@@ -266,6 +268,12 @@ function getBadgeLabel(index: number) {
 export function RewardPreview({ items }: RewardPreviewProps) {
   const t = useTranslations('ranking');
   const topThree = items.slice(0, 3);
+  const rewardItems = t.raw('rewardItems') as Array<{
+    skin: string;
+    badge: string;
+    title: string;
+    frame: string;
+  }>;
 
   return (
     <Wrap initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -275,6 +283,8 @@ export function RewardPreview({ items }: RewardPreviewProps) {
           const tone = getTone(index);
           const badgeLabel = getBadgeLabel(index);
           const isTop1 = index === 0;
+          const rankImage = TOP_IMAGES[index] ?? item.image;
+          const localized = rewardItems[index];
 
           const orderDesktop = index === 0 ? 2 : index === 1 ? 1 : 3;
           const orderMobile = index + 1;
@@ -291,27 +301,27 @@ export function RewardPreview({ items }: RewardPreviewProps) {
                 <FaCrown /> {badgeLabel}
               </RankBadge>
               <Thumb $featured={isTop1}>
-                <Image src={item.image} alt={item.tier} fill sizes="420px" style={{ objectFit: 'cover' }} />
+                <Image src={rankImage} alt={item.tier} fill sizes="420px" style={{ objectFit: 'cover' }} />
               </Thumb>
               <Body>
                 <RewardLine>
                   <FaGem /> {item.coin.toLocaleString()} {t('rewardPreview.coinSuffix')}
                 </RewardLine>
                 <RewardLine>
-                  <FaCoins /> {item.skin}
+                  <FaCoins /> {localized?.skin ?? item.skin}
                 </RewardLine>
                 <RewardLine>
-                  <FaTrophy /> {item.badge}
+                  <FaTrophy /> {localized?.badge ?? item.badge}
                 </RewardLine>
                 <RewardLine>
-                  <FaRegSquare /> {item.frame}
+                  <FaRegSquare /> {localized?.frame ?? item.frame}
                 </RewardLine>
               </Body>
             </Card>
           );
         })}
       </Grid>
-      <ViewAllButton type="button">[-] XEM TẤT CẢ PHẦN THƯỞNG</ViewAllButton>
+      <ViewAllButton type="button">{t('rewardPreview.viewAll')}</ViewAllButton>
     </Wrap>
   );
 }
