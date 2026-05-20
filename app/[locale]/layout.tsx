@@ -6,6 +6,7 @@ import StyledComponentsRegistry from '@/lib/registry';
 import { GlobalStyles } from '@/styles/globalStyles';
 import { AuthProvider } from '@/context/AuthContext';
 import { notFound } from 'next/navigation';
+import { Analytics } from '@vercel/analytics/next';
 
 const roboto = Roboto({
   subsets: ['latin', 'vietnamese'],
@@ -47,6 +48,7 @@ export default async function LocaleLayout({
             </AuthProvider>
           </StyledComponentsRegistry>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
