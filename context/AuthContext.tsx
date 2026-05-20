@@ -1,50 +1,87 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 export interface AuthUser {
+  id: string;
   username: string;
-  email?: string;
-  avatar?: string;
+  email: string;
+  displayName?: string | null;
+  avatar?: string | null;
+  goldCoins?: number;
+  gems?: number;
+  locale?: string;
 }
 
 interface AuthContextType {
   user: AuthUser | null;
   isAuthenticated: boolean;
   login: (username: string, password: string) => Promise<void>;
-  register: (username: string, email: string, password: string, phone: string) => Promise<void>;
+  register: (username: string, email: string, password: string, phone: string, locale?: string) => Promise<void>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const STORAGE_KEY = 'authUser';
+
+interface AuthResponse {
+  success?: boolean;
+  error?: string;
+  user?: AuthUser;
+}
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
 
-  const login = async (username: string, password: string) => {
-    // Mock login - in production, call your API
-    if (username && password) {
-      setUser({
-        username,
-        email: `${username}@example.com`,
-        avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`,
-      });
+  useEffect(() => {
+    const storedUser = localStorage.getItem(STORAGE_KEY);
+    if (!storedUser) return;
+
+    try {
+      setUser(JSON.parse(storedUser) as AuthUser);
+    } catch {
+      localStorage.removeItem(STORAGE_KEY);
     }
+  }, []);
+
+  const login = async (username: string, password: string) => {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = (await response.json()) as AuthResponse;
+
+    if (!response.ok || !data.success || !data.user) {
+      throw new Error(data.error || 'INTERNAL_ERROR');
+    }
+
+    setUser(data.user);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data.user));
   };
 
-  const register = async (username: string, email: string, password: string, phone: string) => {
-    // Mock registration - in production, call your API
-    if (username && email && password && phone) {
-      setUser({
-        username,
-        email,
-        avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`,
-      });
+  const register = async (username: string, email: string, password: string, phone: string, locale = 'vi') => {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, email, password, phone, locale }),
+    });
+
+    const data = (await response.json()) as AuthResponse;
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || 'INTERNAL_ERROR');
     }
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem(STORAGE_KEY);
   };
 
   return (

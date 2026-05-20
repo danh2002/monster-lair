@@ -8,6 +8,7 @@ import { theme } from '@/styles/theme';
 import { AiOutlineEye } from '@react-icons/all-files/ai/AiOutlineEye';
 import { AiOutlineEyeInvisible } from '@react-icons/all-files/ai/AiOutlineEyeInvisible';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 interface LoginFormProps {
   onSwitchToRegister?: () => void;
@@ -243,9 +244,18 @@ const SuccessMessage = styled.p`
   border-left: 3px solid #00cc00;
 `;
 
+function getLoginErrorMessage(error: unknown, t: ReturnType<typeof useTranslations<'auth'>>) {
+  if (error instanceof Error && error.message === 'INVALID_CREDENTIALS') {
+    return t('errorInvalidCredentials');
+  }
+
+  return t('errorLoginInvalid');
+}
+
 export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const { login } = useAuth();
   const t = useTranslations('auth');
+  const router = useRouter();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -280,8 +290,9 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
       if (rememberMe) {
         localStorage.setItem('rememberMe', formData.username);
       }
-    } catch {
-      setError(t('errorLoginInvalid'));
+      router.push('/');
+    } catch (err) {
+      setError(getLoginErrorMessage(err, t));
     } finally {
       setIsLoading(false);
     }

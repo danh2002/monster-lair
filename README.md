@@ -475,3 +475,12 @@ For issues or questions:
 
 **Built with ❤️ for gamers** 🦖⚔️
 
+/*
+  Connect DBeaver to this database:
+  1. New Connection -> PostgreSQL
+  2. Host: localhost  Port: 5432
+  3. Database: dinoisland_db
+  4. Username/Password: same as DATABASE_URL in .env
+  5. Test Connection -> Finish
+  You will see the "User" table under: dinoisland_db -> Schemas -> public -> Tables
+*/

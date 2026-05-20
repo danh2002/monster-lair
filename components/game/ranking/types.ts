@@ -21,7 +21,7 @@ export interface RankingEntry {
   clan: string;
   value: number;
   winStreak: number;
-  title: string;
+  titleKey: 'title_warrior' | 'title_hunter' | 'title_recruit';
   reward: number;
   status: 'online' | 'battle' | 'offline';
   avatar: string;
@@ -30,17 +30,16 @@ export interface RankingEntry {
 export interface RewardCardItem {
   tier: string;
   coin: number;
-  skin: string;
-  badge: string;
-  title: string;
-  frame: string;
+  skinKey: 'exclusive_skins' | 'rare_skins';
+  badgeKey: 'gold_title_badge' | 'silver_title_badge' | 'bronze_title_badge';
+  frameKey: 'gold_avatar_frame' | 'silver_avatar_frame' | 'bronze_portrait';
   image: string;
 }
 
 export interface HallOfFameItem {
   username: string;
-  season: string;
-  achievement: string;
+  seasonKey: 'season_alpha_s1' | 'season_alpha_s0';
+  achievementKey: 'season_champion' | 'arena_king' | 'topup_champion' | 'battlefield_commander' | 'survival_master';
   value: number;
   avatar: string;
 }

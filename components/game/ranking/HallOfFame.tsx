@@ -183,11 +183,11 @@ export function HallOfFame({ items }: HallOfFameProps) {
 
   return (
     <Wrap initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-      <Title>{t('hallOfFame.title')}</Title>
+      <Title>{t('hall_of_fame')}</Title>
 
       <List>
         {items.slice(0, 3).map((item, index) => (
-          <Row key={`${item.username}-${item.season}`}>
+          <Row key={`${item.username}-${item.seasonKey}-${item.achievementKey}`}>
             <RankIcon $rank={index + 1}>
               <span>{index + 1}</span>
               <FaTrophy />
@@ -198,18 +198,18 @@ export function HallOfFame({ items }: HallOfFameProps) {
             <TextCol>
               <User>{item.username}</User>
               <Meta>
-                {item.season}
-                <br />• {item.achievement}
+                {t(item.seasonKey)}
+                <br />• {t(item.achievementKey)}
               </Meta>
             </TextCol>
             <Value>
-              {formatCompactXu(item.value)} {t('hallOfFame.coinSuffix')}
+              {formatCompactXu(item.value)} {t('gold_coins')}
             </Value>
           </Row>
         ))}
       </List>
 
-      <ViewAllButton type="button">{t('hallOfFame.viewAll')}</ViewAllButton>
+      <ViewAllButton type="button">{t('view_all')}</ViewAllButton>
     </Wrap>
   );
 }

@@ -188,8 +188,8 @@ export function RankingPage() {
           <HeroLogo>
             <Image src="/images/dao-khung-long-logo.png" alt={t('logoAlt')} fill sizes="280px" style={{ objectFit: 'contain' }} />
           </HeroLogo>
-          <HeroTitle>{t('heroTitle')}</HeroTitle>
-          <HeroSubtitle>{t('heroSubtitle')}</HeroSubtitle>
+          <HeroTitle>{t('page_title')}</HeroTitle>
+          <HeroSubtitle>{t('page_subtitle')}</HeroSubtitle>
         </HeroContent>
       </Hero>
 
@@ -198,10 +198,10 @@ export function RankingPage() {
           active={activeCategory}
           onChange={setActiveCategory}
           labels={{
-            topup: t('tabs.topup'),
-            arena: t('tabs.arena'),
-            daily: t('tabs.daily'),
-            weekly: t('tabs.weekly'),
+            topup: t('tab_topup'),
+            arena: t('tab_arena'),
+            daily: t('tab_daily'),
+            weekly: t('tab_weekly'),
           }}
         />
 
@@ -210,12 +210,12 @@ export function RankingPage() {
         <RankingTable
           rows={data.entries}
           headers={[
-            t('table.rank'),
-            t('table.player'),
-            t('table.clan'),
-            t('table.value'),
-            t('table.title'),
-            t('table.reward'),
+            t('col_ranking'),
+            t('col_players'),
+            t('col_guild'),
+            t('col_score'),
+            t('col_title'),
+            t('col_award'),
           ]}
         />
 

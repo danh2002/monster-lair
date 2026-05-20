@@ -53,9 +53,9 @@ function useCountdown(targetDate: Date) {
 // ============================================================
 
 const podiumPlayers = [
-  { name: 'Brian Ngo', reward: '50,000', score: '2,000 điểm', place: 2, height: 178, avatar: '/images/top2loidai.png' },
-  { name: 'Jolie Joie', reward: '100,000', score: '2,000 điểm', place: 1, height: 210, avatar: '/images/top1loidai.png' },
-  { name: 'David Do', reward: '20,000', score: '2,000 điểm', place: 3, height: 178, avatar: '/images/top3loidai.png' },
+  { name: 'Brian Ngo', reward: '50,000', score: '2,000', place: 2, height: 178, avatar: '/images/top2loidai.png' },
+  { name: 'Jolie Joie', reward: '100,000', score: '2,000', place: 1, height: 210, avatar: '/images/top1loidai.png' },
+  { name: 'David Do', reward: '20,000', score: '2,000', place: 3, height: 178, avatar: '/images/top3loidai.png' },
 ];
 
 const rankingRows = [
@@ -848,6 +848,13 @@ export default function ArenaPage() {
   const { days, hours, minutes, seconds, done, mounted } = useCountdown(targetDate);
 
   const pad = (n: number) => String(n).padStart(2, '0');
+  const pageTitle = t('page_title');
+  const [pageTitleLead, pageTitleEmphasis] = useMemo(() => {
+    const lastSpace = pageTitle.lastIndexOf(' ');
+    return lastSpace === -1
+      ? ['', pageTitle]
+      : [pageTitle.slice(0, lastSpace), pageTitle.slice(lastSpace + 1)];
+  }, [pageTitle]);
 
   return (
     <Page>
@@ -909,10 +916,11 @@ export default function ArenaPage() {
         <SectionInner>
           <LeaderboardHeading>
             <LeaderboardTitle>
-              BXH TOP <span>LÔI ĐÀI</span>
+              {pageTitleLead && `${pageTitleLead} `}
+              <span>{pageTitleEmphasis}</span>
             </LeaderboardTitle>
             <HeadingGem />
-            <LeaderboardSubtitle>AI SẼ LÀ CHÚA TẾ LÔI ĐÀI?</LeaderboardSubtitle>
+            <LeaderboardSubtitle>{t('subtitle')}</LeaderboardSubtitle>
           </LeaderboardHeading>
 
           <PodiumGrid>
@@ -984,11 +992,13 @@ export default function ArenaPage() {
                   <TrophyBox>
                     <FaTrophy />
                   </TrophyBox>
-                  <WinnerScore>{player.score}</WinnerScore>
+                  <WinnerScore>
+                    {player.score} {t('points_label')}
+                  </WinnerScore>
                   <Reward $place={player.place as 1 | 2 | 3}>
                     <FaGem />
                     {player.reward}
-                    <span>{t('rewardSuffix')}</span>
+                    <span>{t('currency_label')}</span>
                   </Reward>
                 </CardInfo>
               </WinnerCard>
@@ -998,7 +1008,7 @@ export default function ArenaPage() {
           <Countdown>
             <div className="label">
               <FaClock />
-              KẾT THÚC TRONG
+              {t('ends_in')}
             </div>
             <strong>
               {!mounted ? '...' : done ? '---' : `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`}
@@ -1007,19 +1017,21 @@ export default function ArenaPage() {
 
           <LeaderboardTable>
             <TableHeader>
-              <div>RANK</div>
-              <div>NGƯỜI CHƠI</div>
-              <div>ĐIỂM</div>
-              <div>PHẦN THƯỞNG</div>
+              <div>{t('col_rank')}</div>
+              <div>{t('col_player')}</div>
+              <div>{t('col_points')}</div>
+              <div>{t('col_reward')}</div>
             </TableHeader>
             {rankingRows.map((row) => (
               <TableRow key={row.rank}>
                 <RankCell>{row.rank}</RankCell>
                 <NameCell>{row.name}</NameCell>
-                <PointsCell>{row.points}</PointsCell>
+                <PointsCell>
+                  {row.points} {t('points_label')}
+                </PointsCell>
                 <RewardCell>
                   <FaGem />
-                  {row.reward}
+                  {row.reward} {t('currency_label')}
                 </RewardCell>
               </TableRow>
             ))}

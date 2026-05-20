@@ -8,6 +8,7 @@ import { FaCrown } from '@react-icons/all-files/fa/FaCrown';
 import { FaGem } from '@react-icons/all-files/fa/FaGem';
 import { FaCoins } from '@react-icons/all-files/fa/FaCoins';
 import { TopPlayer } from './types';
+import { formatRewardAmount } from './formatters';
 
 interface TopPlayerCardProps {
   player: TopPlayer;
@@ -179,11 +180,11 @@ export function TopPlayerCard({ player }: TopPlayerCardProps) {
       <Name>{player.username}</Name>
       <Clan>{player.clan}</Clan>
       <Value>
-        <FaGem /> {player.value.toLocaleString()} {t('rewardPreview.coinSuffix')}
+        <FaGem /> {formatRewardAmount(player.value)} {t('gold_coins')}
       </Value>
       <RewardGrid>
         <RewardItem>
-          <FaCoins /> x{player.rewardPreview.coin.toLocaleString()}
+          <FaCoins /> x{formatRewardAmount(player.rewardPreview.coin)}
         </RewardItem>
         <RewardItem>
           <FaGem /> x{player.rewardPreview.ruby}

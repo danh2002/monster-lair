@@ -8,6 +8,7 @@ import { FaArrowUp } from '@react-icons/all-files/fa/FaArrowUp';
 import { FaCoins } from '@react-icons/all-files/fa/FaCoins';
 import { theme } from '@/styles/theme';
 import { RankingEntry } from './types';
+import { formatRewardAmount } from './formatters';
 
 interface RankingRowProps {
   row: RankingEntry;
@@ -126,9 +127,9 @@ export function RankingRow({ row }: RankingRowProps) {
 
       <Cell>{row.clan}</Cell>
       <OrangeCell>{row.value.toLocaleString()}</OrangeCell>
-      <Badge>{row.title}</Badge>
+      <Badge>{t(row.titleKey)}</Badge>
       <Cell>
-        <FaCoins /> x{row.reward.toLocaleString()}
+        <FaCoins /> x{formatRewardAmount(row.reward)}
       </Cell>
     </Row>
   );

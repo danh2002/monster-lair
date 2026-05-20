@@ -7,7 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { theme } from '@/styles/theme';
 import { AiOutlineEye } from '@react-icons/all-files/ai/AiOutlineEye';
 import { AiOutlineEyeInvisible } from '@react-icons/all-files/ai/AiOutlineEyeInvisible';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface RegisterFormProps {
   onSwitchToLogin?: () => void;
@@ -257,9 +257,19 @@ const SuccessMessage = styled.p`
   border-left: 3px solid #00cc00;
 `;
 
+function getRegisterErrorMessage(error: unknown, t: ReturnType<typeof useTranslations<'auth'>>) {
+  if (error instanceof Error) {
+    if (error.message === 'USERNAME_TAKEN') return t('errorUsernameTaken');
+    if (error.message === 'EMAIL_TAKEN') return t('errorEmailTaken');
+  }
+
+  return t('errorRegisterFailed');
+}
+
 export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
   const { register } = useAuth();
   const t = useTranslations('auth');
+  const locale = useLocale();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -307,7 +317,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 
     setIsLoading(true);
     try {
-      await register(formData.username, formData.email, formData.password, formData.phone);
+      await register(formData.username, formData.email, formData.password, formData.phone, locale);
       setSuccess(t('successRegister'));
       setTimeout(() => {
         setFormData({
@@ -318,9 +328,10 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           phone: '',
           verificationCode: '',
         });
+        onSwitchToLogin?.();
       }, 1500);
-    } catch {
-      setError(t('errorRegisterFailed'));
+    } catch (err) {
+      setError(getRegisterErrorMessage(err, t));
     } finally {
       setIsLoading(false);
     }
@@ -367,6 +378,19 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
               name="username"
               placeholder={t('username')}
               value={formData.username}
+              onChange={handleChange}
+            />
+          </InputFieldWrapper>
+
+          <InputFieldWrapper>
+            <InputIcon>
+              <Image src="/images/user.png" alt={t('emailAlt')} width={18} height={18} />
+            </InputIcon>
+            <InputField
+              type="email"
+              name="email"
+              placeholder={t('email')}
+              value={formData.email}
               onChange={handleChange}
             />
           </InputFieldWrapper>

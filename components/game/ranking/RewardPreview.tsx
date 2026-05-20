@@ -10,6 +10,7 @@ import { FaTrophy } from '@react-icons/all-files/fa/FaTrophy';
 import { FaRegSquare } from '@react-icons/all-files/fa/FaRegSquare';
 import { FaCrown } from '@react-icons/all-files/fa/FaCrown';
 import { RewardCardItem } from './types';
+import { formatRewardAmount } from './formatters';
 
 interface RewardPreviewProps {
   items: RewardCardItem[];
@@ -268,24 +269,16 @@ function getBadgeLabel(index: number) {
 export function RewardPreview({ items }: RewardPreviewProps) {
   const t = useTranslations('ranking');
   const topThree = items.slice(0, 3);
-  const rewardItems = t.raw('rewardItems') as Array<{
-    skin: string;
-    badge: string;
-    title: string;
-    frame: string;
-  }>;
 
   return (
     <Wrap initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-      <Title>{t('rewardPreview.title')}</Title>
+      <Title>{t('ranking_rewards')}</Title>
       <Grid>
         {topThree.map((item, index) => {
           const tone = getTone(index);
           const badgeLabel = getBadgeLabel(index);
           const isTop1 = index === 0;
           const rankImage = TOP_IMAGES[index] ?? item.image;
-          const localized = rewardItems[index];
-
           const orderDesktop = index === 0 ? 2 : index === 1 ? 1 : 3;
           const orderMobile = index + 1;
 
@@ -305,23 +298,23 @@ export function RewardPreview({ items }: RewardPreviewProps) {
               </Thumb>
               <Body>
                 <RewardLine>
-                  <FaGem /> {item.coin.toLocaleString()} {t('rewardPreview.coinSuffix')}
+                  <FaGem /> {formatRewardAmount(item.coin)} {t('gold_coins')}
                 </RewardLine>
                 <RewardLine>
-                  <FaCoins /> {localized?.skin ?? item.skin}
+                  <FaCoins /> {t(item.skinKey)}
                 </RewardLine>
                 <RewardLine>
-                  <FaTrophy /> {localized?.badge ?? item.badge}
+                  <FaTrophy /> {t(item.badgeKey)}
                 </RewardLine>
                 <RewardLine>
-                  <FaRegSquare /> {localized?.frame ?? item.frame}
+                  <FaRegSquare /> {t(item.frameKey)}
                 </RewardLine>
               </Body>
             </Card>
           );
         })}
       </Grid>
-      <ViewAllButton type="button">{t('rewardPreview.viewAll')}</ViewAllButton>
+      <ViewAllButton type="button">{t('view_all_rewards')}</ViewAllButton>
     </Wrap>
   );
 }

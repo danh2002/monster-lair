@@ -194,10 +194,6 @@ const Stat = styled.div`
   }
 `;
 
-function pad(value: number) {
-  return String(value).padStart(2, '0');
-}
-
 export function SeasonCountdown() {
   const t = useTranslations('ranking');
   const target = useMemo(() => Date.now() + 10 * 24 * 60 * 60 * 1000, []);
@@ -221,41 +217,41 @@ export function SeasonCountdown() {
     <Card initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
       <CornerBR />
       <Content>
-        <Label>{t('season.currentLabel')}</Label>
+        <Label>{t('current_season')}</Label>
         <SeasonName>
           <span>{t('season.name')}</span>
         </SeasonName>
-        <EndLabel>{t('season.endLabel')}</EndLabel>
+        <EndLabel>{t('time_left')}</EndLabel>
 
         <CountdownRow>
           <TimeBox>
-            <strong>{pad(days)}</strong>
-            <span>{t('season.days')}</span>
+            <strong>{days}</strong>
+            <span>{t('unit_day')}</span>
           </TimeBox>
           <TimeBox>
-            <strong>{pad(hours)}</strong>
-            <span>{t('season.hours')}</span>
+            <strong>{hours}</strong>
+            <span>{t('unit_hour')}</span>
           </TimeBox>
           <TimeBox>
-            <strong>{pad(minutes)}</strong>
-            <span>{t('season.minutes')}</span>
+            <strong>{minutes}</strong>
+            <span>{t('unit_minute')}</span>
           </TimeBox>
           <TimeBox>
-            <strong>{pad(seconds)}</strong>
-            <span>{t('season.seconds')}</span>
+            <strong>{seconds}</strong>
+            <span>{t('unit_second')}</span>
           </TimeBox>
         </CountdownRow>
 
         <StatGrid>
           <Stat>
             <span>
-              <FaCoins /> {t('season.totalRewardLabel')}
+              <FaCoins /> {t('total_rewards')}
             </span>
-            <strong>{t('season.totalReward')}</strong>
+            <strong>500,000 {t('gold_coins')}</strong>
           </Stat>
           <Stat>
             <span>
-              <FaUsers /> {t('season.participantsLabel')}
+              <FaUsers /> {t('participants')}
             </span>
             <strong>{t('season.participants')}</strong>
           </Stat>
