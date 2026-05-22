@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { LazyMotion, domAnimation, m, animate, useInView, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion';
 import { FaDownload } from '@react-icons/all-files/fa/FaDownload';
 import { FaFire } from '@react-icons/all-files/fa/FaFire';
 import { FaPlayCircle } from '@react-icons/all-files/fa/FaPlayCircle';
@@ -782,47 +784,146 @@ const StatItem = styled.div`
   }
 `;
 
+const MotionEyebrow = m.create(Eyebrow);
+const MotionLogoWrap = m.create(LogoWrap);
+const MotionTagline = m.create(Tagline);
+const MotionDescription = m.create(Description);
+const MotionButtonRow = m.create(ButtonRow);
+const MotionHeroButton = m.create(HeroButton);
+const MotionScrollHint = m.create(ScrollHint);
+const MotionRankingPanel = m.create(RankingPanel);
+const MotionRankingRow = m.create(RankingRow);
+const MotionPodiumBlock = m.create(PodiumBlock);
+const MotionSectionHeading = m.create(SectionHeading);
+const MotionMiniLabel = m.create(MiniLabel);
+const MotionFeatureCard = m.create(FeatureCard);
+const MotionVideoFrame = m.create(VideoFrame);
+const MotionPlayButton = m.create(PlayButton);
+const MotionVideoMeta = m.create(VideoMeta);
+const MotionCtaTitle = m.create(CtaTitle);
+const MotionCtaText = m.create(CtaText);
+const MotionDownloadButton = m.create(DownloadButton);
+const MotionStatItem = m.create(StatItem);
+
+const smoothEase = [0.25, 0.1, 0.25, 1] as const;
+const scrollViewport = { once: true, margin: '-60px' as const };
+const motionStyle = { willChange: 'transform' };
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: smoothEase } },
+};
+
+const titleLine = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: smoothEase } },
+};
+
+function AnimatedStatValue({ value }: { value: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, scrollViewport);
+  const count = useMotionValue(0);
+  const [displayValue, setDisplayValue] = useState(value === '100v100' ? value : '0');
+  const formattedValue = useTransform(count, (latest) => {
+    if (value === '2M+') return `${Math.round(latest)}M+`;
+    if (value === '50+') return `${Math.round(latest)}+`;
+    if (value.includes('4.8')) return `${latest.toFixed(1)}★`;
+    return value;
+  });
+
+  useMotionValueEvent(formattedValue, 'change', setDisplayValue);
+
+  useEffect(() => {
+    if (!inView || value === '100v100') return;
+
+    const target = value === '2M+' ? 2 : value === '50+' ? 50 : 4.8;
+    const controls = animate(count, target, { duration: 1.5, ease: 'easeOut' });
+
+    return () => controls.stop();
+  }, [count, inView, value]);
+
+  return <div ref={ref}>{value === '100v100' ? value : displayValue}</div>;
+}
+
 export default function HomePage() {
   const t = useTranslations('home');
 
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       <HomeShell>
         <ContentGrid>
           <HeroCopy>
-            <Eyebrow>{t('eyebrow')}</Eyebrow>
-            <LogoWrap>
+            <MotionEyebrow initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.1, ease: smoothEase }} style={motionStyle}>
+              {t('eyebrow')}
+            </MotionEyebrow>
+            <MotionLogoWrap
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: smoothEase }}
+              style={motionStyle}
+            >
               <Image src="/images/dao-khung-long-logo.png" alt={t('logoAlt')} fill sizes="430px" style={{ objectFit: 'contain' }} priority />
-            </LogoWrap>
-            <Tagline>{t('tagline')}</Tagline>
-            <Description>{t('description')}</Description>
-            <ButtonRow>
-              <HeroButton type="button" $primary>
+            </MotionLogoWrap>
+            <MotionTagline
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.35, ease: smoothEase }}
+              style={motionStyle}
+            >
+              {t('tagline')}
+            </MotionTagline>
+            <MotionDescription
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.45, ease: smoothEase }}
+              style={motionStyle}
+            >
+              {t('description')}
+            </MotionDescription>
+            <MotionButtonRow
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.55, ease: smoothEase }}
+              style={motionStyle}
+            >
+              <MotionHeroButton type="button" $primary whileHover={{ scale: 1.03 }} transition={{ duration: 0.2, ease: smoothEase }} style={motionStyle}>
                 <FaFire />
                 {t('loadGame')}
-              </HeroButton>
-              <HeroButton type="button">
+              </MotionHeroButton>
+              <MotionHeroButton type="button" whileHover={{ scale: 1.02 }} transition={{ duration: 0.2, ease: smoothEase }} style={motionStyle}>
                 <FaPlayCircle />
                 {t('watchTrailer')}
-              </HeroButton>
-            </ButtonRow>
+              </MotionHeroButton>
+            </MotionButtonRow>
           </HeroCopy>
 
-          <RankingPanel>
+          <MotionRankingPanel
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: smoothEase }}
+            style={motionStyle}
+          >
             <RankingTitle>
               {t('rankingTitlePrefix')} <span>{t('rankingTitleHighlight')}</span>
             </RankingTitle>
             <Podium>
-              {podium.map((item) => (
+              {podium.map((item, index) => (
                 <PodiumSlot key={item.name}>
                   <Avatar $size={50}>
                     <Image src="/images/rank-avatar.webp" alt="" fill sizes="50px" style={{ objectFit: 'cover' }} />
                   </Avatar>
                   <PodiumName>{item.name}</PodiumName>
-                  <PodiumBlock $height={item.height} $first={item.place === '1st'}>
+                  <MotionPodiumBlock
+                    $height={item.height}
+                    $first={item.place === '1st'}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: item.height - 15, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1, ease: 'easeOut' }}
+                    style={motionStyle}
+                  >
                     {item.place}
                     <span>{item.points}</span>
-                  </PodiumBlock>
+                  </MotionPodiumBlock>
                 </PodiumSlot>
               ))}
             </Podium>
@@ -833,8 +934,14 @@ export default function HomePage() {
                 <div>{t('tableRank')}</div>
                 <div>{t('tablePoints')}</div>
               </TableHead>
-              {rankers.map((player) => (
-                <RankingRow key={player.name}>
+              {rankers.map((player, index) => (
+                <MotionRankingRow
+                  key={player.name}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.65 + index * 0.08, ease: smoothEase }}
+                  style={motionStyle}
+                >
                   <Player>
                     <Avatar $size={42}>
                       <Image src="/images/rank-avatar.webp" alt="" fill sizes="42px" style={{ objectFit: 'cover' }} />
@@ -843,27 +950,56 @@ export default function HomePage() {
                   </Player>
                   <div>{player.rank}</div>
                   <div>{player.points}</div>
-                </RankingRow>
+                </MotionRankingRow>
               ))}
             </RankingTable>
-          </RankingPanel>
+          </MotionRankingPanel>
         </ContentGrid>
-        <ScrollHint>{t('scrollDown')}</ScrollHint>
+        <MotionScrollHint
+          animate={{ x: '-50%', y: [0, 8, 0] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+          style={motionStyle}
+        >
+          {t('scrollDown')}
+        </MotionScrollHint>
       </HomeShell>
 
       <LandingSection>
         <SectionInner>
-          <SectionHeading>
-            <MiniLabel>{t('featuresMiniLabel')}</MiniLabel>
+          <MotionSectionHeading
+            variants={{
+              hidden: { opacity: 0, y: 24 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: smoothEase, staggerChildren: 0.12 } },
+            }}
+            initial="hidden"
+            whileInView="show"
+            viewport={scrollViewport}
+            style={motionStyle}
+          >
+            <MotionMiniLabel variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.5, delay: 0.1, ease: smoothEase } } }} style={motionStyle}>
+              {t('featuresMiniLabel')}
+            </MotionMiniLabel>
             <SectionTitle>
-              {t('featuresSectionTitleTop')}
-              <span>{t('featuresSectionTitleBottom')}</span>
+              <m.span variants={titleLine} style={{ ...motionStyle, display: 'block', color: '#fff' }}>
+                {t('featuresSectionTitleTop')}
+              </m.span>
+              <m.span variants={titleLine} style={motionStyle}>
+                {t('featuresSectionTitleBottom')}
+              </m.span>
             </SectionTitle>
-          </SectionHeading>
+          </MotionSectionHeading>
 
           <FeatureGrid>
-            {featureCards.map((card) => (
-              <FeatureCard key={card.title}>
+            {featureCards.map((card, index) => (
+              <MotionFeatureCard
+                key={card.title}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={scrollViewport}
+                transition={{ duration: 0.5, delay: index * 0.12, ease: smoothEase }}
+                whileHover={{ y: -6, scale: 1.01 }}
+                style={motionStyle}
+              >
                 <FeatureImage>
                   <Image src={card.image} alt="" fill sizes="(max-width: 1024px) 100vw, 370px" style={{ objectFit: 'cover' }} />
                 </FeatureImage>
@@ -879,7 +1015,7 @@ export default function HomePage() {
                   </TagRow>
                   <FeatureLink href="#feature">{t('learnMore')}</FeatureLink>
                 </FeatureBody>
-              </FeatureCard>
+              </MotionFeatureCard>
             ))}
           </FeatureGrid>
         </SectionInner>
@@ -887,25 +1023,50 @@ export default function HomePage() {
 
       <TrailerSection $background="/images/feature-war.jpg">
         <SectionInner>
-          <SectionHeading>
+          <MotionSectionHeading
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={scrollViewport}
+            style={motionStyle}
+          >
             <MiniLabel>{t('officialTrailerMiniLabel')}</MiniLabel>
             <SectionTitle>
               {t('watchOfficialTrailer')}
               <span>{t('official')}</span>
             </SectionTitle>
-          </SectionHeading>
+          </MotionSectionHeading>
 
-          <VideoFrame>
+          <MotionVideoFrame
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={scrollViewport}
+            transition={{ duration: 0.6, ease: smoothEase }}
+            style={motionStyle}
+          >
             <Image src="/images/trailer-dinosaur.webp" alt={t('trailerCaptionTitle')} fill sizes="930px" style={{ objectFit: 'cover' }} />
-            <PlayButton type="button" aria-label={t('playTrailerAriaLabel')}>
+            <MotionPlayButton
+              type="button"
+              aria-label={t('playTrailerAriaLabel')}
+              animate={{ x: '-50%', y: '-50%', scale: [1, 1.08, 1] }}
+              whileHover={{ x: '-50%', y: '-50%', scale: 1.15 }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+              style={motionStyle}
+            >
               <FaPlayCircle />
-            </PlayButton>
+            </MotionPlayButton>
             <TrailerCaption>
               {t('trailerCaptionTitle')}
               <span>{t('trailerCaptionMeta')}</span>
             </TrailerCaption>
-          </VideoFrame>
-          <VideoMeta>
+          </MotionVideoFrame>
+          <MotionVideoMeta
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={scrollViewport}
+            transition={{ duration: 0.5, delay: 0.3, ease: smoothEase }}
+            style={motionStyle}
+          >
             <MetaGroup>
               <span>{t('trailerViews')}</span>
               <span>{t('trailerLikes')}</span>
@@ -918,36 +1079,66 @@ export default function HomePage() {
                 <FaYoutube /> {t('watchOnYoutube')}
               </MetaButton>
             </MetaGroup>
-          </VideoMeta>
+          </MotionVideoMeta>
         </SectionInner>
       </TrailerSection>
 
       <CtaSection>
         <CtaInner>
           <div>
-            <CtaTitle>
+            <MotionCtaTitle
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={scrollViewport}
+              transition={{ duration: 0.5, ease: smoothEase }}
+              style={motionStyle}
+            >
               {t('readyTitleLine1')}
               <br />
               {t('readyTitleLine2')}
               <span>{t('readyTitleEmphasis')}</span>
-            </CtaTitle>
-            <CtaText>{t('ctaText')}</CtaText>
-            <DownloadButton type="button" $primary>
+            </MotionCtaTitle>
+            <MotionCtaText
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={scrollViewport}
+              transition={{ duration: 0.5, delay: 0.15, ease: smoothEase }}
+              style={motionStyle}
+            >
+              {t('ctaText')}
+            </MotionCtaText>
+            <MotionDownloadButton
+              type="button"
+              $primary
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.04 }}
+              viewport={scrollViewport}
+              transition={{ duration: 0.2, delay: 0.25, ease: smoothEase }}
+              style={motionStyle}
+            >
               <FaDownload />
               {t('downloadFree')}
-            </DownloadButton>
+            </MotionDownloadButton>
           </div>
 
           <StatGrid>
-            {stats.map((stat) => (
-              <StatItem key={stat.label}>
-                {stat.value}
+            {stats.map((stat, index) => (
+              <MotionStatItem
+                key={stat.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={scrollViewport}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: smoothEase }}
+                style={motionStyle}
+              >
+                <AnimatedStatValue value={stat.value} />
                 <span>{t(stat.label)}</span>
-              </StatItem>
+              </MotionStatItem>
             ))}
           </StatGrid>
         </CtaInner>
       </CtaSection>
-    </>
+    </LazyMotion>
   );
 }

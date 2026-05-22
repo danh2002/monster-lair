@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { FaClock } from '@react-icons/all-files/fa/FaClock';
 import { FaGem } from '@react-icons/all-files/fa/FaGem';
 import { FaTrophy } from '@react-icons/all-files/fa/FaTrophy';
@@ -332,6 +334,8 @@ const ProgressLine = styled.div<{ $side: 'red' | 'blue'; $value: number }>`
     width: ${(props) => props.$value}%;
     border-radius: inherit;
     background: ${(props) => (props.$side === 'red' ? '#ff2b21' : '#0d28ff')};
+    transform: scaleX(var(--progress-scale, 1));
+    transform-origin: ${(props) => (props.$side === 'red' ? 'right center' : 'left center')};
     box-shadow: ${(props) =>
       props.$side === 'red'
         ? '0 0 10px rgba(255, 43, 33, 0.6)'
@@ -842,6 +846,84 @@ const RewardCell = styled.div`
   }
 `;
 
+const CountdownNumber = styled.span`
+  display: inline-flex;
+  position: relative;
+  overflow: hidden;
+  vertical-align: baseline;
+`;
+
+const CountdownUnit = styled.span`
+  display: inline-flex;
+  align-items: baseline;
+`;
+
+const MotionHeroLogo = motion(HeroLogo);
+const MotionDownMark = motion(DownMark);
+const MotionBattleCard = motion(BattleCard);
+const MotionFaction = motion(Faction);
+const MotionFactionName = motion(FactionName);
+const MotionProgressLine = motion(ProgressLine);
+const MotionLeaderboardTitle = motion(LeaderboardTitle);
+const MotionLeaderboardSubtitle = motion(LeaderboardSubtitle);
+const MotionPodiumItem = motion.div;
+const MotionRankBadgeWrap = motion.div;
+const MotionTableRow = motion(TableRow);
+
+const scrollViewport = { once: true, margin: '-80px' as const };
+const animatedStyle = { willChange: 'transform' };
+
+function AnimatedProgressLine({
+  side,
+  value,
+  children,
+}: {
+  side: 'red' | 'blue';
+  value: number;
+  children: ReactNode;
+}) {
+  const progressRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(progressRef, scrollViewport);
+
+  return (
+    <MotionProgressLine
+      ref={progressRef}
+      $side={side}
+      $value={value}
+      initial={{ '--progress-scale': 0 }}
+      animate={{ '--progress-scale': isInView ? 1 : 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      style={animatedStyle as CSSProperties}
+      layout={false}
+    >
+      {children}
+    </MotionProgressLine>
+  );
+}
+
+function CountdownFlip({ value, suffix }: { value: string | number; suffix: string }) {
+  return (
+    <CountdownUnit>
+      <CountdownNumber>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.span
+            key={value}
+            initial={{ y: 18, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -18, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            style={animatedStyle}
+            layout={false}
+          >
+            {value}
+          </motion.span>
+        </AnimatePresence>
+      </CountdownNumber>
+      {suffix}
+    </CountdownUnit>
+  );
+}
+
 export default function ArenaPage() {
   const t = useTranslations('arena');
   const targetDate = useMemo(() => getNextResetDate(CYCLE_DAYS), []);
@@ -863,15 +945,44 @@ export default function ArenaPage() {
           <span />
         </HeroCorner>
         <HeroContent>
-          <HeroLogo>
+          <MotionHeroLogo
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            style={animatedStyle}
+            layout={false}
+          >
             <Image src="/images/dao-khung-long-logo.png" alt={t('logoAlt')} fill sizes="300px" style={{ objectFit: 'contain' }} priority />
-          </HeroLogo>
+          </MotionHeroLogo>
           <HeroTitle>
-            <span>{t('heroTitleLine1')}</span>
-            <span>{t('heroTitleLine2')}</span>
+            <motion.span
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, ease: 'easeOut', delay: 0.15 }}
+              style={animatedStyle}
+              layout={false}
+            >
+              {t('heroTitleLine1')}
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, ease: 'easeOut', delay: 0.3 }}
+              style={animatedStyle}
+              layout={false}
+            >
+              {t('heroTitleLine2')}
+            </motion.span>
           </HeroTitle>
         </HeroContent>
-        <DownMark>{t('downMark')}</DownMark>
+        <MotionDownMark
+          animate={{ x: '-50%', y: [0, -6, 0] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+          style={animatedStyle}
+          layout={false}
+        >
+          {t('downMark')}
+        </MotionDownMark>
       </ArenaHero>
 
       <BattleSection>
@@ -881,32 +992,76 @@ export default function ArenaPage() {
           </SectionTitle>
 
           <BattleList>
-            {battles.map((battle) => (
-              <BattleCard key={battle.id}>
-                <Faction $side="red">
-                  <FactionName $side="red">{t('factionHoaLong')}</FactionName>
+            {battles.map((battle, index) => (
+              <MotionBattleCard
+                key={battle.id}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -80 : 80 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={scrollViewport}
+                transition={{ duration: 0.7, ease: 'easeOut', delay: index * 0.15 }}
+                style={animatedStyle}
+                layout={false}
+              >
+                <MotionFaction
+                  $side="red"
+                  initial={{ opacity: 0, x: -40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={scrollViewport}
+                  transition={{ duration: 0.55, ease: 'easeOut', delay: index * 0.15 + 0.08 }}
+                  style={animatedStyle}
+                  layout={false}
+                >
+                  <MotionFactionName
+                    $side="red"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={scrollViewport}
+                    transition={{ duration: 0.45, ease: 'easeOut', delay: index * 0.15 + 0.12 }}
+                    style={animatedStyle}
+                    layout={false}
+                  >
+                    {t('factionHoaLong')}
+                  </MotionFactionName>
                   <PlayerCount>{t('playerCount')}</PlayerCount>
-                  <ProgressLine $side="red" $value={battle.redProgress}>
+                  <AnimatedProgressLine side="red" value={battle.redProgress}>
                     <span>{t('progressLabel')}</span>
                     <span className="bar" />
                     <span>{battle.redProgress}%</span>
-                  </ProgressLine>
-                </Faction>
+                  </AnimatedProgressLine>
+                </MotionFaction>
 
                 <Vs>
                   <span>{t('vs')}</span>
                 </Vs>
 
-                <Faction $side="blue">
-                  <FactionName $side="blue">{t('factionTuTien')}</FactionName>
+                <MotionFaction
+                  $side="blue"
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={scrollViewport}
+                  transition={{ duration: 0.55, ease: 'easeOut', delay: index * 0.15 + 0.14 }}
+                  style={animatedStyle}
+                  layout={false}
+                >
+                  <MotionFactionName
+                    $side="blue"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={scrollViewport}
+                    transition={{ duration: 0.45, ease: 'easeOut', delay: index * 0.15 + 0.2 }}
+                    style={animatedStyle}
+                    layout={false}
+                  >
+                    {t('factionTuTien')}
+                  </MotionFactionName>
                   <PlayerCount>{t('playerCount')}</PlayerCount>
-                  <ProgressLine $side="blue" $value={battle.blueProgress}>
+                  <AnimatedProgressLine side="blue" value={battle.blueProgress}>
                     <span>{t('progressLabel')}</span>
                     <span className="bar" />
                     <span>{battle.blueProgress}%</span>
-                  </ProgressLine>
-                </Faction>
-              </BattleCard>
+                  </AnimatedProgressLine>
+                </MotionFaction>
+              </MotionBattleCard>
             ))}
           </BattleList>
         </SectionInner>
@@ -915,17 +1070,62 @@ export default function ArenaPage() {
       <LeaderboardSection>
         <SectionInner>
           <LeaderboardHeading>
-            <LeaderboardTitle>
+            <MotionLeaderboardTitle
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={scrollViewport}
+              transition={{ duration: 0.65, ease: 'easeOut' }}
+              style={animatedStyle}
+              layout={false}
+            >
               {pageTitleLead && `${pageTitleLead} `}
               <span>{pageTitleEmphasis}</span>
-            </LeaderboardTitle>
+            </MotionLeaderboardTitle>
             <HeadingGem />
-            <LeaderboardSubtitle>{t('subtitle')}</LeaderboardSubtitle>
+            <MotionLeaderboardSubtitle
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={scrollViewport}
+              transition={{ duration: 0.55, ease: 'easeOut', delay: 0.2 }}
+              style={animatedStyle}
+              layout={false}
+            >
+              {t('subtitle')}
+            </MotionLeaderboardSubtitle>
           </LeaderboardHeading>
 
           <PodiumGrid>
             {podiumPlayers.map((player) => (
-              <WinnerCard key={player.name} $height={player.height} $place={player.place as 1 | 2 | 3}>
+              <MotionPodiumItem
+                key={player.name}
+                initial={{
+                  opacity: 0,
+                  x: player.place === 2 ? -80 : player.place === 3 ? 80 : 0,
+                  scale: player.place === 1 ? 0.7 : 1,
+                }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                animate={
+                  player.place === 1
+                    ? {
+                        filter: [
+                          'drop-shadow(0 0 18px rgba(255, 200, 50, 0.6))',
+                          'drop-shadow(0 0 30px rgba(255, 200, 50, 1))',
+                          'drop-shadow(0 0 18px rgba(255, 200, 50, 0.6))',
+                        ],
+                      }
+                    : undefined
+                }
+                viewport={scrollViewport}
+                transition={{
+                  duration: player.place === 1 ? 0.8 : 0.7,
+                  ease: 'easeOut',
+                  delay: player.place === 2 ? 0 : player.place === 1 ? 0.3 : 0.45,
+                  filter: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+                }}
+                style={animatedStyle}
+                layout={false}
+              >
+              <WinnerCard $height={player.height} $place={player.place as 1 | 2 | 3}>
                 <WinnerPortrait $place={player.place as 1 | 2 | 3}>
                   <Image
                     src={player.avatar}
@@ -958,7 +1158,18 @@ export default function ArenaPage() {
                         <line x1="24" y1="16" x2="6" y2="4" stroke={player.place === 2 ? '#AEBBCB' : '#8B5E3C'} strokeWidth="1" opacity="0.5" />
                       </WingDecor>
                     )}
-                    <RankBadge $place={player.place as 1 | 2 | 3}>{player.place}</RankBadge>
+                    {player.place === 1 ? (
+                      <MotionRankBadgeWrap
+                        animate={{ scale: [1, 1.08, 1] }}
+                        transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                        style={animatedStyle}
+                        layout={false}
+                      >
+                        <RankBadge $place={player.place as 1 | 2 | 3}>{player.place}</RankBadge>
+                      </MotionRankBadgeWrap>
+                    ) : (
+                      <RankBadge $place={player.place as 1 | 2 | 3}>{player.place}</RankBadge>
+                    )}
                     {player.place !== 1 && (
                       <WingDecor
                         $color={player.place === 2 ? '#AEBBCB' : '#8B5E3C'}
@@ -1002,6 +1213,7 @@ export default function ArenaPage() {
                   </Reward>
                 </CardInfo>
               </WinnerCard>
+              </MotionPodiumItem>
             ))}
           </PodiumGrid>
 
@@ -1011,7 +1223,16 @@ export default function ArenaPage() {
               {t('ends_in')}
             </div>
             <strong>
-              {!mounted ? '...' : done ? '---' : `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`}
+              {!mounted ? (
+                '...'
+              ) : done ? (
+                '---'
+              ) : (
+                <>
+                  <CountdownFlip value={days} suffix="d" /> <CountdownFlip value={pad(hours)} suffix="h" />{' '}
+                  <CountdownFlip value={pad(minutes)} suffix="m" /> <CountdownFlip value={pad(seconds)} suffix="s" />
+                </>
+              )}
             </strong>
           </Countdown>
 
@@ -1022,8 +1243,16 @@ export default function ArenaPage() {
               <div>{t('col_points')}</div>
               <div>{t('col_reward')}</div>
             </TableHeader>
-            {rankingRows.map((row) => (
-              <TableRow key={row.rank}>
+            {rankingRows.map((row, index) => (
+              <MotionTableRow
+                key={row.rank}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={scrollViewport}
+                transition={{ duration: 0.45, ease: 'easeOut', delay: index * 0.06 }}
+                style={animatedStyle}
+                layout={false}
+              >
                 <RankCell>{row.rank}</RankCell>
                 <NameCell>{row.name}</NameCell>
                 <PointsCell>
@@ -1033,7 +1262,7 @@ export default function ArenaPage() {
                   <FaGem />
                   {row.reward} {t('currency_label')}
                 </RewardCell>
-              </TableRow>
+              </MotionTableRow>
             ))}
           </LeaderboardTable>
         </SectionInner>
