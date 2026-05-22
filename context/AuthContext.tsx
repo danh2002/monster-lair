@@ -6,10 +6,12 @@ export interface AuthUser {
   id: string;
   username: string;
   email: string;
+  phone?: string | null;
   displayName?: string | null;
   avatar?: string | null;
   goldCoins?: number;
   gems?: number;
+  createdAt?: string;
   locale?: string;
 }
 

@@ -224,14 +224,9 @@ const ActionButton = styled.button<{ $primary?: boolean }>`
 `;
 
 const UserProfileSection = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 12px;
-  height: 31px;
-  background: rgba(30, 30, 30, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
 `;
 
 const UserAvatar = styled.img`
@@ -242,29 +237,88 @@ const UserAvatar = styled.img`
   border: 2px solid ${theme.colors.primary.main};
 `;
 
-const UserUsername = styled.span`
+const UserMenuButton = styled.button<{ $open?: boolean }>`
+  height: 31px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: ${(props) => (props.$open ? 'rgba(255, 106, 0, 0.14)' : 'rgba(30, 30, 30, 0.8)')};
+  border: 1px solid ${(props) => (props.$open ? 'rgba(255, 106, 0, 0.45)' : 'rgba(255, 255, 255, 0.1)')};
+  border-radius: 4px;
   color: #fff;
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
+  cursor: pointer;
+  transition: border-color ${theme.transitions.fast}, background ${theme.transitions.fast};
+
+  svg {
+    color: ${theme.colors.primary.main};
+    font-size: 0.7rem;
+  }
+
+  &:hover {
+    border-color: rgba(255, 106, 0, 0.45);
+    background: rgba(255, 106, 0, 0.12);
+  }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    display: none;
+    span {
+      display: none;
+    }
   }
 `;
 
-const LogoutButton = styled.button`
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
+const UserDropdown = styled.div<{ $open: boolean }>`
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 168px;
+  background: #1a1b1b;
+  border: 1px solid rgba(255, 106, 0, 0.25);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.45);
+  z-index: 220;
+  opacity: ${(props) => (props.$open ? 1 : 0)};
+  pointer-events: ${(props) => (props.$open ? 'all' : 'none')};
+  transform: ${(props) => (props.$open ? 'translateY(0)' : 'translateY(-6px)')};
+  transition: opacity 0.15s ease, transform 0.15s ease;
+`;
+
+const UserDropdownHeader = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  transition: color ${theme.transitions.fast};
+  gap: 9px;
+  padding: 11px 12px;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  svg {
+    color: ${theme.colors.primary.main};
+  }
+`;
+
+const UserDropdownItem = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background ${theme.transitions.fast}, color ${theme.transitions.fast};
 
   &:hover {
+    background: rgba(255, 106, 0, 0.1);
     color: ${theme.colors.primary.main};
   }
 `;
@@ -285,10 +339,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('nav');
+  const tAccount = useTranslations('account');
   const { isAuthenticated, user, logout } = useAuth();
 
   const [langOpen, setLangOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
 
   const activePage = currentPage ?? (
     pathname.startsWith('/arena')
@@ -307,6 +364,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
         setLangOpen(false);
       }
+
+      if (userRef.current && !userRef.current.contains(e.target as Node)) {
+        setUserOpen(false);
+      }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -316,6 +377,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem('authUser');
+    setUserOpen(false);
+    router.push('/');
   };
 
   return (
@@ -397,12 +461,33 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
             </ActionButton>
           </>
         ) : (
-          <UserProfileSection>
-            {user?.avatar && <UserAvatar src={user.avatar} alt={user.username} />}
-            <UserUsername>{user?.username}</UserUsername>
-            <LogoutButton onClick={handleLogout} title={t('logout')}>
-              <FaSignOutAlt />
-            </LogoutButton>
+          <UserProfileSection ref={userRef}>
+            <UserMenuButton type="button" $open={userOpen} onClick={() => setUserOpen((v) => !v)}>
+              {user?.avatar ? <UserAvatar src={user.avatar} alt={user.username} /> : <FaUser />}
+              <span>{user?.username}</span>
+              <FaChevronRight />
+            </UserMenuButton>
+
+            <UserDropdown $open={userOpen}>
+              <UserDropdownHeader>
+                <FaUser />
+                {user?.username}
+              </UserDropdownHeader>
+              <UserDropdownItem
+                type="button"
+                onClick={() => {
+                  setUserOpen(false);
+                  router.push('/account');
+                }}
+              >
+                <FaUser />
+                {tAccount('dropdown_account')}
+              </UserDropdownItem>
+              <UserDropdownItem type="button" onClick={handleLogout}>
+                <FaSignOutAlt />
+                {tAccount('dropdown_logout')}
+              </UserDropdownItem>
+            </UserDropdown>
           </UserProfileSection>
         )}
       </NavActions>

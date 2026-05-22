@@ -40,15 +40,16 @@ export async function POST(request: Request) {
         id: user.id,
         username: user.username,
         email: user.email,
+        phone: user.phone,
         displayName: user.displayName,
         avatar: user.avatar,
         goldCoins: user.goldCoins,
         gems: user.gems,
+        createdAt: user.createdAt.toISOString(),
         locale: user.locale,
       },
     });
-  } catch (error) {
-    console.error('Login error:', error);
+  } catch {
     return NextResponse.json({ error: 'INTERNAL_ERROR' }, { status: 500 });
   }
 }

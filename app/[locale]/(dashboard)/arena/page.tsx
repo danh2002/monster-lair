@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { FaClock } from '@react-icons/all-files/fa/FaClock';
