@@ -3,6 +3,7 @@
     "brandAriaLabel": "Monster Lair",
     "home": "Trang chủ",
     "arena": "Lôi đài chiến",
+    "news": "Tin Tức",
     "topup": "Nạp game",
     "guide": "Bảng xếp hạng",
     "support": "Hỗ trợ",
@@ -15,6 +16,24 @@
       "zh": "Chinese"
     },
     "ranking": "Bảng xếp hạng"
+  },
+  "news": {
+    "page_title": "Tin Tức & Sự Kiện",
+    "subtitle": "Cập nhật mới nhất",
+    "tab_all": "Tất Cả",
+    "tab_news": "Tin Tức",
+    "tab_events": "Sự Kiện",
+    "tab_updates": "Cập Nhật Game",
+    "read_more": "Đọc Thêm",
+    "read_time": "phút đọc",
+    "featured": "Nổi Bật",
+    "upcoming": "Sắp Diễn Ra",
+    "ongoing": "Đang Diễn Ra",
+    "ended": "Đã Kết Thúc",
+    "related_posts": "Bài Viết Liên Quan",
+    "categories": "Danh Mục",
+    "share": "Chia Sẻ",
+    "back_to_news": "Quay Lại Tin Tức"
   },
   "home": {
     "eyebrow": "Dinosaur Survival MMORPG",

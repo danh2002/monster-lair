@@ -3,6 +3,7 @@
     "brandAriaLabel": "Monster Lair",
     "home": "首页",
     "arena": "竞技场",
+    "news": "新闻",
     "topup": "充值",
     "guide": "排行榜",
     "support": "支持",
@@ -15,6 +16,24 @@
       "zh": "中文"
     },
     "ranking": "排行榜"
+  },
+  "news": {
+    "page_title": "新闻与活动",
+    "subtitle": "最新资讯",
+    "tab_all": "全部",
+    "tab_news": "新闻",
+    "tab_events": "活动",
+    "tab_updates": "游戏更新",
+    "read_more": "阅读更多",
+    "read_time": "分钟阅读",
+    "featured": "精选",
+    "upcoming": "即将开始",
+    "ongoing": "进行中",
+    "ended": "已结束",
+    "related_posts": "相关文章",
+    "categories": "分类",
+    "share": "分享",
+    "back_to_news": "返回新闻"
   },
   "home": {
     "eyebrow": "恐龙生存 MMORPG",

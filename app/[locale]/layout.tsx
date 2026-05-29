@@ -38,18 +38,16 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${roboto.className} ${roboto.variable}`}>
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <StyledComponentsRegistry>
-            <AuthProvider>
-              <GlobalStyles />
-              {children}
-            </AuthProvider>
-          </StyledComponentsRegistry>
-        </NextIntlClientProvider>
-        <Analytics />
-      </body>
-    </html>
+    <div lang={locale} className={`${roboto.className} ${roboto.variable}`}>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <StyledComponentsRegistry>
+          <AuthProvider>
+            <GlobalStyles />
+            {children}
+          </AuthProvider>
+        </StyledComponentsRegistry>
+      </NextIntlClientProvider>
+      <Analytics />
+    </div>
   );
 }

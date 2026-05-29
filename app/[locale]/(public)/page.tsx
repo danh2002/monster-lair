@@ -11,6 +11,7 @@ import { FaShareAlt } from '@react-icons/all-files/fa/FaShareAlt';
 import { FaYoutube } from '@react-icons/all-files/fa/FaYoutube';
 import { theme } from '@/styles/theme';
 import { useTranslations } from 'next-intl';
+import { BannerSlider } from '@/components/marketing/BannerSlider';
 
 const rankers = [
   { name: 'Cody Fisher', rank: 1, points: 1500 },
@@ -963,6 +964,8 @@ export default function HomePage() {
           {t('scrollDown')}
         </MotionScrollHint>
       </HomeShell>
+
+      <BannerSlider position="home" />
 
       <LandingSection>
         <SectionInner>

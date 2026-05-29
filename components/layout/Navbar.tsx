@@ -350,6 +350,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
   const activePage = currentPage ?? (
     pathname.startsWith('/arena')
       ? 'arena'
+      : pathname.startsWith('/news')
+        ? 'news'
       : pathname.startsWith('/topup')
         ? 'topup'
         : pathname.startsWith('/ranking')
@@ -396,6 +398,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onAuthClick }) => {
         </Link>
         <Link href="/arena" className={activePage === 'arena' ? 'active' : ''}>
           {t('arena')}
+        </Link>
+        <Link href="/news" className={activePage === 'news' ? 'active' : ''}>
+          {t('news')}
         </Link>
         <Link href="/topup" className={activePage === 'topup' ? 'active' : ''}>
           {t('topup')}

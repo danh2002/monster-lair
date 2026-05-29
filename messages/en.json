@@ -3,6 +3,7 @@
     "brandAriaLabel": "Monster Lair",
     "home": "Home",
     "arena": "Arena",
+    "news": "News",
     "topup": "Top Up",
     "guide": "Leaderboard",
     "support": "Support",
@@ -15,6 +16,24 @@
       "zh": "Chinese"
     },
     "ranking": "Leaderboard"
+  },
+  "news": {
+    "page_title": "News & Events",
+    "subtitle": "Latest Updates",
+    "tab_all": "All",
+    "tab_news": "News",
+    "tab_events": "Events",
+    "tab_updates": "Game Updates",
+    "read_more": "Read More",
+    "read_time": "min read",
+    "featured": "Featured",
+    "upcoming": "Upcoming",
+    "ongoing": "Ongoing",
+    "ended": "Ended",
+    "related_posts": "Related Posts",
+    "categories": "Categories",
+    "share": "Share",
+    "back_to_news": "Back to News"
   },
   "home": {
     "eyebrow": "Dinosaur Survival MMORPG",
