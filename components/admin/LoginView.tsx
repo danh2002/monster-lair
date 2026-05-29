@@ -117,7 +117,7 @@ export function LoginView() {
     setLoading(true);
     setError('');
 
-    const response = await fetch('/api/users/login', {
+    const response = await fetch('/api/admin/login', {
       body: JSON.stringify({ email, password }),
       credentials: 'same-origin',
       headers: {
@@ -131,10 +131,6 @@ export function LoginView() {
       setLoading(false);
       setError(data?.message ?? 'Login failed');
       return;
-    }
-
-    if (data?.token) {
-      document.cookie = `payload-token=${data.token}; path=/; samesite=lax`;
     }
 
     router.push('/admin');
